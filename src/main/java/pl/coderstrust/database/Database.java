@@ -8,6 +8,6 @@ public interface Database {
 
   void saveInvoice(Invoice invoice);
 
-  List<Invoice> getListOfInvoice();
+  List<Invoice> getInvoices();
 
 }
