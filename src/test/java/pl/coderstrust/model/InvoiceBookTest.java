@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import pl.coderstrust.database.Database;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +23,7 @@ public class InvoiceBookTest {
 
 
   @Test
-  public void shouldReturnEmptyListIfItsEmpty() {
+  public void shouldReturnEmptyListIfItsEmpty() throws IOException {
     // given
     InvoiceBook invoiceBook = new InvoiceBook(databaseMock);
 
@@ -35,7 +36,7 @@ public class InvoiceBookTest {
   }
 
   @Test
-  public void shouldReturnSingleOrMoreInvoiceFromBook() {
+  public void shouldReturnSingleOrMoreInvoiceFromBook() throws IOException {
     // given
     InvoiceBook invoiceBook = new InvoiceBook(databaseMock);
     Invoice invoice = new Invoice();

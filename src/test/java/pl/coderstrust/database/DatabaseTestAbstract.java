@@ -37,8 +37,6 @@ public abstract class  DatabaseTestAbstract {
     Database database = getDatabase();
     Invoice invoice = new Invoice();
 
-
-
     // when
     database.saveInvoice(invoice);
     List<Invoice> invoiceList = database.getInvoices();
@@ -46,7 +44,7 @@ public abstract class  DatabaseTestAbstract {
     // then
     assertNotNull("should not be null", invoiceList);
     assertEquals("List size 1!?",1, invoiceList.size());
-    assertEquals(invoice, invoiceList.get(0));
+    assertEquals(invoice.getDescription(), invoiceList.get(0).getDescription());
 
 
 

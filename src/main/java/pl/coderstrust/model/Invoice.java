@@ -12,5 +12,19 @@ public class Invoice {
     this.description = "Time Machine";
   }
 
+  public BigDecimal getValue() {
+    return value;
+  }
 
+  public void setValue(BigDecimal value) {
+    this.value = value;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }
