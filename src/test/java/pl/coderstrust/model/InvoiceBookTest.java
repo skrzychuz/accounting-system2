@@ -1,17 +1,15 @@
 package pl.coderstrust.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import pl.coderstrust.database.Database;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,11 +17,11 @@ import java.util.List;
 public class InvoiceBookTest {
 
   @Mock
-  Database databaseMock;
+  private Database databaseMock;
 
 
   @Test
-  public void shouldReturnEmptyListIfItsEmpty() throws IOException {
+  public void shouldReturnEmptyListIfItsEmpty() throws Exception {
     // given
     InvoiceBook invoiceBook = new InvoiceBook(databaseMock);
 
@@ -36,7 +34,7 @@ public class InvoiceBookTest {
   }
 
   @Test
-  public void shouldReturnSingleOrMoreInvoiceFromBook() throws IOException {
+  public void shouldReturnSingleOrMoreInvoiceFromBook() throws Exception {
     // given
     InvoiceBook invoiceBook = new InvoiceBook(databaseMock);
     Invoice invoice = new Invoice();

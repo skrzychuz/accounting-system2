@@ -9,6 +9,6 @@ public interface Database {
 
   void saveInvoice(Invoice invoice) throws IOException;
 
-  List<Invoice> getInvoices() throws IOException;
+  List<Invoice> getInvoices() throws Exception;
 
 }

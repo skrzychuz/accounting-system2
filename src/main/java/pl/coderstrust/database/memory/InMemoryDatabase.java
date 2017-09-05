@@ -11,11 +11,9 @@ public class InMemoryDatabase implements Database {
 
   private final List<Invoice> listOfInovice = new ArrayList<>();
 
-
   @Override
   public void saveInvoice(Invoice invoice) {
     listOfInovice.add(invoice);
-
   }
 
   @Override

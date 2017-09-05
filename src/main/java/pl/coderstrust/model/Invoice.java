@@ -7,7 +7,7 @@ public class Invoice {
   private BigDecimal value;
   private String description;
 
-  public Invoice () {
+  public Invoice() {
     this.value = BigDecimal.TEN;
     this.description = "Time Machine";
   }

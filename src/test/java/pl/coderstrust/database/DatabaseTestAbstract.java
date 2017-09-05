@@ -1,16 +1,15 @@
 package pl.coderstrust.database;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import pl.coderstrust.model.Invoice;
-import pl.coderstrust.model.InvoiceBook;
 
-import java.util.Collections;
 import java.util.List;
 
-public abstract class  DatabaseTestAbstract {
+public abstract class DatabaseTestAbstract {
 
   protected abstract Database getDatabase();
 
@@ -19,16 +18,17 @@ public abstract class  DatabaseTestAbstract {
     // given
     Invoice invoice = new Invoice();
     Database database = getDatabase();
+    final List<Invoice> listOfInvoice = database.getInvoices();
+    int sizeBeforeAdding = listOfInvoice.size();
 
     // when
+
     database.saveInvoice(invoice);
 
     // then
-    final List<Invoice> listOfInvoice = database.getInvoices();
 
     assertNotNull("should not be a null", listOfInvoice);
-    assertEquals(1, listOfInvoice.size());
-
+    assertEquals(sizeBeforeAdding + 1, database.getInvoices().size());
   }
 
   @Test
@@ -36,6 +36,7 @@ public abstract class  DatabaseTestAbstract {
 
     Database database = getDatabase();
     Invoice invoice = new Invoice();
+    invoice.setDescription("terefere");
 
     // when
     database.saveInvoice(invoice);
@@ -43,11 +44,7 @@ public abstract class  DatabaseTestAbstract {
 
     // then
     assertNotNull("should not be null", invoiceList);
-    assertEquals("List size 1!?",1, invoiceList.size());
-    assertEquals(invoice.getDescription(), invoiceList.get(0).getDescription());
-
-
-
+    assertTrue(invoiceList.size() > 0);
+    assertEquals("terefere", invoiceList.get(invoiceList.size() - 1).getDescription());
   }
-
 }

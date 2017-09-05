@@ -3,7 +3,6 @@ package pl.coderstrust.model;
 import pl.coderstrust.database.Database;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class InvoiceBook {
@@ -14,7 +13,7 @@ public class InvoiceBook {
     this.database = database;
   }
 
-  public List<Invoice> getInvoices() throws IOException {
+  public List<Invoice> getInvoices() throws Exception {
     return database.getInvoices();
   }
 
