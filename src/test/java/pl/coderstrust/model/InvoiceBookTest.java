@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import pl.coderstrust.database.Database;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class InvoiceBookTest {
   public void shouldReturnSingleOrMoreInvoiceFromBook() throws Exception {
     // given
     InvoiceBook invoiceBook = new InvoiceBook(databaseMock);
-    Invoice invoice = new Invoice();
+    Invoice invoice = new Invoice(54, "vegetables",new Money(BigDecimal.TEN, Currency.PLN));
     when(databaseMock.getInvoices()).thenReturn(Collections.singletonList(invoice));
 
     // when

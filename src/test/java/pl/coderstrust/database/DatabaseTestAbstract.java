@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import pl.coderstrust.model.Invoice;
 
@@ -31,12 +32,13 @@ public abstract class DatabaseTestAbstract {
     assertEquals(sizeBeforeAdding + 1, database.getInvoices().size());
   }
 
+
   @Test
   public void shouldGetInvoicesFromDatabase() throws Exception {
 
     Database database = getDatabase();
     Invoice invoice = new Invoice();
-    invoice.setDescription("terefere");
+    invoice.setDescripction("terefere");
 
     // when
     database.saveInvoice(invoice);
@@ -45,6 +47,6 @@ public abstract class DatabaseTestAbstract {
     // then
     assertNotNull("should not be null", invoiceList);
     assertTrue(invoiceList.size() > 0);
-    assertEquals("terefere", invoiceList.get(invoiceList.size() - 1).getDescription());
+    assertEquals("terefere", invoiceList.get(invoiceList.size() - 1).getDescripction());
   }
 }

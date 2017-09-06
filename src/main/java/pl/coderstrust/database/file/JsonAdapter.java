@@ -15,7 +15,7 @@ class JsonAdapter {
 
   void saveStringToFile(String string) {
     try (BufferedWriter bufferedWriter = new BufferedWriter(
-        new FileWriter("src\\main\\resources\\TestJson3.json", true))) {
+        new FileWriter("src\\main\\resources\\TestJson5.json", true))) {
 
       bufferedWriter.write(string);
       bufferedWriter.newLine();
@@ -27,16 +27,19 @@ class JsonAdapter {
 
   List<Invoice> readStringFromFile(ObjectMapper mapper, List<Invoice> invoices) throws Exception {
 
-    try (BufferedReader bufferedWriter = new BufferedReader(
-        new FileReader("src\\main\\resources\\TestJson3.json"))) {
+    try (BufferedReader bufferedReader = new BufferedReader(
+        new FileReader("src\\main\\resources\\TestJson5.json"))) {
 
-      String lineInvoice;
-      while ((lineInvoice = bufferedWriter.readLine()) != null) {
+      String lineInvoice = null;
+      while ((lineInvoice = bufferedReader.readLine()) != null) {
 
-        Invoice invoice = mapper.readValue(lineInvoice, Invoice.class);
-        invoices.add(invoice);
+        Invoice invoice1 = mapper.readValue(lineInvoice, Invoice.class);
+        invoices.add(invoice1);
 
       }
+
+    } catch (IOException e) {
+      e.printStackTrace();
     }
     return invoices;
   }

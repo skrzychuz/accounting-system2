@@ -1,4 +1,5 @@
 package pl.coderstrust.model;
+
 import pl.coderstrust.database.Database;
 
 import java.io.IOException;
