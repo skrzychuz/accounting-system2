@@ -2,9 +2,6 @@ package pl.coderstrust.model;
 
 import java.math.BigDecimal;
 
-/**
- * Created by Nanck on 05.09.2017.
- */
 public class Invoice {
     private int id;
     private String descripction;
@@ -15,6 +12,10 @@ public class Invoice {
         this.descripction = descripction;
         this.amount = amount;
     }
+      public Invoice() {
+    this.id = 5;
+    this.descripction = "Time Machine";
+  }
 
     public int getId() {
         return id;
@@ -39,4 +40,26 @@ public class Invoice {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+
+  public Invoice() {
+    this.value = BigDecimal.TEN;
+    this.description = "Time Machine";
+  }
+
+  public BigDecimal getValue() {
+    return value;
+  }
+
+  public void setValue(BigDecimal value) {
+    this.value = value;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
 }
