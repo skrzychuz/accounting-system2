@@ -6,8 +6,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import pl.coderstrust.model.Currency;
 import pl.coderstrust.model.Invoice;
+import pl.coderstrust.model.Money;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public abstract class DatabaseTestAbstract {
@@ -37,7 +40,7 @@ public abstract class DatabaseTestAbstract {
   public void shouldGetInvoicesFromDatabase() throws Exception {
 
     Database database = getDatabase();
-    Invoice invoice = new Invoice();
+    Invoice invoice = new Invoice(54,"yoyoyo",new Money(BigDecimal.valueOf(150), Currency.PLN));
     invoice.setDescripction("terefere");
 
     // when

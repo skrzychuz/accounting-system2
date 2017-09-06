@@ -1,25 +1,42 @@
 package pl.coderstrust.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class Invoice {
 
   private int id;
   private String descripction;
   private Money amount;
+  private LocalDate date;
 
 
   /**
-   *  Counstructor.
+   * Counstructor.
    */
   public Invoice(int id, String descripction, Money amount) {
     this.id = id;
     this.descripction = descripction;
     this.amount = amount;
+    this.date = LocalDate.now();
   }
 
   /**
-   *  Counstructor.
+   * Counstructor2.
+   */
+
+  public Invoice(int id, String descripction, Money amount, LocalDate date) {
+    this.id = id;
+    this.descripction = descripction;
+    this.amount = amount;
+    this.date = date;
+  }
+
+  // Invoice invoice = new Invoice
+  // (75,"desc", new Money(BigDecimal.TEN, Currency.PLN), LocalDate.of(2015,2,15));
+
+  /**
+   * Counstructor.
    */
 
   public Invoice() {
