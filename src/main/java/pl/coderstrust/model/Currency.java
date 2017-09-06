@@ -1,5 +1,8 @@
 package pl.coderstrust.model;
 
 public enum Currency {
-  PLN, USD, EUR
+  PLN, USD, EUR;
+
+  Currency() {
+  }
 }

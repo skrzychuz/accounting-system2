@@ -11,6 +11,7 @@ import pl.coderstrust.model.Invoice;
 import pl.coderstrust.model.Money;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public abstract class DatabaseTestAbstract {
@@ -20,7 +21,8 @@ public abstract class DatabaseTestAbstract {
   @Test
   public void shouldSaveInvoiceToDatabase() throws Exception {
     // given
-    Invoice invoice = new Invoice();
+    Invoice invoice = new Invoice(54, "yoyoyo", new Money(BigDecimal.valueOf(150), Currency.PLN),
+        LocalDate.of(2016, 5, 15));
     Database database = getDatabase();
     final List<Invoice> listOfInvoice = database.getInvoices();
     int sizeBeforeAdding = listOfInvoice.size();
@@ -40,8 +42,8 @@ public abstract class DatabaseTestAbstract {
   public void shouldGetInvoicesFromDatabase() throws Exception {
 
     Database database = getDatabase();
-    Invoice invoice = new Invoice(54,"yoyoyo",new Money(BigDecimal.valueOf(150), Currency.PLN));
-    invoice.setDescripction("terefere");
+    Invoice invoice = new Invoice(58, "asdf", new Money(BigDecimal.TEN, Currency.PLN),
+        LocalDate.of(2017, 8, 30));
 
     // when
     database.saveInvoice(invoice);
@@ -49,7 +51,6 @@ public abstract class DatabaseTestAbstract {
 
     // then
     assertNotNull("should not be null", invoiceList);
-    assertTrue(invoiceList.size() > 0);
-    assertEquals("terefere", invoiceList.get(invoiceList.size() - 1).getDescripction());
+    assertNotNull("should not be null", invoiceList.get(invoiceList.size() - 1));
   }
 }

@@ -7,7 +7,9 @@ import java.util.List;
 
 public class InvoiceBook {
 
+
   private final Database database;
+
 
   public InvoiceBook(Database database) {
     this.database = database;
