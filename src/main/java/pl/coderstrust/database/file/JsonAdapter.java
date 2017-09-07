@@ -1,6 +1,7 @@
 package pl.coderstrust.database.file;
 
-import org.codehaus.jackson.map.ObjectMapper;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import pl.coderstrust.model.Invoice;
 
 import java.io.BufferedReader;
@@ -32,7 +33,7 @@ List<Invoice> invoicesL = invoices;
 
       String lineInvoice;
       while ((lineInvoice = bufferedReader.readLine()) != null) {
-
+        System.out.println(lineInvoice);
         Invoice invoice1 = mapper.readValue(lineInvoice, Invoice.class);
         invoicesL.add(invoice1);
 
