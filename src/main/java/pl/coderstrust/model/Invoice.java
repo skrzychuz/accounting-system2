@@ -3,12 +3,13 @@ package pl.coderstrust.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Invoice {
+public class Invoice implements Comparable<Invoice> {
 
   private int id;
   private String descripction;
   private Money amount;
   private LocalDate localDate;
+
 
   /**
    * Counstructor2.
@@ -59,5 +60,10 @@ public class Invoice {
 
   public void setAmount(Money amount) {
     this.amount = amount;
+  }
+
+  @Override
+  public int compareTo(Invoice o) {
+    return 0;
   }
 }

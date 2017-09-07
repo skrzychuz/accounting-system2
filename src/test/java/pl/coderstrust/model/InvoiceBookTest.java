@@ -28,7 +28,7 @@ public class InvoiceBookTest {
     InvoiceBook invoiceBook = new InvoiceBook(databaseMock);
 
     // when
-    List<Invoice> invoiceList = invoiceBook.getInvoices();
+    List<Invoice> invoiceList = invoiceBook.getInvoicesIB();
 
     // then
     assertNotNull("should not be null", invoiceList);
@@ -39,13 +39,13 @@ public class InvoiceBookTest {
   public void shouldReturnSingleOrMoreInvoiceFromBook() throws Exception {
     // given
     InvoiceBook invoiceBook = new InvoiceBook(databaseMock);
-    Invoice invoice = new Invoice(54, "vegetables",new Money(BigDecimal.TEN, Currency.PLN),
+    Invoice invoice = new Invoice(54, "vegetables",new Money(BigDecimal.TEN,BigDecimal.valueOf(22), Currency.PLN),
         LocalDate.of(2015,5,23));
     when(databaseMock.getInvoices()).thenReturn(Collections.singletonList(invoice));
 
     // when
-    invoiceBook.addInvoice(invoice);
-    List<Invoice> invoiceList = invoiceBook.getInvoices();
+    invoiceBook.addInvoiceIB(invoice);
+    List<Invoice> invoiceList = invoiceBook.getInvoicesIB();
 
     // then
     assertNotNull("should not be null", invoiceList);

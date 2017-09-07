@@ -7,10 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.model.Invoice;
-import pl.coderstrust.model.Money;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,11 +15,16 @@ import java.util.List;
 
 public class InFileDatabase implements Database {
 
+  ObjectMapper mapper = new ObjectMapper()
+      .registerModule(new ParameterNamesModule())
+      .registerModule(new Jdk8Module())
+      .registerModule(new JavaTimeModule());
+
+
   @Override
   public void saveInvoice(Invoice invoice) throws IOException {
 
     JsonAdapter jsonAdapter = new JsonAdapter();
-    ObjectMapper mapper = new ObjectMapper();
     String jsonInString = mapper.writeValueAsString(invoice);
     jsonAdapter.saveStringToFile(jsonInString);
   }
@@ -30,28 +32,26 @@ public class InFileDatabase implements Database {
   @Override
   public List<Invoice> getInvoices() throws Exception {
     JsonAdapter jsonAdapter = new JsonAdapter();
-
-    ObjectMapper mapper = new ObjectMapper()
-        .registerModule(new ParameterNamesModule())
-        .registerModule(new Jdk8Module())
-        .registerModule(new JavaTimeModule());
-
     return jsonAdapter.readStringFromFile(mapper, new ArrayList<>());
   }
 
-  public static void main(String[] args) throws IOException {
-    ObjectMapper mapper = new ObjectMapper()
-        .registerModule(new ParameterNamesModule())
-        .registerModule(new Jdk8Module())
-        .registerModule(new JavaTimeModule());
+  @Override
+  public List<Invoice> getFromToListOfInvoices(LocalDate fromDate, LocalDate toDate)
+      throws Exception {
 
-    Invoice invoice = new Invoice(1, "abc", new Money(), LocalDate.now());
-
-    String result = mapper.writeValueAsString(invoice);
-    System.out.println(result);
-
-    Invoice invoice2 = mapper.readValue(result, Invoice.class);
-    System.out.println(invoice2.getLocalDate());
-
+    List<Invoice> fromToList = new ArrayList<>();
+    for (Invoice invoice : getInvoices()) {
+      if (invoice.getLocalDate().isAfter(fromDate) && invoice.getLocalDate().isBefore(toDate)) {
+        fromToList.add(invoice);
+      }
+    }
+    return fromToList;
   }
+
+
+  @Override
+  public List<Invoice> sortingList(List<Invoice> listToSort) {
+    return null;
+  }
+
 }

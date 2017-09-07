@@ -2,9 +2,7 @@ package pl.coderstrust.database;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import pl.coderstrust.model.Currency;
 import pl.coderstrust.model.Invoice;
@@ -21,7 +19,8 @@ public abstract class DatabaseTestAbstract {
   @Test
   public void shouldSaveInvoiceToDatabase() throws Exception {
     // given
-    Invoice invoice = new Invoice(54, "yoyoyo", new Money(BigDecimal.valueOf(150), Currency.PLN),
+    Invoice invoice = new Invoice(54, "yoyoyo",
+        new Money(BigDecimal.valueOf(150), BigDecimal.TEN, Currency.PLN),
         LocalDate.of(2016, 5, 15));
     Database database = getDatabase();
     final List<Invoice> listOfInvoice = database.getInvoices();
@@ -42,7 +41,8 @@ public abstract class DatabaseTestAbstract {
   public void shouldGetInvoicesFromDatabase() throws Exception {
 
     Database database = getDatabase();
-    Invoice invoice = new Invoice(58, "asdf", new Money(BigDecimal.TEN, Currency.PLN),
+    Invoice invoice = new Invoice(58, "asdf",
+        new Money(BigDecimal.valueOf(800), BigDecimal.valueOf(22), Currency.PLN),
         LocalDate.of(2017, 8, 30));
 
     // when
