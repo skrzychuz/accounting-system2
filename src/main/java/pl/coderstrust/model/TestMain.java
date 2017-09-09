@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 public class TestMain {
 
@@ -18,6 +17,7 @@ public class TestMain {
 
     InMemoryDatabase inMemoryDatabase = new InMemoryDatabase();
     InFileDatabase inFileDatabase = new InFileDatabase();
+
     Invoice invoice1 = new Invoice(65, "yo",
         new Money(BigDecimal.valueOf(150), BigDecimal.TEN, Currency.PLN),
         LocalDate.of(2016, 6, 15));
@@ -36,11 +36,19 @@ public class TestMain {
 
     inMemoryDatabase.sortingList(testlist);
 
+    inMemoryDatabase.saveInvoice(invoice1);
+    inMemoryDatabase.saveInvoice(invoice2);
+    inMemoryDatabase.saveInvoice(invoice3);
+
     int i = 0;
 
-
-    List <Invoice> listtest = inFileDatabase.getFromToListOfInvoices(LocalDate.of(2016,6,1), LocalDate.of(2016,6,30));
+    List<Invoice> listtest = inFileDatabase
+        .getListOfInvoicesFromPeriodTime(LocalDate.of(2016, 6, 1), LocalDate.of(2016, 6, 30));
     int id = 0;
+
+    List<Invoice> listtest2 = inMemoryDatabase
+        .getListOfInvoicesFromPeriodTime(LocalDate.of(2016, 6, 1), LocalDate.of(2016, 6, 30));
+    int id3 = 0;
   }
 
 

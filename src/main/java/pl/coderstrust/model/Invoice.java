@@ -10,17 +10,15 @@ public class Invoice implements Comparable<Invoice> {
   private Money amount;
   private LocalDate localDate;
 
-
   /**
-   * Counstructor2.
+   * Counstructor2.+++++
    */
 
   public Invoice() {
-
   }
 
   /**
-   * Counstructor.
+   * Counstructor.+++++.
    */
 
   public Invoice(int id, String descripction, Money amount, LocalDate date) {
@@ -50,7 +48,7 @@ public class Invoice implements Comparable<Invoice> {
     return descripction;
   }
 
-  public void setDescripction(String descripction) {
+  public void setDescripction(String descripttion) {
     this.descripction = descripction;
   }
 
@@ -65,5 +63,31 @@ public class Invoice implements Comparable<Invoice> {
   @Override
   public int compareTo(Invoice o) {
     return 0;
+  }
+
+  public static class Builder{
+    private int id;
+    private String description;
+
+    Builder withId(int id){
+      this.id = id;
+      return this;
+    }
+
+    Builder withDescription(String description){
+      this.description = description;
+      return this;
+    }
+
+    Invoice build(){
+      return new Invoice(id, description, null, null);
+    }
+  }
+
+  public static void main(String[] args) {
+    new Invoice.Builder()
+        .withId(1)
+        .withDescription("")
+        .build();
   }
 }

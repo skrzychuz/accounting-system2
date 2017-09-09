@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InMemoryDatabase implements Database {
 
@@ -25,15 +26,11 @@ public class InMemoryDatabase implements Database {
   }
 
   @Override
-  public List<Invoice> getFromToListOfInvoices(LocalDate fromDate, LocalDate toDate) {
-
-    List<Invoice> fromToList = new ArrayList<>();
-    for (Invoice invoice : listOfInovice) {
-      if (invoice.getLocalDate().isAfter(fromDate) && invoice.getLocalDate().isBefore(toDate)) {
-        fromToList.add(invoice);
-      }
-    }
-    return fromToList;
+  public List<Invoice> getListOfInvoicesFromPeriodTime(LocalDate fromDate, LocalDate toDate) {
+    return listOfInovice.stream()
+        .filter(invoice -> invoice.getLocalDate().isAfter(fromDate) && invoice.getLocalDate()
+            .isBefore(toDate)) //
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -42,6 +39,11 @@ public class InMemoryDatabase implements Database {
     Collections.sort(listToSort, new MyComparator());
 
     return listToSort;
+
+  }
+
+  @Override
+  public void clearDatabase() {
 
   }
 }

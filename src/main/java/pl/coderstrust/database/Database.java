@@ -12,8 +12,10 @@ public interface Database {
 
   List<Invoice> getInvoices() throws Exception;
 
-  List<Invoice> getFromToListOfInvoices(LocalDate fromDate, LocalDate toDate) throws Exception;
+  List<Invoice> getListOfInvoicesFromPeriodTime(LocalDate fromDate, LocalDate toDate) throws Exception;
 
   List<Invoice> sortingList(List<Invoice> listToSort);
+
+  void clearDatabase();
 
 }

@@ -6,11 +6,13 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import pl.coderstrust.database.Database;
+import pl.coderstrust.database.MyComparator;
 import pl.coderstrust.model.Invoice;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class InFileDatabase implements Database {
@@ -36,11 +38,12 @@ public class InFileDatabase implements Database {
   }
 
   @Override
-  public List<Invoice> getFromToListOfInvoices(LocalDate fromDate, LocalDate toDate)
+  public List<Invoice> getListOfInvoicesFromPeriodTime(LocalDate fromDate, LocalDate toDate)
       throws Exception {
 
+    List<Invoice> newlist = getInvoices();
     List<Invoice> fromToList = new ArrayList<>();
-    for (Invoice invoice : getInvoices()) {
+    for (Invoice invoice : newlist) {
       if (invoice.getLocalDate().isAfter(fromDate) && invoice.getLocalDate().isBefore(toDate)) {
         fromToList.add(invoice);
       }
@@ -51,7 +54,13 @@ public class InFileDatabase implements Database {
 
   @Override
   public List<Invoice> sortingList(List<Invoice> listToSort) {
-    return null;
+    Collections.sort(listToSort, new MyComparator());
+
+    return listToSort;
+  }
+
+  @Override
+  public void clearDatabase() {
   }
 
 }

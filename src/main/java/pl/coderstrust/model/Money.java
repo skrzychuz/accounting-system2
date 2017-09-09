@@ -1,7 +1,7 @@
 package pl.coderstrust.model;
 
 import java.math.BigDecimal;
-
+// do wyrzucenia
 public class Money {
 
   private BigDecimal amount;
