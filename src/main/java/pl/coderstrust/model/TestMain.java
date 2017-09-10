@@ -3,6 +3,7 @@ package pl.coderstrust.model;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.database.file.InFileDatabase;
 import pl.coderstrust.database.memory.InMemoryDatabase;
+import pl.coderstrust.model.Invoice.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -18,15 +19,24 @@ public class TestMain {
     InMemoryDatabase inMemoryDatabase = new InMemoryDatabase();
     InFileDatabase inFileDatabase = new InFileDatabase();
 
-    Invoice invoice1 = new Invoice(65, "yo",
-        new Money(BigDecimal.valueOf(150), BigDecimal.TEN, Currency.PLN),
-        LocalDate.of(2016, 6, 15));
-    Invoice invoice2 = new Invoice(66, "yoyo",
-        new Money(BigDecimal.valueOf(150), BigDecimal.TEN, Currency.PLN),
-        LocalDate.of(2016, 7, 15));
-    Invoice invoice3 = new Invoice(67, "yoyoyo",
-        new Money(BigDecimal.valueOf(150), BigDecimal.TEN, Currency.PLN),
-        LocalDate.of(2016, 5, 15));
+//    Invoice invoice1 = new Invoice(65, "yo", BigDecimal.valueOf(150), BigDecimal.valueOf(23),LocalDate.of(2016, 6, 15));
+//    Invoice invoice2 = new Invoice(65, "yo", BigDecimal.valueOf(150), BigDecimal.valueOf(23),LocalDate.of(2016, 5, 15));
+//    Invoice invoice3 = new Invoice(65, "yo", BigDecimal.valueOf(150), BigDecimal.valueOf(23),LocalDate.of(2016, 7, 15));
+
+    Invoice invoice1 = new Builder()
+        .withId(5)
+        .withLocalDate(LocalDate.of(2016, 7, 15))
+        .build();
+
+    Invoice invoice2 = new Builder()
+        .withId(5)
+        .withLocalDate(LocalDate.of(2016, 5, 15))
+        .build();
+
+    Invoice invoice3 = new Builder()
+        .withId(5)
+        .withLocalDate(LocalDate.of(2016, 6, 15))
+        .build();
 
     List<Invoice> testlist = new ArrayList<>();
 
@@ -34,7 +44,7 @@ public class TestMain {
     testlist.add(invoice2);
     testlist.add(invoice3);
 
-    inMemoryDatabase.sortingList(testlist);
+    // inMemoryDatabase.sortingList(testlist);
 
     inMemoryDatabase.saveInvoice(invoice1);
     inMemoryDatabase.saveInvoice(invoice2);
@@ -43,12 +53,12 @@ public class TestMain {
     int i = 0;
 
     List<Invoice> listtest = inFileDatabase
-        .getListOfInvoicesFromPeriodTime(LocalDate.of(2016, 6, 1), LocalDate.of(2016, 6, 30));
-    int id = 0;
+        .getListOfInvoicesFromPeriod(LocalDate.of(2016, 6, 1), LocalDate.of(2016, 6, 30));
+    int j = 0;
 
     List<Invoice> listtest2 = inMemoryDatabase
-        .getListOfInvoicesFromPeriodTime(LocalDate.of(2016, 6, 1), LocalDate.of(2016, 6, 30));
-    int id3 = 0;
+        .getListOfInvoicesFromPeriod(LocalDate.of(2016, 6, 1), LocalDate.of(2016, 6, 30));
+    int k = 0;
   }
 
 

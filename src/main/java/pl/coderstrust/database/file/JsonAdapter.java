@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -41,6 +42,8 @@ class JsonAdapter {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    Collections.sort(invoices, new Invoice());
+
     return invoices;
   }
 }

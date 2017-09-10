@@ -26,11 +26,7 @@ public class InvoiceBook {
 
   public List<Invoice> getFromToListOfInvoicesInBook(LocalDate fromDate, LocalDate toDate)
       throws Exception {
-    return database.getListOfInvoicesFromPeriodTime(fromDate, toDate);
+    return database.getListOfInvoicesFromPeriod(fromDate, toDate);
   }
 
-  public List<Invoice> sortingListInBook(List<Invoice> listToSort) {
-
-    return database.sortingList(listToSort);
-  }
 }

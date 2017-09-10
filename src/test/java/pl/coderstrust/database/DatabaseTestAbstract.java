@@ -3,48 +3,60 @@ package pl.coderstrust.database;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import org.junit.Test;
-import org.mockito.Mock;
 import pl.coderstrust.InvoicesGenerator;
-import pl.coderstrust.model.Currency;
 import pl.coderstrust.model.Invoice;
-import pl.coderstrust.model.Money;
+import pl.coderstrust.model.Invoice.Builder;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
-
 
 public abstract class DatabaseTestAbstract {
 
   protected InvoicesGenerator invoicesGenerator = new InvoicesGenerator();
-
 
   protected abstract Database getDatabase();
 
   @Test
   public void shouldSaveInvoiceToDatabase() throws Exception {
     // given
-    Invoice invoice = new Invoice(54, "yoyoyo",
-        new Money(BigDecimal.valueOf(150), BigDecimal.TEN, Currency.PLN),
-        LocalDate.of(2016, 5, 15));
+    Invoice invoice1 = new Builder()
+        .withId(5)
+        .withLocalDate(LocalDate.of(2016, 7, 15))
+        .build();
+
+    Invoice invoice2 = new Builder()
+        .withId(5)
+        .withLocalDate(LocalDate.of(2016, 5, 15))
+        .build();
+
+    Invoice invoice3 = new Builder()
+        .withId(5)
+        .withLocalDate(LocalDate.of(2016, 6, 15))
+        .build();
+
+//    Invoice invoice1 = new Invoice(65, "yo", BigDecimal.valueOf(150), BigDecimal.valueOf(23),
+//        LocalDate.of(2016, 6, 15));
+//    Invoice invoice2 = new Invoice(65, "yo", BigDecimal.valueOf(150), BigDecimal.valueOf(23),
+//        LocalDate.of(2016, 5, 15));
+//    Invoice invoice3 = new Invoice(65, "yo", BigDecimal.valueOf(150), BigDecimal.valueOf(23),
+//        LocalDate.of(2016, 7, 15));
 
     Database database = getDatabase();
-    final List<Invoice> listOfInvoice = database.getInvoices();
+    List<Invoice> listOfInvoice = database.getInvoices();
     int sizeBeforeAdding = listOfInvoice.size();
 
     // when
+    database.saveInvoice(invoice1);
+    database.saveInvoice(invoice2);
+    database.saveInvoice(invoice3);
 
-    database.saveInvoice(invoice);
+    List<Invoice> listOfInvoice2 = database.getInvoices();
 
     // then
-
     assertNotNull("should not be a null", listOfInvoice);
-    assertEquals(sizeBeforeAdding + 1, database.getInvoices().size());
+    assertEquals(sizeBeforeAdding + 3, database.getInvoices().size());
   }
 
 
@@ -52,9 +64,10 @@ public abstract class DatabaseTestAbstract {
   public void shouldGetInvoicesFromDatabase() throws Exception {
 
     Database database = getDatabase();
-    Invoice invoice = new Invoice(58, "asdf",
-        new Money(BigDecimal.valueOf(800), BigDecimal.valueOf(22), Currency.PLN),
-        LocalDate.of(2017, 8, 30));
+    Invoice invoice = new Builder().withId(5)
+        .withDescription("terefere")
+        .build();
+    //  Invoice invoice = new Invoice(65, "yo", BigDecimal.valueOf(150), BigDecimal.valueOf(23),LocalDate.of(2016, 6, 15));
 
     // when
     database.saveInvoice(invoice);
@@ -73,18 +86,15 @@ public abstract class DatabaseTestAbstract {
   @Test
   public void shouldGetInvoicesFromDayToDayIn2016() throws Exception {
     // given
-    List<Invoice> randomList = invoicesGenerator.randomInoviceList(150);
+    List<Invoice> randomList = invoicesGenerator.invoicesGeneratorWithRandomDateFrom2016(150);
     Database database = getDatabase();
     for (Invoice invoice : randomList) {
       database.saveInvoice(invoice);
     }
 
     // when
-
     List<Invoice> invoicesFromDayToDay = database
-        .getListOfInvoicesFromPeriodTime(LocalDate.of(2016, 3, 1), LocalDate.of(2016, 6, 30));
-
-    //   invoicesFromDayToDay.get(5).setLocalDate(LocalDate.of(2016, 2,15));
+        .getListOfInvoicesFromPeriod(LocalDate.of(2016, 3, 1), LocalDate.of(2016, 6, 30));
 
     // then
 
@@ -93,6 +103,5 @@ public abstract class DatabaseTestAbstract {
           .isBefore(LocalDate.of(2016, 6, 30)));
 
     }
-
   }
 }

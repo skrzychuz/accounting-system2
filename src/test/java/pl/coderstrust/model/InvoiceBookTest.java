@@ -1,17 +1,15 @@
 package pl.coderstrust.model;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import pl.coderstrust.InvoicesGenerator;
 import pl.coderstrust.database.Database;
+import pl.coderstrust.model.Invoice.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -42,9 +40,12 @@ public class InvoiceBookTest {
   public void shouldReturnSingleOrMoreInvoiceFromBook() throws Exception {
     // given
     InvoiceBook invoiceBook = new InvoiceBook(databaseMock);
-    Invoice invoice = new Invoice(54, "vegetables",
-        new Money(BigDecimal.TEN, BigDecimal.valueOf(22), Currency.PLN),
-        LocalDate.of(2015, 5, 23));
+
+    Invoice invoice = new Builder()
+        .withId(5)
+        .withLocalDate(LocalDate.of(2016, 7, 15))
+        .build();
+
     when(databaseMock.getInvoices()).thenReturn(Collections.singletonList(invoice));
 
     // when
@@ -56,21 +57,5 @@ public class InvoiceBookTest {
     assertEquals("List size 1!?", 1, invoiceList.size());
     assertEquals(invoice, invoiceList.get(0));
   }
-
-  @Test
-  public void getFromToListOfInvoicesInBookTEST() throws Exception {
-    // given
-    InvoiceBook invoiceBook = new InvoiceBook(databaseMock);
-    InvoicesGenerator invoicesGenerator = new InvoicesGenerator();
-    List<Invoice> fakeList = invoicesGenerator.randomInoviceList(200);
-
-    when(databaseMock.getListOfInvoicesFromPeriodTime(any(LocalDate.class), any(LocalDate.class))).thenReturn(fakeList);
-
-    // when
-    List<Invoice> someInvoices = invoiceBook.getFromToListOfInvoicesInBook(LocalDate.of(2016, 3, 1), LocalDate.of(2016, 6, 30));
-    int i=0;
-    // then
-  }
-
 
 }

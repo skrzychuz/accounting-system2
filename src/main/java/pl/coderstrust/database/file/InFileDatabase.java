@@ -1,18 +1,15 @@
 package pl.coderstrust.database.file;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import pl.coderstrust.database.Database;
-import pl.coderstrust.database.MyComparator;
 import pl.coderstrust.model.Invoice;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class InFileDatabase implements Database {
@@ -38,7 +35,7 @@ public class InFileDatabase implements Database {
   }
 
   @Override
-  public List<Invoice> getListOfInvoicesFromPeriodTime(LocalDate fromDate, LocalDate toDate)
+  public List<Invoice> getListOfInvoicesFromPeriod(LocalDate fromDate, LocalDate toDate)
       throws Exception {
 
     List<Invoice> newlist = getInvoices();
@@ -50,17 +47,4 @@ public class InFileDatabase implements Database {
     }
     return fromToList;
   }
-
-
-  @Override
-  public List<Invoice> sortingList(List<Invoice> listToSort) {
-    Collections.sort(listToSort, new MyComparator());
-
-    return listToSort;
-  }
-
-  @Override
-  public void clearDatabase() {
-  }
-
 }

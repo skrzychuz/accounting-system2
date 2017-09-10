@@ -2,38 +2,43 @@ package pl.coderstrust.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Comparator;
 
-public class Invoice implements Comparable<Invoice> {
+public class Invoice implements Comparator<Invoice> {
 
   private int id;
-  private String descripction;
-  private Money amount;
+  private String description;
+  private BigDecimal amount;
+  private BigDecimal vatRate;
+  private BigDecimal vatAmount;
   private LocalDate localDate;
 
   /**
-   * Counstructor2.+++++
+   * Default Constructor to initialize the object.
    */
-
   public Invoice() {
   }
 
   /**
-   * Counstructor.+++++.
+   * Personalized Constructor to initialize the object.
    */
-
-  public Invoice(int id, String descripction, Money amount, LocalDate date) {
+  private Invoice(int id, String description, BigDecimal amount, BigDecimal vatRate,
+      LocalDate date) {
     this.id = id;
-    this.descripction = descripction;
+    this.description = description;
     this.amount = amount;
+    this.vatRate = vatRate;
     this.localDate = date;
   }
 
-  public LocalDate getLocalDate() {
-    return localDate;
+  public static void main(String[] args) {
+    new Invoice.Builder()
+        .withId(1)
+        .build();
   }
 
-  public void setLocalDate(LocalDate localDate) {
-    this.localDate = localDate;
+  public BigDecimal getVatAmount(BigDecimal vatRate) {
+    return this.amount.multiply(vatRate).divide(new BigDecimal(100));
   }
 
   public int getId() {
@@ -44,50 +49,80 @@ public class Invoice implements Comparable<Invoice> {
     this.id = id;
   }
 
-  public String getDescripction() {
-    return descripction;
+  public String getDescription() {
+    return description;
   }
 
-  public void setDescripction(String descripttion) {
-    this.descripction = descripction;
+  public void setDescription(String description) {
+    this.description = description;
   }
 
-  public Money getAmount() {
+  public BigDecimal getAmount() {
     return amount;
   }
 
-  public void setAmount(Money amount) {
+  public void setAmount(BigDecimal amount) {
     this.amount = amount;
   }
 
+  public BigDecimal getVatAmount() {
+    return vatAmount;
+  }
+
+  public LocalDate getLocalDate() {
+    return localDate;
+  }
+
+  public void setLocalDate(LocalDate localDate) {
+    this.localDate = localDate;
+  }
+
   @Override
-  public int compareTo(Invoice o) {
+  public int compare(Invoice i1, Invoice i2) {
+    if (i1.getLocalDate().isBefore(i2.getLocalDate())) {
+      return -1;
+    } else if (i1.getLocalDate().isAfter(i2.getLocalDate())) {
+      return 1;
+    }
     return 0;
   }
 
-  public static class Builder{
+  public static class Builder {
+
     private int id;
     private String description;
+    private BigDecimal amount;
+    private BigDecimal vatRate;
+    private LocalDate localDate;
 
-    Builder withId(int id){
+    public Builder withId(int id) {
       this.id = id;
       return this;
     }
 
-    Builder withDescription(String description){
+    public Builder withDescription(String description) {
       this.description = description;
       return this;
     }
 
-    Invoice build(){
-      return new Invoice(id, description, null, null);
+    public Builder withAmount(BigDecimal amount) {
+      this.amount = amount;
+      return this;
+    }
+
+    public Builder withVatRate(BigDecimal vatRate) {
+      this.vatRate = vatRate;
+      return this;
+    }
+
+    public Builder withLocalDate(LocalDate localDate) {
+      this.localDate = localDate;
+      return this;
+    }
+
+    public Invoice build() {
+      return new Invoice(id, description, amount, vatRate, localDate);
     }
   }
-
-  public static void main(String[] args) {
-    new Invoice.Builder()
-        .withId(1)
-        .withDescription("")
-        .build();
-  }
 }
+
