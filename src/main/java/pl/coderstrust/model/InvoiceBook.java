@@ -16,17 +16,17 @@ public class InvoiceBook {
     this.database = database;
   }
 
-  public List<Invoice> getInvoicesIB() throws Exception {
+  public List<Invoice> getInvoices() throws Exception {
     return database.getInvoices();
   }
 
-  public void addInvoiceIB(Invoice invoice) throws IOException {
+  public void addInvoices(Invoice invoice) throws Exception {
     database.saveInvoice(invoice);
   }
 
-  public List<Invoice> getFromToListOfInvoicesInBook(LocalDate fromDate, LocalDate toDate)
+  public List<Invoice> getListOfInvoicesFromGivenPeriod (LocalDate fromDate, LocalDate toDate)
       throws Exception {
-    return database.getListOfInvoicesFromPeriod(fromDate, toDate);
+    return database.getListOfInvoicesFromGivenPeriod(fromDate, toDate);
   }
 
 }

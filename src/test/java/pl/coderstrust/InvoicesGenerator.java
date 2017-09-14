@@ -30,18 +30,31 @@ public class InvoicesGenerator {
     return randomInvoices;
   }
 
-  public Invoice invoiceGeneratorWithRandomDateFrom2016() {
+  public List<Invoice> invoiceGeneratorFor30DaysInJanuary2016InSuccession() {
 
-    Random randomDay = new Random();
-    Random randomMonth = new Random();
+    List<Invoice> invoicesInSuccession = new ArrayList<>();
 
-    int day = randomDay.nextInt(29) + 1;
-    int month = randomMonth.nextInt(11) + 1;
-    int year = 2016;
+    for(int i=1; i<=30; i++) {
+      Invoice invoice = new Builder()
+          .withLocalDate(LocalDate.of(2016,1,i))
+          .build();
+      invoicesInSuccession.add(invoice);
+    }
 
-//    Invoice invoice = new Invoice(33, "yo", BigDecimal.valueOf(150), BigDecimal.valueOf(23),
-//        LocalDate.of(year, month, day));
+    return invoicesInSuccession;
+  }
 
-    return null;
+  public List<Invoice> invoiceGeneratorFor11DaysInJanuary2016InSuccession() {
+
+    List<Invoice> invoicesInSuccession = new ArrayList<>();
+
+    for(int i=15; i<=25; i++) {
+      Invoice invoice = new Builder()
+          .withLocalDate(LocalDate.of(2016,1,i))
+          .build();
+      invoicesInSuccession.add(invoice);
+    }
+
+    return invoicesInSuccession;
   }
 }

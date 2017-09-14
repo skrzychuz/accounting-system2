@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Comparator;
 
-public class Invoice implements Comparator<Invoice> {
+public class Invoice implements Comparable<Invoice> {
 
   private int id;
   private String description;
@@ -14,13 +14,13 @@ public class Invoice implements Comparator<Invoice> {
   private LocalDate localDate;
 
   /**
-   * Default Constructor to initialize the object.
+   * Default Constructor to create the object.
    */
   public Invoice() {
   }
 
   /**
-   * Personalized Constructor to initialize the object.
+   * Personalized Constructor to create the object.
    */
   private Invoice(int id, String description, BigDecimal amount, BigDecimal vatRate,
       LocalDate date) {
@@ -29,12 +29,6 @@ public class Invoice implements Comparator<Invoice> {
     this.amount = amount;
     this.vatRate = vatRate;
     this.localDate = date;
-  }
-
-  public static void main(String[] args) {
-    new Invoice.Builder()
-        .withId(1)
-        .build();
   }
 
   public BigDecimal getVatAmount(BigDecimal vatRate) {
@@ -78,10 +72,10 @@ public class Invoice implements Comparator<Invoice> {
   }
 
   @Override
-  public int compare(Invoice i1, Invoice i2) {
-    if (i1.getLocalDate().isBefore(i2.getLocalDate())) {
+  public int compareTo(Invoice i) {
+    if (this.getLocalDate().isBefore(i.getLocalDate())) {
       return -1;
-    } else if (i1.getLocalDate().isAfter(i2.getLocalDate())) {
+    } else if (this.getLocalDate().isAfter(i.getLocalDate())) {
       return 1;
     }
     return 0;

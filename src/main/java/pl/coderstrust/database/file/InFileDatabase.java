@@ -1,5 +1,6 @@
 package pl.coderstrust.database.file;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -21,7 +22,7 @@ public class InFileDatabase implements Database {
 
 
   @Override
-  public void saveInvoice(Invoice invoice) throws IOException {
+  public void saveInvoice(Invoice invoice) throws JsonProcessingException {
 
     JsonAdapter jsonAdapter = new JsonAdapter();
     String jsonInString = mapper.writeValueAsString(invoice);
@@ -35,7 +36,7 @@ public class InFileDatabase implements Database {
   }
 
   @Override
-  public List<Invoice> getListOfInvoicesFromPeriod(LocalDate fromDate, LocalDate toDate)
+  public List<Invoice> getListOfInvoicesFromGivenPeriod(LocalDate fromDate, LocalDate toDate)
       throws Exception {
 
     List<Invoice> newlist = getInvoices();

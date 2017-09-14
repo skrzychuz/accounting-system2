@@ -5,7 +5,6 @@ import pl.coderstrust.database.file.InFileDatabase;
 import pl.coderstrust.database.memory.InMemoryDatabase;
 import pl.coderstrust.model.Invoice.Builder;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,11 +52,11 @@ public class TestMain {
     int i = 0;
 
     List<Invoice> listtest = inFileDatabase
-        .getListOfInvoicesFromPeriod(LocalDate.of(2016, 6, 1), LocalDate.of(2016, 6, 30));
+        .getListOfInvoicesFromGivenPeriod(LocalDate.of(2016, 6, 1), LocalDate.of(2016, 6, 30));
     int j = 0;
 
     List<Invoice> listtest2 = inMemoryDatabase
-        .getListOfInvoicesFromPeriod(LocalDate.of(2016, 6, 1), LocalDate.of(2016, 6, 30));
+        .getListOfInvoicesFromGivenPeriod(LocalDate.of(2016, 6, 1), LocalDate.of(2016, 6, 30));
     int k = 0;
   }
 

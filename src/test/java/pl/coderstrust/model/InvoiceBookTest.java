@@ -11,7 +11,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.model.Invoice.Builder;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +28,7 @@ public class InvoiceBookTest {
     InvoiceBook invoiceBook = new InvoiceBook(databaseMock);
 
     // when
-    List<Invoice> invoiceList = invoiceBook.getInvoicesIB();
+    List<Invoice> invoiceList = invoiceBook.getInvoices();
 
     // then
     assertNotNull("should not be null", invoiceList);
@@ -49,8 +48,8 @@ public class InvoiceBookTest {
     when(databaseMock.getInvoices()).thenReturn(Collections.singletonList(invoice));
 
     // when
-    invoiceBook.addInvoiceIB(invoice);
-    List<Invoice> invoiceList = invoiceBook.getInvoicesIB();
+    invoiceBook.addInvoices(invoice);
+    List<Invoice> invoiceList = invoiceBook.getInvoices();
 
     // then
     assertNotNull("should not be null", invoiceList);

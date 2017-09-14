@@ -15,21 +15,20 @@ public class InMemoryDatabase implements Database {
   private final List<Invoice> listOfInovice = new ArrayList<>();
 
   @Override
-  public void saveInvoice(Invoice invoice) {
+  public void saveInvoice(Invoice invoice) throws Exception {
     listOfInovice.add(invoice);
   }
 
   @Override
   public List<Invoice> getInvoices() {
-    Collections.sort(listOfInovice, new Builder().build());
+    Collections.sort(listOfInovice);
     return Collections.unmodifiableList(listOfInovice);
   }
 
   @Override
-  public List<Invoice> getListOfInvoicesFromPeriod(LocalDate fromDate, LocalDate toDate) {
+  public List<Invoice> getListOfInvoicesFromGivenPeriod(LocalDate fromDate, LocalDate toDate) {
     return listOfInovice.stream()
-        .filter(invoice -> invoice.getLocalDate().isAfter(fromDate) && invoice.getLocalDate()
-            .isBefore(toDate))  //
+        .filter(invoice -> invoice.getLocalDate().isAfter(fromDate.minusDays(1)) && invoice.getLocalDate().isBefore(toDate.plusDays(1)))
         .collect(Collectors.toList());
   }
 }

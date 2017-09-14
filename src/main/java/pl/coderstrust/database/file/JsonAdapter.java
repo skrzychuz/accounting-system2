@@ -17,7 +17,7 @@ class JsonAdapter {
 
   void saveStringToFile(String string) {
     try (BufferedWriter bufferedWriter = new BufferedWriter(
-        new FileWriter("src\\main\\resources\\TestJson100.json", true))) {
+        new FileWriter("src\\main\\resources\\database.json", true))) {
 
       bufferedWriter.write(string);
       bufferedWriter.newLine();
@@ -30,7 +30,7 @@ class JsonAdapter {
   List<Invoice> readStringFromFile(ObjectMapper mapper, List<Invoice> invoices) throws Exception {
 
     try (BufferedReader bufferedReader = new BufferedReader(
-        new FileReader("src\\main\\resources\\TestJson100.json"))) {
+        new FileReader("src\\main\\resources\\database.json"))) {
 
       String lineInvoice;
       while ((lineInvoice = bufferedReader.readLine()) != null) {
@@ -42,7 +42,7 @@ class JsonAdapter {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    Collections.sort(invoices, new Invoice());
+    Collections.sort(invoices);
 
     return invoices;
   }
