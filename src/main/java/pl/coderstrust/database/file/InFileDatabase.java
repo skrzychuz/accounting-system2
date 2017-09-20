@@ -1,51 +1,72 @@
 package pl.coderstrust.database.file;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.model.Invoice;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class InFileDatabase implements Database {
 
-  ObjectMapper mapper = new ObjectMapper()
-      .registerModule(new ParameterNamesModule())
-      .registerModule(new Jdk8Module())
-      .registerModule(new JavaTimeModule());
+  private final File myFileDatabase;
+  private final JsonHelper jsonHelper;
+  private final FileProcessor fileProcessor;
 
-
-  @Override
-  public void saveInvoice(Invoice invoice) throws JsonProcessingException {
-
-    JsonAdapter jsonAdapter = new JsonAdapter();
-    String jsonInString = mapper.writeValueAsString(invoice);
-    jsonAdapter.saveStringToFile(jsonInString);
+  /**
+   * Constructor.
+   */
+  InFileDatabase(String path, JsonHelper jsonHelper, FileProcessor fileProcessor) {
+    this.jsonHelper = jsonHelper;
+    this.fileProcessor = fileProcessor;
+    this.myFileDatabase = new File(path);
   }
 
   @Override
-  public List<Invoice> getInvoices() throws Exception {
-    JsonAdapter jsonAdapter = new JsonAdapter();
-    return jsonAdapter.readStringFromFile(mapper, new ArrayList<>());
+  public void saveInvoice(Invoice invoice) {
+
+    fileProcessor.saveToFile(jsonHelper.jsonConvertInvoiceToString(invoice), myFileDatabase);
+  }
+
+  @Override
+  public List<Invoice> getInvoices() {
+
+    List<Invoice> listToSort = jsonHelper
+        .jsonConvertFromStrinfToInvoice(fileProcessor.readFromFile(myFileDatabase));
+    Collections.sort(listToSort);
+    return listToSort;
+  }
+
+  private List<Invoice> getInvoicesUnsorted() {
+    return jsonHelper.jsonConvertFromStrinfToInvoice(fileProcessor.readFromFile(myFileDatabase));
   }
 
   @Override
   public List<Invoice> getListOfInvoicesFromGivenPeriod(LocalDate fromDate, LocalDate toDate)
-      throws Exception {
+      throws IOException {
 
-    List<Invoice> newlist = getInvoices();
-    List<Invoice> fromToList = new ArrayList<>();
-    for (Invoice invoice : newlist) {
-      if (invoice.getLocalDate().isAfter(fromDate) && invoice.getLocalDate().isBefore(toDate)) {
-        fromToList.add(invoice);
+    List<Invoice> invoicesList = getInvoices();
+    List<Invoice> partOfList = new ArrayList<>();
+
+    for (Invoice invoice : invoicesList) {
+      if (invoice.getLocalDate().isAfter(fromDate.minusDays(1)) && invoice.getLocalDate()
+          .isBefore(toDate.plusDays(1))) {
+        partOfList.add(invoice);
       }
     }
-    return fromToList;
+    return partOfList;
+  }
+
+  @Override
+  public void setUniqId(Invoice invoice) {
+    List<Invoice> listOfInvoices = getInvoicesUnsorted();
+    if (listOfInvoices.size() == 0) {
+      invoice.setId(0);
+    } else {
+      invoice.setId((listOfInvoices.get(listOfInvoices.size() - 1).getId()) + 1);
+    }
   }
 }

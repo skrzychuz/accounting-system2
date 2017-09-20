@@ -15,7 +15,7 @@ public class InMemoryDatabase implements Database {
   private final List<Invoice> listOfInovice = new ArrayList<>();
 
   @Override
-  public void saveInvoice(Invoice invoice) throws Exception {
+  public void saveInvoice(Invoice invoice) {
     listOfInovice.add(invoice);
   }
 
@@ -25,10 +25,25 @@ public class InMemoryDatabase implements Database {
     return Collections.unmodifiableList(listOfInovice);
   }
 
+  public List<Invoice> getInvoicesUnsorted() {
+    return Collections.unmodifiableList(listOfInovice);
+  }
+
   @Override
   public List<Invoice> getListOfInvoicesFromGivenPeriod(LocalDate fromDate, LocalDate toDate) {
     return listOfInovice.stream()
-        .filter(invoice -> invoice.getLocalDate().isAfter(fromDate.minusDays(1)) && invoice.getLocalDate().isBefore(toDate.plusDays(1)))
+        .filter(invoice -> invoice.getLocalDate().isAfter(fromDate.minusDays(1)) &&
+            invoice.getLocalDate().isBefore(toDate.plusDays(1)))
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public void setUniqId(Invoice invoice) {
+
+    if (listOfInovice.size() == 0) {
+      invoice.setId(0);
+    } else {
+      invoice.setId((listOfInovice.get(listOfInovice.size() - 1).getId()) + 1);
+    }
   }
 }

@@ -2,7 +2,6 @@ package pl.coderstrust.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Comparator;
 
 public class Invoice implements Comparable<Invoice> {
 
@@ -22,9 +21,9 @@ public class Invoice implements Comparable<Invoice> {
   /**
    * Personalized Constructor to create the object.
    */
-  private Invoice(int id, String description, BigDecimal amount, BigDecimal vatRate,
+  private Invoice(String description, BigDecimal amount, BigDecimal vatRate,
       LocalDate date) {
-    this.id = id;
+
     this.description = description;
     this.amount = amount;
     this.vatRate = vatRate;
@@ -72,10 +71,10 @@ public class Invoice implements Comparable<Invoice> {
   }
 
   @Override
-  public int compareTo(Invoice i) {
-    if (this.getLocalDate().isBefore(i.getLocalDate())) {
+  public int compareTo(Invoice invoice) {
+    if (this.getLocalDate().isBefore(invoice.getLocalDate())) {
       return -1;
-    } else if (this.getLocalDate().isAfter(i.getLocalDate())) {
+    } else if (this.getLocalDate().isAfter(invoice.getLocalDate())) {
       return 1;
     }
     return 0;
@@ -83,16 +82,10 @@ public class Invoice implements Comparable<Invoice> {
 
   public static class Builder {
 
-    private int id;
     private String description;
     private BigDecimal amount;
     private BigDecimal vatRate;
     private LocalDate localDate;
-
-    public Builder withId(int id) {
-      this.id = id;
-      return this;
-    }
 
     public Builder withDescription(String description) {
       this.description = description;
@@ -115,7 +108,7 @@ public class Invoice implements Comparable<Invoice> {
     }
 
     public Invoice build() {
-      return new Invoice(id, description, amount, vatRate, localDate);
+      return new Invoice(description, amount, vatRate, localDate);
     }
   }
 }

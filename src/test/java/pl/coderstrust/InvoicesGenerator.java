@@ -22,7 +22,7 @@ public class InvoicesGenerator {
       int year = 2016;
 
       Invoice invoice = new Builder()
-          .withLocalDate(LocalDate.of(year,month,day))
+          .withLocalDate(LocalDate.of(year, month, day))
           .build();
 
       randomInvoices.add(invoice);
@@ -30,27 +30,32 @@ public class InvoicesGenerator {
     return randomInvoices;
   }
 
+  /**
+   * asdf.
+   */
   public List<Invoice> invoiceGeneratorFor30DaysInJanuary2016InSuccession() {
 
     List<Invoice> invoicesInSuccession = new ArrayList<>();
 
-    for(int i=1; i<=30; i++) {
+    for (int i = 1; i <= 30; i++) {
       Invoice invoice = new Builder()
-          .withLocalDate(LocalDate.of(2016,1,i))
+          .withLocalDate(LocalDate.of(2016, 1, i))
           .build();
       invoicesInSuccession.add(invoice);
     }
 
     return invoicesInSuccession;
   }
-
-  public List<Invoice> invoiceGeneratorFor11DaysInJanuary2016InSuccession() {
+  /**
+   * asdf.
+   */
+  public List<Invoice> invoiceGeneratorFor11DaysInJanuary2016InSuccessionFrom11JanuaryTo25January() {
 
     List<Invoice> invoicesInSuccession = new ArrayList<>();
 
-    for(int i=15; i<=25; i++) {
+    for (int i = 15; i <= 25; i++) {
       Invoice invoice = new Builder()
-          .withLocalDate(LocalDate.of(2016,1,i))
+          .withLocalDate(LocalDate.of(2016, 1, i))
           .build();
       invoicesInSuccession.add(invoice);
     }

@@ -41,7 +41,9 @@ public class InvoiceBookTest {
     InvoiceBook invoiceBook = new InvoiceBook(databaseMock);
 
     Invoice invoice = new Builder()
-        .withId(5)
+        .withLocalDate(LocalDate.of(2016, 7, 15))
+        .build();
+    Invoice invoice2 = new Builder()
         .withLocalDate(LocalDate.of(2016, 7, 15))
         .build();
 
@@ -49,6 +51,7 @@ public class InvoiceBookTest {
 
     // when
     invoiceBook.addInvoices(invoice);
+    invoiceBook.addInvoices(invoice2);
     List<Invoice> invoiceList = invoiceBook.getInvoices();
 
     // then
