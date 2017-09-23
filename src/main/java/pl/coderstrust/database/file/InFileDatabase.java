@@ -19,7 +19,7 @@ public class InFileDatabase implements Database {
   /**
    * Constructor.
    */
-  InFileDatabase(String path, JsonHelper jsonHelper, FileProcessor fileProcessor) {
+  public InFileDatabase(String path, JsonHelper jsonHelper, FileProcessor fileProcessor) {
     this.jsonHelper = jsonHelper;
     this.fileProcessor = fileProcessor;
     this.myFileDatabase = new File(path);
@@ -40,7 +40,8 @@ public class InFileDatabase implements Database {
     return listToSort;
   }
 
-  private List<Invoice> getInvoicesUnsorted() {
+  @Override
+  public List<Invoice> getInvoicesUnsorted() {
     return jsonHelper.jsonConvertFromStrinfToInvoice(fileProcessor.readFromFile(myFileDatabase));
   }
 
@@ -61,7 +62,7 @@ public class InFileDatabase implements Database {
   }
 
   @Override
-  public void setUniqId(Invoice invoice) {
+  public void setUniqueId(Invoice invoice) {
     List<Invoice> listOfInvoices = getInvoicesUnsorted();
     if (listOfInvoices.size() == 0) {
       invoice.setId(0);

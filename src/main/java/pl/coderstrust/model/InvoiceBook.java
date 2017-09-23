@@ -13,11 +13,11 @@ public class InvoiceBook {
   }
 
   public List<Invoice> getInvoices() throws Exception {
-    return database.getInvoices();
+    return database.getInvoicesUnsorted();
   }
 
   public void addInvoices(Invoice invoice) throws Exception {
-    database.setUniqId(invoice);
+    database.setUniqueId(invoice);
     database.saveInvoice(invoice);
   }
 }

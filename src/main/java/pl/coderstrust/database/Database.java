@@ -11,9 +11,11 @@ public interface Database {
 
   List<Invoice> getInvoices();
 
+  List<Invoice> getInvoicesUnsorted();
+
   List<Invoice> getListOfInvoicesFromGivenPeriod(LocalDate fromDate, LocalDate toDate)
       throws Exception;
 
-  void setUniqId(Invoice invoice);
+  void setUniqueId(Invoice invoice);
 
 }

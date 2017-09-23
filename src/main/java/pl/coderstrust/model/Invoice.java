@@ -30,10 +30,6 @@ public class Invoice implements Comparable<Invoice> {
     this.localDate = date;
   }
 
-  public BigDecimal getVatAmount(BigDecimal vatRate) {
-    return this.amount.multiply(vatRate).divide(new BigDecimal(100));
-  }
-
   public int getId() {
     return id;
   }
@@ -68,6 +64,10 @@ public class Invoice implements Comparable<Invoice> {
 
   public void setLocalDate(LocalDate localDate) {
     this.localDate = localDate;
+  }
+
+  public BigDecimal getVatAmount2(BigDecimal vatRate) {
+    return this.amount.multiply(vatRate).divide(BigDecimal.valueOf(100), 0);
   }
 
   @Override

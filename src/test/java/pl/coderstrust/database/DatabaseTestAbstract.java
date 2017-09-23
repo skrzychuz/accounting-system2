@@ -1,34 +1,24 @@
 package pl.coderstrust.database;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
 import pl.coderstrust.InvoicesGenerator;
-import pl.coderstrust.database.file.InFileDatabase;
 import pl.coderstrust.model.Invoice;
 import pl.coderstrust.model.Invoice.Builder;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-;
 
 public abstract class DatabaseTestAbstract {
 
-  protected InvoicesGenerator invoicesGenerator = new InvoicesGenerator();
+  private InvoicesGenerator invoicesGenerator = new InvoicesGenerator();
 
   protected abstract Database getDatabase() throws IOException;
-
-
 
   @Test
   public void shouldSaveInvoiceToDatabase() throws Exception {
@@ -50,7 +40,7 @@ public abstract class DatabaseTestAbstract {
 
     Database database = getDatabase();
     List<Invoice> listOfInvoice = database.getInvoices();
-    int sizeBeforeAdding = listOfInvoice.size();
+    final int sizeBeforeAdding = listOfInvoice.size();
 
     // when
     database.saveInvoice(invoice1);
@@ -140,7 +130,6 @@ public abstract class DatabaseTestAbstract {
         .getListOfInvoicesFromGivenPeriod(LocalDate.of(2016, 1, 15), LocalDate.of(2016, 1, 25)));
 
     // then
-//    assertEquals(expectedList.size(), actualList.size());
     assertTrue(!actualList.get(0).getLocalDate().isBefore(LocalDate.of(2016, 1, 15)));
     assertTrue(
         !actualList.get(actualList.size() - 1).getLocalDate().isAfter(LocalDate.of(2016, 1, 25)));
