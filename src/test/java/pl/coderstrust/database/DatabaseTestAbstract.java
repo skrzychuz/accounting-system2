@@ -18,7 +18,7 @@ public abstract class DatabaseTestAbstract {
 
   private InvoicesGenerator invoicesGenerator = new InvoicesGenerator();
 
-  protected abstract Database getDatabase() throws IOException;
+  protected abstract Database getDatabase();
 
   @Test
   public void shouldSaveInvoiceToDatabase() throws Exception {

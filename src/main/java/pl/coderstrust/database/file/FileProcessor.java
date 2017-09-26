@@ -1,5 +1,7 @@
 package pl.coderstrust.database.file;
 
+import org.springframework.stereotype.Service;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,13 +11,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class FileProcessor {
 
 
   void saveToFile(String line, File file) {
 
     try (BufferedWriter bufferedWriter = new BufferedWriter(
-        new FileWriter(file,true))) {
+        new FileWriter(file, true))) {
 
       bufferedWriter.write(line);
       bufferedWriter.newLine();
@@ -42,4 +45,18 @@ public class FileProcessor {
     return linesFromFile;
 
   }
+
+  public void clearTheFile(File file) {
+
+    try (BufferedWriter bufferedWriter = new BufferedWriter(
+        new FileWriter(file))) {
+
+      bufferedWriter.write("");
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+  }
+
 }

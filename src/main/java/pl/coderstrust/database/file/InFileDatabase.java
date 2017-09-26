@@ -1,30 +1,51 @@
 package pl.coderstrust.database.file;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.model.Invoice;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
+@Service
 public class InFileDatabase implements Database {
 
   private final File myFileDatabase;
   private final JsonHelper jsonHelper;
   private final FileProcessor fileProcessor;
 
+
   /**
    * Constructor.
    */
+
   public InFileDatabase(String path, JsonHelper jsonHelper, FileProcessor fileProcessor) {
     this.jsonHelper = jsonHelper;
     this.fileProcessor = fileProcessor;
     this.myFileDatabase = new File(path);
   }
 
+  @Autowired
+  public InFileDatabase(JsonHelper jsonHelper, FileProcessor fileProcessor) {
+    this.jsonHelper = jsonHelper;
+    this.fileProcessor = fileProcessor;
+    this.myFileDatabase = new File("database\\data.json");
+  }
+
+  /**
+   * Constructor.
+   */
+//  public InFileDatabase() {
+//    this.jsonHelper = new JsonHelper();
+//    this.fileProcessor = new FileProcessor();
+//    this.myFileDatabase = new File("database\\restDataBasetFile.json");
+//  }
   @Override
   public void saveInvoice(Invoice invoice) {
 
@@ -46,9 +67,7 @@ public class InFileDatabase implements Database {
   }
 
   @Override
-  public List<Invoice> getListOfInvoicesFromGivenPeriod(LocalDate fromDate, LocalDate toDate)
-      throws IOException {
-
+  public List<Invoice> getListOfInvoicesFromGivenPeriod(LocalDate fromDate, LocalDate toDate) {
     List<Invoice> invoicesList = getInvoices();
     List<Invoice> partOfList = new ArrayList<>();
 
@@ -68,6 +87,22 @@ public class InFileDatabase implements Database {
       invoice.setId(0);
     } else {
       invoice.setId((listOfInvoices.get(listOfInvoices.size() - 1).getId()) + 1);
+    }
+  }
+
+  @Override
+  public void deleteInvoice(int id) {
+
+    Iterator<Invoice> invoiceIterator = getInvoicesUnsorted().iterator();
+    fileProcessor.clearTheFile(myFileDatabase);
+    while (invoiceIterator.hasNext()) {
+      Invoice invoice = invoiceIterator.next();
+      if (invoice.getId() == id) {
+        invoiceIterator.remove();
+
+      } else {
+        saveInvoice(invoice);
+      }
     }
   }
 }

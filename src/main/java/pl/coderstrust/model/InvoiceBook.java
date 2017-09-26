@@ -20,4 +20,8 @@ public class InvoiceBook {
     database.setUniqueId(invoice);
     database.saveInvoice(invoice);
   }
+
+  public void deleteInvoice(int id) throws Exception {
+     database.deleteInvoice(id);
+  }
 }

@@ -17,11 +17,13 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
   JsonHelper jsonHelperMock = mock(JsonHelper.class);
   File fileForTests = new File("src\\test\\resources\\dataForTest.json");
   public String testPath = fileForTests.getPath();
+  DatabaseFilesPaths databaseFilesPaths = new DatabaseFilesPaths();
+
 
 
   @Override
   protected Database getDatabase() {
-    return new InFileDatabase(testPath, new JsonHelper(), new FileProcessor());
+    return new InFileDatabase(databaseFilesPaths.testDataBase, new JsonHelper(), new FileProcessor());
 
   }
 
