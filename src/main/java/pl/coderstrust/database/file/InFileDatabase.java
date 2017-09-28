@@ -1,6 +1,5 @@
 package pl.coderstrust.database.file;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
@@ -33,19 +32,9 @@ public class InFileDatabase implements Database {
 
   @Autowired
   public InFileDatabase(JsonHelper jsonHelper, FileProcessor fileProcessor) {
-    this.jsonHelper = jsonHelper;
-    this.fileProcessor = fileProcessor;
-    this.myFileDatabase = new File("database\\data.json");
+    this("database\\data.json", jsonHelper, fileProcessor);
   }
 
-  /**
-   * Constructor.
-   */
-//  public InFileDatabase() {
-//    this.jsonHelper = new JsonHelper();
-//    this.fileProcessor = new FileProcessor();
-//    this.myFileDatabase = new File("database\\restDataBasetFile.json");
-//  }
   @Override
   public void saveInvoice(Invoice invoice) {
 

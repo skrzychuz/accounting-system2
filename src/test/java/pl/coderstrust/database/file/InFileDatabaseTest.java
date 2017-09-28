@@ -20,19 +20,18 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
   DatabaseFilesPaths databaseFilesPaths = new DatabaseFilesPaths();
 
 
-
   @Override
   protected Database getDatabase() {
-    return new InFileDatabase(databaseFilesPaths.testDataBase, new JsonHelper(), new FileProcessor());
+    return new InFileDatabase(databaseFilesPaths.testDataBase, new JsonHelper(),
+        new FileProcessor());
 
   }
 
-//  @After
-//  public void cleaner() throws IOException {
-//    FileWriter fileWriter = new FileWriter(testPath);
-//    fileWriter.write("");
-//    fileWriter.close();
-//  }
+  //  @After
+  //  public void cleaner() throws IOException {
+  //    FileWriter fileWriter = new FileWriter(testPath);
+  //    fileWriter.write("");
+  //    fileWriter.close();
 }
 
 

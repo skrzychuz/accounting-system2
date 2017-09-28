@@ -22,6 +22,6 @@ public class InvoiceBook {
   }
 
   public void deleteInvoice(int id) throws Exception {
-     database.deleteInvoice(id);
+    database.deleteInvoice(id);
   }
 }

@@ -30,6 +30,18 @@ public class Invoice implements Comparable<Invoice> {
     this.localDate = date;
   }
 
+  public BigDecimal getVatRate() {
+    return vatRate;
+  }
+
+  public void setVatRate(BigDecimal vatRate) {
+    this.vatRate = vatRate;
+  }
+
+  public void setVatAmount(BigDecimal vatAmount) {
+    this.vatAmount = vatAmount;
+  }
+
   public int getId() {
     return id;
   }

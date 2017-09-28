@@ -46,7 +46,10 @@ public class FileProcessor {
 
   }
 
-  public void clearTheFile(File file) {
+  /**
+   * Clear Method.
+   */
+  void clearTheFile(File file) {
 
     try (BufferedWriter bufferedWriter = new BufferedWriter(
         new FileWriter(file))) {
@@ -56,7 +59,5 @@ public class FileProcessor {
     } catch (IOException e) {
       e.printStackTrace();
     }
-
   }
-
 }

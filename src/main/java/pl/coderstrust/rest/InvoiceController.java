@@ -22,20 +22,21 @@ public class InvoiceController {
   @Autowired
   InvoiceController(Database database) {
     this.invoiceBookDatabase = new InvoiceBook(database);
-
   }
 
   @RequestMapping("/")
-  public @ResponseBody
+  @ResponseBody
   String greeting() {
     return "Hello World";
   }
 
+  /**
+   *Save.
+   */
   @RequestMapping(value = "/invoices", method = RequestMethod.POST)
   public void saveInvoice(@RequestBody Invoice invoice) throws Exception {
     invoiceBookDatabase.addInvoices(invoice);
     System.out.println("success POST");
-
   }
 
   @RequestMapping(value = "/invoices", method = RequestMethod.GET)
@@ -43,8 +44,11 @@ public class InvoiceController {
     return invoiceBookDatabase.getInvoices();
   }
 
+  /**
+   * Get.
+   */
   @RequestMapping(value = "/invoices/{id}", method = RequestMethod.GET)
-  public Invoice getInvoices2(@PathVariable int id) throws Exception {
+  public Invoice getInvoicesById(@PathVariable int id) throws Exception {
     return invoiceBookDatabase.getInvoices()
         .stream()
         .filter(invoice -> invoice.getId() == id)
