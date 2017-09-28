@@ -1,6 +1,7 @@
 package pl.coderstrust.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,8 +58,16 @@ public class InvoiceController {
   }
 
   @RequestMapping(value = "/invoices/{id}", method = RequestMethod.DELETE)
-  public void removeInvoiceById(@PathVariable int id) throws Exception {
+  public ResponseEntity<?> removeInvoiceById(@PathVariable int id) throws Exception {
     invoiceBookDatabase.deleteInvoice(id);
+    return ResponseEntity.noContent().build();
+  }
+
+  @RequestMapping(value = "/invoices/{id}", method = RequestMethod.PUT)
+  public ResponseEntity<?> updateInvoice(@PathVariable Integer id, @RequestBody Invoice invoice) throws Exception {
+    invoiceBookDatabase.modifyInvoice(id, invoice);
+    return ResponseEntity.noContent().build();
+
   }
 }
 

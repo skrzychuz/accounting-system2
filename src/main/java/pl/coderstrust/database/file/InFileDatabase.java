@@ -94,4 +94,24 @@ public class InFileDatabase implements Database {
       }
     }
   }
+
+  @Override
+  public void updateInvoice(int id, Invoice invoice) {
+
+    Iterator<Invoice> invoiceIterator = getInvoicesUnsorted().iterator();
+    fileProcessor.clearTheFile(myFileDatabase);
+    while (invoiceIterator.hasNext()) {
+      Invoice in = invoiceIterator.next();
+      if (in.getId() == id) {
+        invoiceIterator.remove();
+        invoice.setId(id);
+        saveInvoice(invoice);
+
+      } else {
+        invoice.setId(id);
+        saveInvoice(in);
+      }
+    }
+  }
 }
+

@@ -19,7 +19,7 @@ public class JsonHelper {
     for (String string : listToConvert) {
       Invoice invoice;
       try {
-        invoice = mapperConfig.mapper.readValue(string, Invoice.class);
+        invoice = mapperConfig.getMapper().readValue(string, Invoice.class);
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
@@ -31,7 +31,7 @@ public class JsonHelper {
   public String jsonConvertInvoiceToString(Invoice invoice) {
 
     try {
-      return mapperConfig.mapper.writeValueAsString(invoice);
+      return mapperConfig.getMapper().writeValueAsString(invoice);
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }

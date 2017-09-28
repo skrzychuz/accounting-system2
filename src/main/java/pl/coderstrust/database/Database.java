@@ -20,4 +20,6 @@ public interface Database {
 
   void deleteInvoice(int id);
 
+  void updateInvoice(int id, Invoice invoice);
+
 }

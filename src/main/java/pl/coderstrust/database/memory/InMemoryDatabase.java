@@ -62,4 +62,9 @@ public class InMemoryDatabase implements Database {
       }
     }
   }
+
+  @Override
+  public void updateInvoice(int id, Invoice invoice) {
+
+  }
 }

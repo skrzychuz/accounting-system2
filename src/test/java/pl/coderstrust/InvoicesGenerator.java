@@ -35,7 +35,7 @@ public class InvoicesGenerator {
   /**
    * asdf.
    */
-  public List<Invoice> invoiceGeneratorFor30DaysInJanuary2016InSuccession() {
+  public List<Invoice> invoiceGeneratorFor30DaysInJanuary2016InSuccessionWithID() {
 
     List<Invoice> invoicesInSuccession = new ArrayList<>();
 
@@ -43,6 +43,7 @@ public class InvoicesGenerator {
       Invoice invoice = new Builder()
           .withLocalDate(LocalDate.of(2016, 1, i))
           .build();
+      invoice.setId(i);
       invoicesInSuccession.add(invoice);
     }
 
