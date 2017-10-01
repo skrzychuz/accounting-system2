@@ -1,6 +1,7 @@
 package pl.coderstrust.database.file;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import pl.coderstrust.model.Invoice;
 
@@ -11,9 +12,11 @@ import java.util.List;
 @Service
 public class JsonHelper {
 
-  private MapperConfig mapperConfig = new MapperConfig();
 
-  List<Invoice> jsonConvertFromStrinfToInvoice(List<String> listToConvert) {
+  MapperConfig mapperConfig = new MapperConfig();
+
+  List<Invoice> convertListOfStringsRepresentingInvoiceAsJsonToListOfInvoices(
+      List<String> listToConvert) {
 
     List<Invoice> invoices = new ArrayList<>();
     for (String string : listToConvert) {
@@ -28,7 +31,7 @@ public class JsonHelper {
     return invoices;
   }
 
-  public String jsonConvertInvoiceToString(Invoice invoice) {
+  public String convertInvoiceObjectToJsonAsString(Invoice invoice) {
 
     try {
       return mapperConfig.getMapper().writeValueAsString(invoice);

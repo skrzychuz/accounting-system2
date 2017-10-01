@@ -57,13 +57,13 @@ public class WebMockTest {
         .withLocalDate(LocalDate.of(2016, 10, 15))
         .build();
 
-    when(jsonHelperMock.jsonConvertInvoiceToString(invoice1)).thenReturn(
+    when(jsonHelperMock.convertInvoiceObjectToJsonAsString(invoice1)).thenReturn(
         "{\"id\":0,\"description\":null,\"amount\":null,\"vatRate\":null,\"vatAmount\":null,\""
             + "localDate\":[2016,8,20]}\n");
 
     this.mockMvc.perform(post("/invoices")
         .contentType(contentType)
-        .content(jsonHelperMock.jsonConvertInvoiceToString(invoice1)))
+        .content(jsonHelperMock.convertInvoiceObjectToJsonAsString(invoice1)))
         .andDo(print())
         .andExpect(status().isOk());
   }
