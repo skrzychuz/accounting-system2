@@ -13,7 +13,10 @@ import pl.coderstrust.database.Database;
 import pl.coderstrust.model.Invoice;
 import pl.coderstrust.model.InvoiceBook;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class InvoiceController {
@@ -32,12 +35,11 @@ public class InvoiceController {
   }
 
   /**
-   *Save.
+   * Save.
    */
   @RequestMapping(value = "/invoices", method = RequestMethod.POST)
   public void saveInvoice(@RequestBody Invoice invoice) throws Exception {
     invoiceBookDatabase.addInvoices(invoice);
-    System.out.println("success POST");
   }
 
   @RequestMapping(value = "/invoices", method = RequestMethod.GET)
@@ -54,20 +56,26 @@ public class InvoiceController {
         .stream()
         .filter(invoice -> invoice.getId() == id)
         .findFirst()
-        .get();
+        .orElse(null);
   }
 
+  /**
+   * Delete.
+   */
   @RequestMapping(value = "/invoices/{id}", method = RequestMethod.DELETE)
   public ResponseEntity<?> removeInvoiceById(@PathVariable int id) throws Exception {
     invoiceBookDatabase.deleteInvoice(id);
     return ResponseEntity.noContent().build();
   }
 
+  /**
+   * Update.
+   */
   @RequestMapping(value = "/invoices/{id}", method = RequestMethod.PUT)
-  public ResponseEntity<?> updateInvoice(@PathVariable Integer id, @RequestBody Invoice invoice) throws Exception {
+  public ResponseEntity<?> updateInvoice(@PathVariable Integer id, @RequestBody Invoice invoice)
+      throws Exception {
     invoiceBookDatabase.modifyInvoice(id, invoice);
     return ResponseEntity.noContent().build();
-
   }
 }
 
