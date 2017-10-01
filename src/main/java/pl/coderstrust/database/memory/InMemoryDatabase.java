@@ -1,9 +1,7 @@
 package pl.coderstrust.database.memory;
 
-import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.model.Invoice;
-import pl.coderstrust.model.Invoice.Builder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,7 +22,7 @@ public class InMemoryDatabase implements Database {
 
   @Override
   public List<Invoice> getInvoices() {
-    Collections.sort(listOfInovice);
+//    Collections.sort(listOfInovice);
     return Collections.unmodifiableList(listOfInovice);
   }
 
@@ -45,7 +43,7 @@ public class InMemoryDatabase implements Database {
   public int setUniqueId() {
     return 0;
   }
-
+///////////////////////////////////////////////
 
   @Override
   public void deleteInvoice(int id) {

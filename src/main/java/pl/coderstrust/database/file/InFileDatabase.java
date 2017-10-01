@@ -51,7 +51,7 @@ public class InFileDatabase implements Database {
     List<Invoice> listToSort = jsonHelper
         .convertListOfStringsRepresentingInvoiceAsJsonToListOfInvoices(
             fileProcessor.readFromFile(myFileDatabase));
-    Collections.sort(listToSort);
+//    Collections.sort(listToSort);
     return listToSort;
   }
 

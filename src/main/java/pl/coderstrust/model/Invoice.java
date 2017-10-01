@@ -2,15 +2,18 @@ package pl.coderstrust.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
-public class Invoice implements Comparable<Invoice> {
+public class Invoice {
 
+  private Seller seller;
+  private Buyer buyer;
+  private List<Entry> entries;
   private int id;
-  private String description;
   private BigDecimal amount;
-  private BigDecimal vatRate;
   private BigDecimal vatAmount;
   private LocalDate localDate;
+
 
   /**
    * Default Constructor to create the object.
@@ -21,25 +24,44 @@ public class Invoice implements Comparable<Invoice> {
   /**
    * Personalized Constructor to create the object.
    */
-  private Invoice(String description, BigDecimal amount, BigDecimal vatRate,
-      LocalDate date) {
+  public Invoice(Seller seller, Buyer buyer, List<Entry> entries, LocalDate localDate) {
+    this.seller = seller;
+    this.buyer = buyer;
+    this.entries = entries;
+    this.localDate = localDate;
 
-    this.description = description;
-    this.amount = amount;
-    this.vatRate = vatRate;
-    this.localDate = date;
+    for (Entry e : entries) {
+      this.amount = e.getAmount();
+      this.vatAmount = e.getVatAmount();
+    }
+    for (Entry e : entries) {
+      this.amount = e.getAmount();
+    }
+
   }
 
-  public BigDecimal getVatRate() {
-    return vatRate;
+  public Seller getSeller() {
+    return seller;
   }
 
-  public void setVatRate(BigDecimal vatRate) {
-    this.vatRate = vatRate;
+  public void setSeller(Seller seller) {
+    this.seller = seller;
   }
 
-  public void setVatAmount(BigDecimal vatAmount) {
-    this.vatAmount = vatAmount;
+  public Buyer getBuyer() {
+    return buyer;
+  }
+
+  public void setBuyer(Buyer buyer) {
+    this.buyer = buyer;
+  }
+
+  public List<Entry> getEntries() {
+    return entries;
+  }
+
+  public void setEntries(List<Entry> entries) {
+    this.entries = entries;
   }
 
   public int getId() {
@@ -48,14 +70,6 @@ public class Invoice implements Comparable<Invoice> {
 
   public void setId(int id) {
     this.id = id;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
   }
 
   public BigDecimal getAmount() {
@@ -70,6 +84,10 @@ public class Invoice implements Comparable<Invoice> {
     return vatAmount;
   }
 
+  public void setVatAmount(BigDecimal vatAmount) {
+    this.vatAmount = vatAmount;
+  }
+
   public LocalDate getLocalDate() {
     return localDate;
   }
@@ -78,50 +96,20 @@ public class Invoice implements Comparable<Invoice> {
     this.localDate = localDate;
   }
 
-  public BigDecimal getVatAmount2(BigDecimal vatRate) {
-    return this.amount.multiply(vatRate).divide(BigDecimal.valueOf(100), 0);
-  }
-
   @Override
-  public int compareTo(Invoice invoice) {
-    if (this.getLocalDate().isBefore(invoice.getLocalDate())) {
-      return -1;
-    } else if (this.getLocalDate().isAfter(invoice.getLocalDate())) {
-      return 1;
-    }
-    return 0;
-  }
-
-  public static class Builder {
-
-    private String description;
-    private BigDecimal amount;
-    private BigDecimal vatRate;
-    private LocalDate localDate;
-
-    public Builder withDescription(String description) {
-      this.description = description;
-      return this;
-    }
-
-    public Builder withAmount(BigDecimal amount) {
-      this.amount = amount;
-      return this;
-    }
-
-    public Builder withVatRate(BigDecimal vatRate) {
-      this.vatRate = vatRate;
-      return this;
-    }
-
-    public Builder withLocalDate(LocalDate localDate) {
-      this.localDate = localDate;
-      return this;
-    }
-
-    public Invoice build() {
-      return new Invoice(description, amount, vatRate, localDate);
-    }
+  public String toString() {
+    return "Invoice{"
+        + "seller=" + seller
+        + ", buyer=" + buyer
+        + ", entries=" + entries
+        + ", id=" + id
+        + ", amount=" + amount
+        + ", vatAmount=" + vatAmount
+        + ", localDate=" + localDate
+        + '}';
   }
 }
+
+
+
 

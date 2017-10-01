@@ -13,10 +13,7 @@ import pl.coderstrust.database.Database;
 import pl.coderstrust.model.Invoice;
 import pl.coderstrust.model.InvoiceBook;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 public class InvoiceController {

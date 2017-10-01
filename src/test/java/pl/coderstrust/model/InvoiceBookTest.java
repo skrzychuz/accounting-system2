@@ -14,7 +14,6 @@ import pl.coderstrust.database.file.GeneratorId;
 import pl.coderstrust.database.file.InFileDatabase;
 import pl.coderstrust.database.file.JsonHelper;
 import pl.coderstrust.database.memory.InMemoryDatabase;
-import pl.coderstrust.model.Invoice.Builder;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -46,10 +45,10 @@ public class InvoiceBookTest {
     // given
     InvoiceBook invoiceBook = new InvoiceBook(databaseMock);
 
-    Invoice invoice = new Builder()
+    Invoice invoice = new InvoiceBulider()
         .withLocalDate(LocalDate.of(2016, 7, 15))
         .build();
-    Invoice invoice2 = new Builder()
+    Invoice invoice2 = new InvoiceBulider()
         .withLocalDate(LocalDate.of(2016, 7, 15))
         .build();
 
@@ -76,13 +75,13 @@ public class InvoiceBookTest {
     Database database = new InFileDatabase(testPath, new JsonHelper(), new FileProcessor(), new GeneratorId(new FileProcessor()));
     InvoiceBook invoiceBook = new InvoiceBook(database);
 
-    Invoice invoice1 = new Builder()
+    Invoice invoice1 = new InvoiceBulider()
         .withLocalDate(LocalDate.of(2016, 4, 15))
         .build();
-    Invoice invoice2 = new Builder()
+    Invoice invoice2 = new InvoiceBulider()
         .withLocalDate(LocalDate.of(2016, 6, 15))
         .build();
-    Invoice invoice3 = new Builder()
+    Invoice invoice3 = new InvoiceBulider()
         .withLocalDate(LocalDate.of(2016, 5, 15))
         .build();
 
@@ -103,13 +102,13 @@ public class InvoiceBookTest {
     Database database = new InMemoryDatabase();
     InvoiceBook invoiceBook = new InvoiceBook(database);
 
-    Invoice invoice1 = new Builder()
+    Invoice invoice1 = new InvoiceBulider()
         .withLocalDate(LocalDate.of(2016, 4, 15))
         .build();
-    Invoice invoice2 = new Builder()
+    Invoice invoice2 = new InvoiceBulider()
         .withLocalDate(LocalDate.of(2016, 6, 15))
         .build();
-    Invoice invoice3 = new Builder()
+    Invoice invoice3 = new InvoiceBulider()
         .withLocalDate(LocalDate.of(2016, 5, 15))
         .build();
 

@@ -22,8 +22,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import pl.coderstrust.database.file.InFileDatabase;
 import pl.coderstrust.database.file.JsonHelper;
+import pl.coderstrust.model.Buyer;
 import pl.coderstrust.model.Invoice;
-import pl.coderstrust.model.Invoice.Builder;
+import pl.coderstrust.model.InvoiceBulider;
+import pl.coderstrust.model.InvoiceBulider.BuyerBulider;
+
 
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
@@ -51,9 +54,7 @@ public class WebMockTest {
 
   @Test
   public void shouldAddInvoiceToDatabase() throws Exception {
-    Invoice invoice1 = new Builder()
-        .withDescription("asdf")
-        .withVatRate(BigDecimal.valueOf(22))
+    Invoice invoice1 = new InvoiceBulider()
         .withLocalDate(LocalDate.of(2016, 10, 15))
         .build();
 
@@ -72,13 +73,15 @@ public class WebMockTest {
   public void shouldGetInvoicesFromDatabase() throws Exception {
 
     List<Invoice> toTestList = new ArrayList<>();
-    Invoice invoice1 = new Builder()
-        .withDescription("asdf")
-        .withVatRate(BigDecimal.valueOf(22))
+    Invoice invoice1 = new InvoiceBulider()
+        .withBuyer(new BuyerBulider()
+            .withName("stefan")
+            .bulid())
         .build();
-    Invoice invoice2 = new Builder()
-        .withDescription("yoyoyo")
-        .withAmount(BigDecimal.TEN)
+    Invoice invoice2 = new InvoiceBulider()
+        .withBuyer(new BuyerBulider()
+            .withName("marian")
+            .bulid())
         .build();
 
     toTestList.add(invoice1);
@@ -90,10 +93,9 @@ public class WebMockTest {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0].description", is("asdf")))
-        .andExpect(jsonPath("$[0].vatRate", is(22)))
-        .andExpect(jsonPath("$[1].description", is("yoyoyo")))
-        .andExpect(jsonPath("$[1].amount", is(10)));
+        .andExpect(jsonPath("$[0].buyer.name", is("stefan")))
+        .andExpect(jsonPath("$[1].buyer.name", is("marian")));
+
 
   }
 
@@ -101,16 +103,15 @@ public class WebMockTest {
   public void shouldGetSingleInvoiceFromDatabase() throws Exception {
 
     List<Invoice> toTestList = new ArrayList<>();
-    Invoice invoice1 = new Builder()
-        .withDescription("asdf")
-        .withVatRate(BigDecimal.valueOf(22))
-        .withLocalDate(LocalDate.of(2016, 10, 15))
+    Invoice invoice1 = new InvoiceBulider()
+        .withBuyer(new BuyerBulider()
+            .withName("Mietek")
+            .bulid())
         .build();
+
     invoice1.setId(5);
-    Invoice invoice2 = new Builder()
-        .withDescription("yoyoyo")
-        .withAmount(BigDecimal.TEN)
-        .build();
+    Invoice invoice2 = new InvoiceBulider().build();
+
     invoice2.setId(6);
 
     toTestList.add(invoice1);
@@ -123,8 +124,8 @@ public class WebMockTest {
         .andExpect(status().isOk())
         .andExpect(content().contentType(contentType))
         .andExpect(jsonPath("$.id", is(5)))
-        .andExpect(jsonPath("$.description", is("asdf")))
-        .andExpect(jsonPath("$.vatRate", is(22)));
+        .andExpect(jsonPath("$.buyer.name", is("Mietek")));
+
   }
 }
 
