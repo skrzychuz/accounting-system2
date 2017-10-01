@@ -24,15 +24,17 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
     FileProcessor fileProcessorMock = mock(FileProcessor.class);
     JsonHelper jsonHelperMock = mock(JsonHelper.class);
     File fileForTests = new File("src\\test\\resources\\dataForTest.json");
+    File fileidtest = new File("src\\test\\resources\\idtest.json");
     public String testPath = fileForTests.getPath();
     DatabaseFilesPaths databaseFilesPaths = new DatabaseFilesPaths();
     InvoicesGenerator invoicesGenerator = new InvoicesGenerator();
 
 
+
     @Override
     protected Database getDatabase() {
         return new InFileDatabase(databaseFilesPaths.testDataBase, new JsonHelper(),
-                new FileProcessor());
+                new FileProcessor(), new GeneratorId(new FileProcessor()));
 
     }
 

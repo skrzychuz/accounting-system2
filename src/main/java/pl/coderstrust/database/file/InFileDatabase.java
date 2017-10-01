@@ -18,40 +18,47 @@ public class InFileDatabase implements Database {
   private final File myFileDatabase;
   private final JsonHelper jsonHelper;
   private final FileProcessor fileProcessor;
+  private final GeneratorId generatorId;
 
 
   /**
    * Constructor.
    */
-  public InFileDatabase(String path, JsonHelper jsonHelper, FileProcessor fileProcessor) {
+  public InFileDatabase(String path, JsonHelper jsonHelper, FileProcessor fileProcessor,
+      GeneratorId generatorId) {
     this.jsonHelper = jsonHelper;
     this.fileProcessor = fileProcessor;
+    this.generatorId = generatorId;
     this.myFileDatabase = new File(path);
   }
 
   @Autowired
-  public InFileDatabase(JsonHelper jsonHelper, FileProcessor fileProcessor) {
-    this("database\\data.json", jsonHelper, fileProcessor);
+  public InFileDatabase(JsonHelper jsonHelper, FileProcessor fileProcessor,
+      GeneratorId generatorId) {
+    this("database\\data.json", jsonHelper, fileProcessor, generatorId);
   }
 
   @Override
   public void saveInvoice(Invoice invoice) {
 
-    fileProcessor.saveToFile(jsonHelper.convertInvoiceObjectToJsonAsString(invoice), myFileDatabase);
+    fileProcessor
+        .saveToFile(jsonHelper.convertInvoiceObjectToJsonAsString(invoice), myFileDatabase);
   }
 
   @Override
   public List<Invoice> getInvoices() {
 
     List<Invoice> listToSort = jsonHelper
-        .convertListOfStringsRepresentingInvoiceAsJsonToListOfInvoices(fileProcessor.readFromFile(myFileDatabase));
+        .convertListOfStringsRepresentingInvoiceAsJsonToListOfInvoices(
+            fileProcessor.readFromFile(myFileDatabase));
     Collections.sort(listToSort);
     return listToSort;
   }
 
   @Override
   public List<Invoice> getInvoicesUnsorted() {
-    return jsonHelper.convertListOfStringsRepresentingInvoiceAsJsonToListOfInvoices(fileProcessor.readFromFile(myFileDatabase));
+    return jsonHelper.convertListOfStringsRepresentingInvoiceAsJsonToListOfInvoices(
+        fileProcessor.readFromFile(myFileDatabase));
   }
 
   @Override
@@ -70,14 +77,10 @@ public class InFileDatabase implements Database {
   }
 
   @Override
-  public void setUniqueId(Invoice invoice) {
-    List<Invoice> listOfInvoices = getInvoicesUnsorted();
-    if (listOfInvoices.size() == 0) {
-      invoice.setId(0);
-    } else {
-      invoice.setId((listOfInvoices.get(listOfInvoices.size() - 1).getId()) + 1);
-    }
+  public int setUniqueId() {
+    return (generatorId.generateNewId());
   }
+
 
   @Override
   public void deleteInvoice(int id) {

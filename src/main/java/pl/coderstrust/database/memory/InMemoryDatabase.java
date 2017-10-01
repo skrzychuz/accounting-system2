@@ -42,14 +42,10 @@ public class InMemoryDatabase implements Database {
   }
 
   @Override
-  public void setUniqueId(Invoice invoice) {
-
-    if (getInvoicesUnsorted().size() == 0) {
-      invoice.setId(0);
-    } else {
-      invoice.setId((listOfInovice.get(listOfInovice.size() - 1).getId()) + 1);
-    }
+  public int setUniqueId() {
+    return 0;
   }
+
 
   @Override
   public void deleteInvoice(int id) {

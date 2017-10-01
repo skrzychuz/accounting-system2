@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 public class FileProcessor {
 
-
   void saveToFile(String line, File file) {
 
     try (BufferedWriter bufferedWriter = new BufferedWriter(
@@ -43,7 +42,6 @@ public class FileProcessor {
     }
 
     return linesFromFile;
-
   }
 
   /**

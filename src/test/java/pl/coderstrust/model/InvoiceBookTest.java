@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.database.file.FileProcessor;
+import pl.coderstrust.database.file.GeneratorId;
 import pl.coderstrust.database.file.InFileDatabase;
 import pl.coderstrust.database.file.JsonHelper;
 import pl.coderstrust.database.memory.InMemoryDatabase;
@@ -70,8 +71,9 @@ public class InvoiceBookTest {
   public void shouldCheckExpectedIdNumbersWithFileDataBase() throws Exception {
     // given
     File fileForTests = new File("src\\test\\resources\\invoiceBookTest.json");
+    File fileIdforTests = new File("src\\test\\resources\\idTest.json");
     String testPath = fileForTests.getPath();
-    Database database = new InFileDatabase(testPath, new JsonHelper(), new FileProcessor());
+    Database database = new InFileDatabase(testPath, new JsonHelper(), new FileProcessor(), new GeneratorId(new FileProcessor()));
     InvoiceBook invoiceBook = new InvoiceBook(database);
 
     Invoice invoice1 = new Builder()
