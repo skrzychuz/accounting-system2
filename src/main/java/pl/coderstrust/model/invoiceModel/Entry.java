@@ -1,4 +1,4 @@
-package pl.coderstrust.model;
+package pl.coderstrust.model.invoiceModel;
 
 import java.math.BigDecimal;
 
@@ -53,11 +53,12 @@ public class Entry {
 
   @Override
   public String toString() {
-    return "Entry{" +
-        "description='" + description + '\'' +
-        ", vatRate=" + vatRate +
-        ", amount=" + amount +
-        ", vatAmount=" + vatAmount +
-        '}';
+    return "Entry{"
+        + "description='" + description
+        + '\''
+        + ", vatRate=" + vatRate
+        + ", amount=" + amount
+        + ", vatAmount=" + vatAmount
+        + '}';
   }
 }

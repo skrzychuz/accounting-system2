@@ -22,13 +22,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import pl.coderstrust.database.file.InFileDatabase;
 import pl.coderstrust.database.file.JsonHelper;
-import pl.coderstrust.model.Buyer;
-import pl.coderstrust.model.Invoice;
+import pl.coderstrust.model.invoiceModel.Invoice;
 import pl.coderstrust.model.InvoiceBulider;
 import pl.coderstrust.model.InvoiceBulider.BuyerBulider;
 
 
-import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -87,7 +85,7 @@ public class WebMockTest {
     toTestList.add(invoice1);
     toTestList.add(invoice2);
 
-    when(inFileDatabase.getInvoicesUnsorted()).thenReturn(toTestList);
+    when(inFileDatabase.getInvoices()).thenReturn(toTestList);
 
     this.mockMvc.perform(get("/invoices"))
         .andDo(print())
@@ -117,7 +115,7 @@ public class WebMockTest {
     toTestList.add(invoice1);
     toTestList.add(invoice2);
 
-    when(inFileDatabase.getInvoicesUnsorted()).thenReturn(toTestList);
+    when(inFileDatabase.getInvoices()).thenReturn(toTestList);
 
     this.mockMvc.perform(get("/invoices/" + 5))
         .andDo(print())

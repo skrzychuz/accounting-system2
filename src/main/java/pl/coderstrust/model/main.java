@@ -3,6 +3,7 @@ package pl.coderstrust.model;
 import pl.coderstrust.model.InvoiceBulider.BuyerBulider;
 import pl.coderstrust.model.InvoiceBulider.EntryBulider;
 import pl.coderstrust.model.InvoiceBulider.SellerBulider;
+import pl.coderstrust.model.invoiceModel.Invoice;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

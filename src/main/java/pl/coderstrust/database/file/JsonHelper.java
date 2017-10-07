@@ -1,8 +1,9 @@
 package pl.coderstrust.database.file;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
-import pl.coderstrust.model.Invoice;
+import pl.coderstrust.model.invoiceModel.Invoice;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,8 +12,7 @@ import java.util.List;
 @Service
 public class JsonHelper {
 
-
-  MapperConfig mapperConfig = new MapperConfig();
+  private ObjectMapper mapper = new MapperConfig().getMapper();
 
   List<Invoice> convertListOfStringsRepresentingInvoiceAsJsonToListOfInvoices(
       List<String> listToConvert) {
@@ -21,7 +21,7 @@ public class JsonHelper {
     for (String string : listToConvert) {
       Invoice invoice;
       try {
-        invoice = mapperConfig.getMapper().readValue(string, Invoice.class);
+        invoice = mapper.readValue(string, Invoice.class);
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
@@ -33,7 +33,7 @@ public class JsonHelper {
   public String convertInvoiceObjectToJsonAsString(Invoice invoice) {
 
     try {
-      return mapperConfig.getMapper().writeValueAsString(invoice);
+      return mapper.writeValueAsString(invoice);
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }

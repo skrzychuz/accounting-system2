@@ -1,14 +1,14 @@
-package pl.coderstrust.model;
+package pl.coderstrust.model.invoiceModel;
 
-public class Seller {
+public class Buyer {
 
   private String name;
   private String taxpayerIdentificationNumber;
 
-  public Seller() {
+  public Buyer() {
   }
 
-  public Seller(String name, String taxpayerIdentificationNumber) {
+  public Buyer(String name, String taxpayerIdentificationNumber) {
     this.name = name;
     this.taxpayerIdentificationNumber = taxpayerIdentificationNumber;
   }
@@ -28,5 +28,4 @@ public class Seller {
   public void setTaxpayerIdentificationNumber(String taxpayerIdentificationNumber) {
     this.taxpayerIdentificationNumber = taxpayerIdentificationNumber;
   }
-
 }

@@ -1,7 +1,7 @@
 package pl.coderstrust.model;
 
 import pl.coderstrust.database.Database;
-import pl.coderstrust.database.file.GeneratorId;
+import pl.coderstrust.model.invoiceModel.Invoice;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class InvoiceBook {
   }
 
   public List<Invoice> getInvoices() throws Exception {
-    return database.getInvoicesUnsorted();
+    return database.getInvoices();
   }
 
   public void addInvoices(Invoice invoice) throws Exception {

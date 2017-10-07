@@ -3,11 +3,10 @@ package pl.coderstrust.database.file;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
-import pl.coderstrust.model.Invoice;
+import pl.coderstrust.model.invoiceModel.Invoice;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,18 +44,9 @@ public class InFileDatabase implements Database {
         .saveToFile(jsonHelper.convertInvoiceObjectToJsonAsString(invoice), myFileDatabase);
   }
 
+
   @Override
   public List<Invoice> getInvoices() {
-
-    List<Invoice> listToSort = jsonHelper
-        .convertListOfStringsRepresentingInvoiceAsJsonToListOfInvoices(
-            fileProcessor.readFromFile(myFileDatabase));
-//    Collections.sort(listToSort);
-    return listToSort;
-  }
-
-  @Override
-  public List<Invoice> getInvoicesUnsorted() {
     return jsonHelper.convertListOfStringsRepresentingInvoiceAsJsonToListOfInvoices(
         fileProcessor.readFromFile(myFileDatabase));
   }
@@ -85,7 +75,7 @@ public class InFileDatabase implements Database {
   @Override
   public void deleteInvoice(int id) {
 
-    Iterator<Invoice> invoiceIterator = getInvoicesUnsorted().iterator();
+    Iterator<Invoice> invoiceIterator = this.getInvoices().iterator();
     fileProcessor.clearTheFile(myFileDatabase);
     while (invoiceIterator.hasNext()) {
       Invoice invoice = invoiceIterator.next();
@@ -100,7 +90,7 @@ public class InFileDatabase implements Database {
   @Override
   public void updateInvoice(int id, Invoice invoice) {
 
-    Iterator<Invoice> invoiceIterator = getInvoicesUnsorted().iterator();
+    Iterator<Invoice> invoiceIterator = this.getInvoices().iterator();
     fileProcessor.clearTheFile(myFileDatabase);
     while (invoiceIterator.hasNext()) {
       Invoice in = invoiceIterator.next();

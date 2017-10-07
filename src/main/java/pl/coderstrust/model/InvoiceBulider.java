@@ -1,5 +1,10 @@
 package pl.coderstrust.model;
 
+import pl.coderstrust.model.invoiceModel.Buyer;
+import pl.coderstrust.model.invoiceModel.Entry;
+import pl.coderstrust.model.invoiceModel.Invoice;
+import pl.coderstrust.model.invoiceModel.Seller;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;

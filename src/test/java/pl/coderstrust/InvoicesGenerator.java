@@ -1,6 +1,6 @@
 package pl.coderstrust;
 
-import pl.coderstrust.model.Invoice;
+import pl.coderstrust.model.invoiceModel.Invoice;
 import pl.coderstrust.model.InvoiceBulider;
 
 import java.time.LocalDate;

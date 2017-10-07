@@ -13,7 +13,9 @@ import pl.coderstrust.database.file.FileProcessor;
 import pl.coderstrust.database.file.GeneratorId;
 import pl.coderstrust.database.file.InFileDatabase;
 import pl.coderstrust.database.file.JsonHelper;
+import pl.coderstrust.database.file.MapperConfig;
 import pl.coderstrust.database.memory.InMemoryDatabase;
+import pl.coderstrust.model.invoiceModel.Invoice;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -52,7 +54,7 @@ public class InvoiceBookTest {
         .withLocalDate(LocalDate.of(2016, 7, 15))
         .build();
 
-    when(databaseMock.getInvoicesUnsorted()).thenReturn(Collections.singletonList(invoice));
+    when(databaseMock.getInvoices()).thenReturn(Collections.singletonList(invoice));
 
     // when
     invoiceBook.addInvoices(invoice);
@@ -70,9 +72,10 @@ public class InvoiceBookTest {
   public void shouldCheckExpectedIdNumbersWithFileDataBase() throws Exception {
     // given
     File fileForTests = new File("src\\test\\resources\\invoiceBookTest.json");
-    File fileIdforTests = new File("src\\test\\resources\\idTest.json");
+    MapperConfig mapperConfig = new MapperConfig();
     String testPath = fileForTests.getPath();
-    Database database = new InFileDatabase(testPath, new JsonHelper(), new FileProcessor(), new GeneratorId(new FileProcessor()));
+    Database database = new InFileDatabase(testPath, new JsonHelper(),
+        new FileProcessor(), new GeneratorId(new FileProcessor()));
     InvoiceBook invoiceBook = new InvoiceBook(database);
 
     Invoice invoice1 = new InvoiceBulider()

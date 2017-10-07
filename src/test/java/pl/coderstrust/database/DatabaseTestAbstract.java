@@ -2,7 +2,7 @@ package pl.coderstrust.database;
 
 import org.junit.Test;
 import pl.coderstrust.InvoicesGenerator;
-import pl.coderstrust.model.Invoice;
+import pl.coderstrust.model.invoiceModel.Invoice;
 import pl.coderstrust.model.InvoiceBulider;
 import pl.coderstrust.model.InvoiceBulider.BuyerBulider;
 import pl.coderstrust.model.InvoiceBulider.EntryBulider;
