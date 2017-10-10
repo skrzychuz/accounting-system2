@@ -3,10 +3,8 @@ package pl.coderstrust.database.file;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import pl.coderstrust.InvoicesGenerator;
@@ -30,10 +28,9 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
     InvoicesGenerator invoicesGenerator = new InvoicesGenerator();
 
 
-
     @Override
     protected Database getDatabase() {
-        return new InFileDatabase(databaseFilesPaths.testDataBase, new JsonHelper(),
+        return new InFileDatabase(new File (databaseFilesPaths.testDataBase), new JsonHelper(),
                 new FileProcessor(), new GeneratorId(new FileProcessor()));
 
     }
@@ -51,7 +48,7 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
         cleaner();
         Database database = getDatabase();
         List<Invoice> invoicesInOrder = invoicesGenerator
-                .invoiceGeneratorFor30DaysInJanuary2016InSuccessionWithID();
+                .genereataListOfInvoicesFromJanuary2016IWithSuccessionId();
 
         for (Invoice invoice : invoicesInOrder) {
             database.saveInvoice(invoice);
@@ -62,9 +59,9 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
         database.deleteInvoice(7);
 
         // then
-        assertTrue(database.getInvoicesUnsorted().size() == 29);
-        assertEquals(6, (database.getInvoicesUnsorted().get(5).getId()));
-        assertEquals(8, (database.getInvoicesUnsorted().get(6).getId()));
+        assertTrue(database.getInvoices().size() == 29);
+        assertEquals(6, (database.getInvoices().get(5).getId()));
+        assertEquals(8, (database.getInvoices().get(6).getId()));
 
     }
 
@@ -74,7 +71,7 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
         cleaner();
         Database database = getDatabase();
         List<Invoice> invoicesInOrder = invoicesGenerator
-            .invoiceGeneratorFor30DaysInJanuary2016InSuccessionWithID();
+            .genereataListOfInvoicesFromJanuary2016IWithSuccessionId();
 
         for (Invoice invoice : invoicesInOrder) {
             database.saveInvoice(invoice);
@@ -85,9 +82,9 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
         database.deleteInvoice(7);
 
         // then
-        assertTrue(database.getInvoicesUnsorted().size() == 29);
-        assertEquals(6, (database.getInvoicesUnsorted().get(5).getId()));
-        assertEquals(8, (database.getInvoicesUnsorted().get(6).getId()));
+        assertTrue(database.getInvoices().size() == 29);
+        assertEquals(6, (database.getInvoices().get(5).getId()));
+        assertEquals(8, (database.getInvoices().get(6).getId()));
 
     }
 }

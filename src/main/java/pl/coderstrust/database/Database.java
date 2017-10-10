@@ -12,8 +12,6 @@ public interface Database {
 
   List<Invoice> getInvoices();
 
-  List<Invoice> getInvoicesUnsorted();
-
   List<Invoice> getListOfInvoicesFromGivenPeriod(LocalDate fromDate, LocalDate toDate);
 
   int setUniqueId();

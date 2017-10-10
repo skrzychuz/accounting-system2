@@ -13,7 +13,7 @@ public class InvoicesGenerator {
   /**
    * asdf.
    */
-  public List<Invoice> invoicesGeneratorWithRandomDateFrom2016(int listSize) {
+  public List<Invoice> generateListOfInvoicesWithRandomDatesIn2016(int listSize) {
     List<Invoice> randomInvoices = new ArrayList<>();
 
     for (int i = 0; i < listSize; i++) {
@@ -35,7 +35,7 @@ public class InvoicesGenerator {
   /**
    * asdf.
    */
-  public List<Invoice> invoiceGeneratorFor30DaysInJanuary2016InSuccessionWithID() {
+  public List<Invoice> genereataListOfInvoicesFromJanuary2016IWithSuccessionId() {
 
     List<Invoice> invoicesInSuccession = new ArrayList<>();
 

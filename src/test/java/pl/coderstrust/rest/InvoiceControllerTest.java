@@ -24,6 +24,7 @@ import pl.coderstrust.database.file.InFileDatabase;
 import pl.coderstrust.database.file.JsonHelper;
 import pl.coderstrust.model.Invoice;
 import pl.coderstrust.model.Invoice.Builder;
+import pl.coderstrust.model.InvoiceBook;
 
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
@@ -33,7 +34,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(InvoiceController.class)
-public class WebMockTest {
+public class InvoiceControllerTest {
 
   List<Invoice> listOfInvoice = new ArrayList<>();
 
@@ -48,6 +49,8 @@ public class WebMockTest {
   private JsonHelper jsonHelperMock;
   @MockBean
   private InFileDatabase inFileDatabase;
+  @MockBean
+  private InvoiceBook invoiceBook;
 
   @Test
   public void shouldAddInvoiceToDatabase() throws Exception {
@@ -84,7 +87,7 @@ public class WebMockTest {
     toTestList.add(invoice1);
     toTestList.add(invoice2);
 
-    when(inFileDatabase.getInvoicesUnsorted()).thenReturn(toTestList);
+    when(invoiceBook.getInvoices()).thenReturn(toTestList);
 
     this.mockMvc.perform(get("/invoices"))
         .andDo(print())
@@ -116,7 +119,7 @@ public class WebMockTest {
     toTestList.add(invoice1);
     toTestList.add(invoice2);
 
-    when(inFileDatabase.getInvoicesUnsorted()).thenReturn(toTestList);
+    when(invoiceBook.getInvoices()).thenReturn(toTestList);
 
     this.mockMvc.perform(get("/invoices/" + 5))
         .andDo(print())

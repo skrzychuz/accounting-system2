@@ -92,6 +92,59 @@ public class Invoice implements Comparable<Invoice> {
     return 0;
   }
 
+  @Override
+  public String toString() {
+    return "Invoice{" +
+        "id=" + id +
+        ", description='" + description + '\'' +
+        ", amount=" + amount +
+        ", vatRate=" + vatRate +
+        ", vatAmount=" + vatAmount +
+        ", localDate=" + localDate +
+        '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    Invoice invoice = (Invoice) o;
+
+    if (id != invoice.id) {
+      return false;
+    }
+    if (description != null ? !description.equals(invoice.description)
+        : invoice.description != null) {
+      return false;
+    }
+    if (amount != null ? !amount.equals(invoice.amount) : invoice.amount != null) {
+      return false;
+    }
+    if (vatRate != null ? !vatRate.equals(invoice.vatRate) : invoice.vatRate != null) {
+      return false;
+    }
+    if (vatAmount != null ? !vatAmount.equals(invoice.vatAmount) : invoice.vatAmount != null) {
+      return false;
+    }
+    return localDate != null ? localDate.equals(invoice.localDate) : invoice.localDate == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = id;
+    result = 31 * result + (description != null ? description.hashCode() : 0);
+    result = 31 * result + (amount != null ? amount.hashCode() : 0);
+    result = 31 * result + (vatRate != null ? vatRate.hashCode() : 0);
+    result = 31 * result + (vatAmount != null ? vatAmount.hashCode() : 0);
+    result = 31 * result + (localDate != null ? localDate.hashCode() : 0);
+    return result;
+  }
+
   public static class Builder {
 
     private String description;

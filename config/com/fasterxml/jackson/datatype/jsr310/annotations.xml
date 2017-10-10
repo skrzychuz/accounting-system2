@@ -1,5 +1,0 @@
-<root>
-  <item name='com.fasterxml.jackson.datatype.jsr310.JavaTimeModule'>
-    <annotation name='java.lang.Deprecated'/>
-  </item>
-</root>

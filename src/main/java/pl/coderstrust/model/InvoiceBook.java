@@ -1,10 +1,11 @@
 package pl.coderstrust.model;
 
+import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
-import pl.coderstrust.database.file.GeneratorId;
 
 import java.util.List;
 
+@Service
 public class InvoiceBook {
 
   private final Database database;
@@ -15,7 +16,7 @@ public class InvoiceBook {
   }
 
   public List<Invoice> getInvoices() throws Exception {
-    return database.getInvoicesUnsorted();
+    return database.getInvoices();
   }
 
   public void addInvoices(Invoice invoice) throws Exception {

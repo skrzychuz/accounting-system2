@@ -1,5 +1,6 @@
 package pl.coderstrust.rest;
 
+import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,17 +22,22 @@ import java.util.stream.Collectors;
 @RestController
 public class InvoiceController {
 
+
   private InvoiceBook invoiceBookDatabase;
 
-  @Autowired
-  InvoiceController(Database database) {
-    this.invoiceBookDatabase = new InvoiceBook(database);
-  }
+//  @Autowired
+//  InvoiceBook invoiceBookDatabase;
+////
+////  @Autowired
+////  Database database;
+////
+////  public InvoiceController() {
+////
+////  }
 
-  @RequestMapping("/")
-  @ResponseBody
-  String greeting() {
-    return "Hello World";
+    InvoiceController(InvoiceBook invoiceBook) {
+    this.invoiceBookDatabase = invoiceBook;
+
   }
 
   /**
