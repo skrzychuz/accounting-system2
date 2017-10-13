@@ -1,10 +1,13 @@
 package pl.coderstrust.model.invoiceModel;
 
+import pl.coderstrust.model.invoiceVisitorPattern.InvoiceVisitable;
+import pl.coderstrust.model.invoiceVisitorPattern.InvoiceVisitor;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Invoice {
+public class Invoice implements InvoiceVisitable {
 
   private Seller seller;
   private Buyer buyer;
@@ -29,15 +32,24 @@ public class Invoice {
     this.buyer = buyer;
     this.entries = entries;
     this.localDate = localDate;
+    this.amount =  this.getAmountFromEntries(entries);
+    this.vatAmount = this.getVatAmountFromEntries(entries);
+  }
 
-    for (Entry e : entries) {
-      this.amount = e.getAmount();
-      this.vatAmount = e.getVatAmount();
+  public BigDecimal getAmountFromEntries(List<Entry> entryList) {
+    BigDecimal amountFromEntries = BigDecimal.valueOf(0);
+    for (Entry e : entryList) {
+      amountFromEntries = amountFromEntries.add(e.getAmount());
     }
-    for (Entry e : entries) {
-      this.amount = e.getAmount();
-    }
+    return amountFromEntries;
+  }
 
+  public BigDecimal getVatAmountFromEntries(List<Entry> entryList) {
+    BigDecimal amountFromEntries = BigDecimal.valueOf(0);
+    for (Entry e : entryList) {
+      amountFromEntries = amountFromEntries.add(e.getVatAmount());
+    }
+    return amountFromEntries;
   }
 
   public Seller getSeller() {
@@ -107,6 +119,12 @@ public class Invoice {
         + ", vatAmount=" + vatAmount
         + ", localDate=" + localDate
         + '}';
+  }
+
+  @Override
+  public BigDecimal accept(InvoiceVisitor invoiceVisitor) {
+    return invoiceVisitor.visit(this);
+
   }
 }
 
