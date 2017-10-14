@@ -24,7 +24,6 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
     File fileForTests = new File("src\\test\\resources\\dataForTest.json");
     File fileidtest = new File("src\\test\\resources\\idtest.json");
     public String testPath = fileForTests.getPath();
-    DatabaseFilesPaths databaseFilesPaths = new DatabaseFilesPaths();
     InvoicesGenerator invoicesGenerator = new InvoicesGenerator();
 
 
