@@ -30,8 +30,8 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
 
     @Override
     protected Database getDatabase() {
-        return new InFileDatabase(new File (databaseFilesPaths.testDataBase), new JsonHelper(),
-                new FileProcessor(), new GeneratorId(new FileProcessor()));
+        return new InFileDatabase(new File ("src\\test\\resources\\dataForTest.json"), new JsonHelper(),
+                new FileProcessor(), new IdGenerator(new FileProcessor()));
 
     }
 
@@ -48,7 +48,7 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
         cleaner();
         Database database = getDatabase();
         List<Invoice> invoicesInOrder = invoicesGenerator
-                .genereataListOfInvoicesFromJanuary2016IWithSuccessionId();
+                .genereataListOfInvoicesFromJanuary2016WithSuccessionId();
 
         for (Invoice invoice : invoicesInOrder) {
             database.saveInvoice(invoice);
@@ -71,7 +71,7 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
         cleaner();
         Database database = getDatabase();
         List<Invoice> invoicesInOrder = invoicesGenerator
-            .genereataListOfInvoicesFromJanuary2016IWithSuccessionId();
+            .genereataListOfInvoicesFromJanuary2016WithSuccessionId();
 
         for (Invoice invoice : invoicesInOrder) {
             database.saveInvoice(invoice);

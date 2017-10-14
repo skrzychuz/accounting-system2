@@ -25,16 +25,6 @@ public class InvoiceController {
 
   private InvoiceBook invoiceBookDatabase;
 
-//  @Autowired
-//  InvoiceBook invoiceBookDatabase;
-////
-////  @Autowired
-////  Database database;
-////
-////  public InvoiceController() {
-////
-////  }
-
     InvoiceController(InvoiceBook invoiceBook) {
     this.invoiceBookDatabase = invoiceBook;
 

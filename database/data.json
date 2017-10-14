@@ -1,5 +1,8 @@
-{"id":1,"description":"new  with old ID!!PUT","amount":null,"vatRate":null,"vatAmount":null,"localDate":[2016,10,3]}
-{"id":2,"description":"new  with old ID!!PUT","amount":null,"vatRate":null,"vatAmount":null,"localDate":[2016,10,3]}
+{"id":1,"description":"modify!!","amount":null,"vatRate":null,"vatAmount":null,"localDate":[2016,10,3]}
+{"id":2,"description":"modify!!","amount":null,"vatRate":null,"vatAmount":null,"localDate":[2016,10,3]}
 {"id":4,"description":"modify!!","amount":null,"vatRate":null,"vatAmount":null,"localDate":[2016,10,3]}
-{"id":6,"description":"new  with old ID!!PUT","amount":null,"vatRate":null,"vatAmount":null,"localDate":[2016,10,3]}
-{"id":7,"description":"new  with old ID!!PUT","amount":null,"vatRate":null,"vatAmount":null,"localDate":[2016,10,3]}
+{"id":5,"description":"modify!!","amount":null,"vatRate":null,"vatAmount":null,"localDate":[2016,10,3]}
+{"id":6,"description":"modify!!","amount":null,"vatRate":null,"vatAmount":null,"localDate":[2016,10,3]}
+{"id":7,"description":"modify!!","amount":null,"vatRate":null,"vatAmount":null,"localDate":[2016,10,3]}
+{"id":1,"description":"modify!!","amount":null,"vatRate":null,"vatAmount":null,"localDate":[2016,10,3]}
+{"id":2,"description":"modify!!","amount":null,"vatRate":null,"vatAmount":null,"localDate":[2016,10,3]}

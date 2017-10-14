@@ -20,7 +20,7 @@ public class InvoiceBook {
   }
 
   public void addInvoices(Invoice invoice) throws Exception {
-    invoice.setId(database.setUniqueId());
+    invoice.setId(database.getNextInvoiceId());
     database.saveInvoice(invoice);
   }
 

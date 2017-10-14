@@ -58,4 +58,16 @@ public class FileProcessor {
       e.printStackTrace();
     }
   }
+
+  void saveIdToFile(String line, File file) {
+
+    try (BufferedWriter bufferedWriter = new BufferedWriter(
+        new FileWriter(file))) {
+
+      bufferedWriter.write(line);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }

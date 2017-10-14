@@ -11,7 +11,7 @@ import java.util.Random;
 public class InvoicesGenerator {
 
   /**
-   * asdf.
+   * Generate list Of Invoices With Random Dates In 2016.
    */
   public List<Invoice> generateListOfInvoicesWithRandomDatesIn2016(int listSize) {
     List<Invoice> randomInvoices = new ArrayList<>();
@@ -33,9 +33,9 @@ public class InvoicesGenerator {
   }
 
   /**
-   * asdf.
+   * Genereata List Of Invoices From January 2016 With Succession Id.
    */
-  public List<Invoice> genereataListOfInvoicesFromJanuary2016IWithSuccessionId() {
+  public List<Invoice> genereataListOfInvoicesFromJanuary2016WithSuccessionId() {
 
     List<Invoice> invoicesInSuccession = new ArrayList<>();
 

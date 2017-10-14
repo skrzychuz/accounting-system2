@@ -14,7 +14,7 @@ public interface Database {
 
   List<Invoice> getListOfInvoicesFromGivenPeriod(LocalDate fromDate, LocalDate toDate);
 
-  int setUniqueId();
+  int getNextInvoiceId();
 
   void deleteInvoice(int id);
 

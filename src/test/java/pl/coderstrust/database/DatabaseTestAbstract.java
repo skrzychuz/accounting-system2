@@ -121,7 +121,7 @@ public abstract class DatabaseTestAbstract {
     // given
     Database database = getDatabase();
     List<Invoice> invoicesInOrder = invoicesGenerator
-        .genereataListOfInvoicesFromJanuary2016IWithSuccessionId();
+        .genereataListOfInvoicesFromJanuary2016WithSuccessionId();
 
     for (Invoice invoice : invoicesInOrder) {
       database.saveInvoice(invoice);

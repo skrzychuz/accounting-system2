@@ -7,7 +7,6 @@ import pl.coderstrust.model.Invoice;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,24 +17,24 @@ public class InFileDatabase implements Database {
   private final File myFileDatabase;
   private final JsonHelper jsonHelper;
   private final FileProcessor fileProcessor;
-  private final GeneratorId generatorId;
+  private final IdGenerator idGenerator;
 
 
   /**
    * Constructor.
    */
   public InFileDatabase(File path, JsonHelper jsonHelper, FileProcessor fileProcessor,
-      GeneratorId generatorId) {
+      IdGenerator idGenerator) {
     this.jsonHelper = jsonHelper;
     this.fileProcessor = fileProcessor;
-    this.generatorId = generatorId;
+    this.idGenerator = idGenerator;
     this.myFileDatabase = path;
   }
 
   @Autowired
   public InFileDatabase(JsonHelper jsonHelper, FileProcessor fileProcessor,
-      GeneratorId generatorId) {
-    this(new File("database\\data.json"), jsonHelper, fileProcessor, generatorId);
+      IdGenerator idGenerator) {
+    this(new File("database\\data.json"), jsonHelper, fileProcessor, idGenerator);
   }
 
   @Override
@@ -69,8 +68,8 @@ public class InFileDatabase implements Database {
   }
 
   @Override
-  public int setUniqueId() {
-    return (generatorId.generateNewId());
+  public int getNextInvoiceId() {
+    return idGenerator.generateNewId();
   }
 
 

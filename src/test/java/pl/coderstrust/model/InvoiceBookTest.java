@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.database.file.FileProcessor;
-import pl.coderstrust.database.file.GeneratorId;
+import pl.coderstrust.database.file.IdGenerator;
 import pl.coderstrust.database.file.InFileDatabase;
 import pl.coderstrust.database.file.JsonHelper;
 import pl.coderstrust.database.memory.InMemoryDatabase;
@@ -75,7 +75,8 @@ public class InvoiceBookTest {
     File fileIdforTests = new File("src\\test\\resources\\idTest.json");
     String testPath = fileForTests.getPath();
     Database database = new InFileDatabase(new File(testPath), new JsonHelper(),
-        new FileProcessor(), new GeneratorId(new FileProcessor()));
+        new FileProcessor(), new IdGenerator(new FileProcessor()));
+
     InvoiceBook invoiceBook = new InvoiceBook(database);
 
     Invoice invoice1 = new Builder()

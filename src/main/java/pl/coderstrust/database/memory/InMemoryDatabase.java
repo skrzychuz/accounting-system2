@@ -34,7 +34,7 @@ public class InMemoryDatabase implements Database {
   }
 
   @Override
-  public int setUniqueId() {
+  public int getNextInvoiceId() {
     return 0;
   }
 
