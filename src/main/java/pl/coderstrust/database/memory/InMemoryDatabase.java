@@ -1,7 +1,9 @@
 package pl.coderstrust.database.memory;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
-import pl.coderstrust.model.Invoice;
+import pl.coderstrust.model.invoiceModel.Invoice;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@Service
+@ConditionalOnProperty(name = "pl.coderstrust.database", havingValue = "inMemoryDatabase")
 public class InMemoryDatabase implements Database {
 
   private final List<Invoice> listOfInovice = new ArrayList<>();
@@ -25,6 +27,7 @@ public class InMemoryDatabase implements Database {
     return Collections.unmodifiableList(listOfInovice);
   }
 
+
   @Override
   public List<Invoice> getListOfInvoicesFromGivenPeriod(LocalDate fromDate, LocalDate toDate) {
     return listOfInovice.stream()
@@ -34,15 +37,15 @@ public class InMemoryDatabase implements Database {
   }
 
   @Override
-  public int getNextInvoiceId() {
+  public int setUniqueId() {
     return 0;
   }
-
+///////////////////////////////////////////////
 
   @Override
   public void deleteInvoice(int id) {
 
-    Iterator<Invoice> invoiceIterator = getInvoices().iterator();
+    Iterator<Invoice> invoiceIterator = this.getInvoices().iterator();
     while (invoiceIterator.hasNext()) {
       if (invoiceIterator.next().getId() == id) {
         invoiceIterator.remove();

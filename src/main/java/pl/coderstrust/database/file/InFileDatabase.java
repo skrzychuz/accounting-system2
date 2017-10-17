@@ -7,6 +7,7 @@ import pl.coderstrust.model.Invoice;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,40 +18,40 @@ public class InFileDatabase implements Database {
   private final File myFileDatabase;
   private final JsonHelper jsonHelper;
   private final FileProcessor fileProcessor;
-  private final IdGenerator idGenerator;
+  private final GeneratorId generatorId;
 
 
   /**
    * Constructor.
    */
-  public InFileDatabase(File path, JsonHelper jsonHelper, FileProcessor fileProcessor,
-      IdGenerator idGenerator) {
+  @Autowired
+  public InFileDatabase(@Value("${pl.coderstrust.file.path}")
+      String filePath, JsonHelper jsonHelper, FileProcessor fileProcessor,
+      GeneratorId generatorId) {
+
     this.jsonHelper = jsonHelper;
     this.fileProcessor = fileProcessor;
-    this.idGenerator = idGenerator;
-    this.myFileDatabase = path;
+    this.generatorId = generatorId;
+    this.myFileDatabase = new File(filePath);
   }
 
-  @Autowired
-  public InFileDatabase(JsonHelper jsonHelper, FileProcessor fileProcessor,
-      IdGenerator idGenerator) {
-    this(new File("database\\data.json"), jsonHelper, fileProcessor, idGenerator);
-  }
+//  public InFileDatabase(JsonHelper jsonHelper, FileProcessor fileProcessor,
+//      GeneratorId generatorId) {
+//    this("database\\data.json", jsonHelper, fileProcessor, generatorId);
+//  }
 
   @Override
   public void saveInvoice(Invoice invoice) {
+
     fileProcessor
         .saveToFile(jsonHelper.convertInvoiceObjectToJsonAsString(invoice), myFileDatabase);
   }
 
   @Override
   public List<Invoice> getInvoices() {
-    List<Invoice> listToSort = jsonHelper
-        .convertListOfStringsRepresentingInvoiceAsJsonToListOfInvoices(
-            fileProcessor.readFromFile(myFileDatabase));
-    return listToSort;
+    return jsonHelper.convertListOfStringsRepresentingInvoiceAsJsonToListOfInvoices(
+        fileProcessor.readFromFile(myFileDatabase));
   }
-
 
   @Override
   public List<Invoice> getListOfInvoicesFromGivenPeriod(LocalDate fromDate, LocalDate toDate) {
@@ -68,15 +69,15 @@ public class InFileDatabase implements Database {
   }
 
   @Override
-  public int getNextInvoiceId() {
-    return idGenerator.generateNewId();
+  public int setUniqueId() {
+    return (generatorId.generateNewId());
   }
 
 
   @Override
   public void deleteInvoice(int id) {
 
-    Iterator<Invoice> invoiceIterator = getInvoices().iterator();
+    Iterator<Invoice> invoiceIterator = this.getInvoices().iterator();
     fileProcessor.clearTheFile(myFileDatabase);
     while (invoiceIterator.hasNext()) {
       Invoice invoice = invoiceIterator.next();
@@ -91,7 +92,7 @@ public class InFileDatabase implements Database {
   @Override
   public void updateInvoice(int id, Invoice invoice) {
 
-    Iterator<Invoice> invoiceIterator = getInvoices().iterator();
+    Iterator<Invoice> invoiceIterator = this.getInvoices().iterator();
     fileProcessor.clearTheFile(myFileDatabase);
     while (invoiceIterator.hasNext()) {
       Invoice in = invoiceIterator.next();

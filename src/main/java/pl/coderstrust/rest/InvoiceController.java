@@ -11,23 +11,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.coderstrust.database.Database;
-import pl.coderstrust.model.Invoice;
+import pl.coderstrust.model.invoiceModel.Invoice;
 import pl.coderstrust.model.InvoiceBook;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 public class InvoiceController {
 
-
   private InvoiceBook invoiceBookDatabase;
 
-    InvoiceController(InvoiceBook invoiceBook) {
+  @Autowired
+  InvoiceController(InvoiceBook invoiceBook) {
     this.invoiceBookDatabase = invoiceBook;
+  }
 
+  @RequestMapping("/")
+  @ResponseBody
+  String greeting() {
+    return "Hello World";
   }
 
   /**
