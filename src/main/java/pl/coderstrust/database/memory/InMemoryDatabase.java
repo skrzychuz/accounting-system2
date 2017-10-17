@@ -1,5 +1,7 @@
 package pl.coderstrust.database.memory;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.model.invoiceModel.Invoice;
 
@@ -10,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@Service
+@ConditionalOnProperty(name = "pl.coderstrust.database", havingValue = "inMemoryDatabase")
 public class InMemoryDatabase implements Database {
 
   private final List<Invoice> listOfInovice = new ArrayList<>();

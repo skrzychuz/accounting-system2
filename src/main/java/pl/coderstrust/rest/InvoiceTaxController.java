@@ -1,5 +1,6 @@
 package pl.coderstrust.rest;
 
+import javax.annotation.Resource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,6 @@ import java.util.stream.Collectors;
 
 @RestController
 public class InvoiceTaxController {
-
 
   private InvoiceBook invoiceBookDatabase;
   private InvoiceIncome invoiceIncome;

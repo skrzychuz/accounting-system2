@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Value;
 import pl.coderstrust.InvoicesGenerator;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.database.DatabaseTestAbstract;
@@ -21,23 +22,19 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
 
   FileProcessor fileProcessorMock = mock(FileProcessor.class);
   JsonHelper jsonHelperMock = mock(JsonHelper.class);
-  File fileForTests = new File("src\\test\\resources\\dataForTest.json");
-  public String testPath = fileForTests.getPath();
-  File fileidtest = new File("src\\test\\resources\\idtest.json");
-  DatabaseFilesPaths databaseFilesPaths = new DatabaseFilesPaths();
-  InvoicesGenerator invoicesGenerator = new InvoicesGenerator();
-  MapperConfig mapperConfig = new MapperConfig();
 
+  private InvoicesGenerator invoicesGenerator = new InvoicesGenerator();
+  private String testDataBase = "src\\test\\resources\\dataForTest.json";
 
   @Override
   protected Database getDatabase() {
-    return new InFileDatabase(databaseFilesPaths.testDataBase, new JsonHelper(),
+    return new InFileDatabase(testDataBase, new JsonHelper(),
         new FileProcessor(), new GeneratorId(new FileProcessor()));
   }
 
   @Before
   public void cleaner() throws IOException {
-    FileWriter fileWriter = new FileWriter(testPath);
+    FileWriter fileWriter = new FileWriter(testDataBase);
     fileWriter.write("");
     fileWriter.close();
   }

@@ -1,6 +1,9 @@
 package pl.coderstrust.database.file;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.model.invoiceModel.Invoice;
@@ -10,8 +13,8 @@ import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
-
 @Service
+@ConditionalOnProperty(name = "pl.coderstrust.database", havingValue = "inFileDatabase")
 public class InFileDatabase implements Database {
 
   private final File myFileDatabase;
@@ -19,23 +22,24 @@ public class InFileDatabase implements Database {
   private final FileProcessor fileProcessor;
   private final GeneratorId generatorId;
 
-
   /**
    * Constructor.
    */
-  public InFileDatabase(String path, JsonHelper jsonHelper, FileProcessor fileProcessor,
+  @Autowired
+  public InFileDatabase(@Value("${pl.coderstrust.file.path}")
+      String filePath, JsonHelper jsonHelper, FileProcessor fileProcessor,
       GeneratorId generatorId) {
+
     this.jsonHelper = jsonHelper;
     this.fileProcessor = fileProcessor;
     this.generatorId = generatorId;
-    this.myFileDatabase = new File(path);
+    this.myFileDatabase = new File(filePath);
   }
 
-  @Autowired
-  public InFileDatabase(JsonHelper jsonHelper, FileProcessor fileProcessor,
-      GeneratorId generatorId) {
-    this("database\\data.json", jsonHelper, fileProcessor, generatorId);
-  }
+//  public InFileDatabase(JsonHelper jsonHelper, FileProcessor fileProcessor,
+//      GeneratorId generatorId) {
+//    this("database\\data.json", jsonHelper, fileProcessor, generatorId);
+//  }
 
   @Override
   public void saveInvoice(Invoice invoice) {
