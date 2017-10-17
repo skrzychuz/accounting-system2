@@ -1,14 +1,19 @@
 package pl.coderstrust.model;
 
+import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.model.invoiceModel.Invoice;
+import pl.coderstrust.model.invoiceVisitorPattern.InvoiceBookVisitable;
 import pl.coderstrust.model.invoiceVisitorPattern.InvoiceVisitable;
 import pl.coderstrust.model.invoiceVisitorPattern.InvoiceVisitor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class InvoiceBook implements InvoiceVisitable {
+@Service
+public class InvoiceBook implements InvoiceBookVisitable {
 
   private final Database database;
 
@@ -34,10 +39,20 @@ public class InvoiceBook implements InvoiceVisitable {
     database.updateInvoice(id, invoice);
   }
 
+  public List<Invoice> filterInvoiceByDateFromGivenPeriod(LocalDate dateFrom, LocalDate dateTo) {
+    return getInvoices()
+        .stream()
+        .filter(
+            invoice -> dateFrom == null || invoice.getLocalDate().isAfter(dateFrom.minusDays(1)))
+        .filter(invoice -> dateTo == null || invoice.getLocalDate().isBefore(dateTo.plusDays(1)))
+        .collect(Collectors.toList());
+
+  }
+
   @Override
-  public BigDecimal accept(InvoiceVisitor invoiceVisitor) {
+  public BigDecimal accept(InvoiceVisitor invoiceVisitor, List<Invoice> invoicesList) {
     BigDecimal valueToReturn = BigDecimal.valueOf(0);
-    for (Invoice invoice : getInvoices()) {
+    for (Invoice invoice : invoicesList) {
       valueToReturn = valueToReturn.add(invoice.accept(invoiceVisitor));
     }
     return valueToReturn;
