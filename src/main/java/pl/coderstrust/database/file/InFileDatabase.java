@@ -1,9 +1,10 @@
 package pl.coderstrust.database.file;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
-import pl.coderstrust.model.Invoice;
+import pl.coderstrust.model.invoiceModel.Invoice;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -19,38 +20,32 @@ public class InFileDatabase implements Database {
   private final FileProcessor fileProcessor;
   private final IdGenerator idGenerator;
 
-
   /**
    * Constructor.
    */
-  public InFileDatabase(File path, JsonHelper jsonHelper, FileProcessor fileProcessor,
-      IdGenerator idGenerator) {
+  @Autowired
+  public InFileDatabase(@Value("${pl.coderstrust.file.path}")
+      String filePath, JsonHelper jsonHelper, FileProcessor fileProcessor,
+      IdGenerator generatorId) {
+
     this.jsonHelper = jsonHelper;
     this.fileProcessor = fileProcessor;
-    this.idGenerator = idGenerator;
-    this.myFileDatabase = path;
-  }
-
-  @Autowired
-  public InFileDatabase(JsonHelper jsonHelper, FileProcessor fileProcessor,
-      IdGenerator idGenerator) {
-    this(new File("database\\data.json"), jsonHelper, fileProcessor, idGenerator);
+    this.idGenerator = generatorId;
+    this.myFileDatabase = new File(filePath);
   }
 
   @Override
   public void saveInvoice(Invoice invoice) {
+
     fileProcessor
         .saveToFile(jsonHelper.convertInvoiceObjectToJsonAsString(invoice), myFileDatabase);
   }
 
   @Override
   public List<Invoice> getInvoices() {
-    List<Invoice> listToSort = jsonHelper
-        .convertListOfStringsRepresentingInvoiceAsJsonToListOfInvoices(
-            fileProcessor.readFromFile(myFileDatabase));
-    return listToSort;
+    return jsonHelper.convertListOfStringsRepresentingInvoiceAsJsonToListOfInvoices(
+        fileProcessor.readFromFile(myFileDatabase));
   }
-
 
   @Override
   public List<Invoice> getListOfInvoicesFromGivenPeriod(LocalDate fromDate, LocalDate toDate) {
@@ -69,14 +64,13 @@ public class InFileDatabase implements Database {
 
   @Override
   public int getNextInvoiceId() {
-    return idGenerator.generateNewId();
+    return (idGenerator.generateNewId());
   }
-
 
   @Override
   public void deleteInvoice(int id) {
 
-    Iterator<Invoice> invoiceIterator = getInvoices().iterator();
+    Iterator<Invoice> invoiceIterator = this.getInvoices().iterator();
     fileProcessor.clearTheFile(myFileDatabase);
     while (invoiceIterator.hasNext()) {
       Invoice invoice = invoiceIterator.next();
@@ -91,7 +85,7 @@ public class InFileDatabase implements Database {
   @Override
   public void updateInvoice(int id, Invoice invoice) {
 
-    Iterator<Invoice> invoiceIterator = getInvoices().iterator();
+    Iterator<Invoice> invoiceIterator = this.getInvoices().iterator();
     fileProcessor.clearTheFile(myFileDatabase);
     while (invoiceIterator.hasNext()) {
       Invoice in = invoiceIterator.next();

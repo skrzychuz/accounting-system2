@@ -2,9 +2,15 @@ package pl.coderstrust.database;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import pl.coderstrust.InvoicesGenerator;
-import pl.coderstrust.model.Invoice;
-import pl.coderstrust.model.Invoice.Builder;
+import pl.coderstrust.model.invoiceModel.Invoice;
+import pl.coderstrust.model.InvoiceBulider;
+import pl.coderstrust.model.InvoiceBulider.BuyerBulider;
+import pl.coderstrust.model.InvoiceBulider.EntryBulider;
+import pl.coderstrust.model.InvoiceBulider.SellerBulider;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,6 +18,8 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public abstract class DatabaseTestAbstract {
 
   private InvoicesGenerator invoicesGenerator = new InvoicesGenerator();
@@ -21,19 +29,68 @@ public abstract class DatabaseTestAbstract {
   @Test
   public void shouldSaveInvoiceToDatabase() throws Exception {
     // given
-    Invoice invoice1 = new Builder()
-        .withLocalDate(LocalDate.of(2016, 7, 15))
-        .withAmount(BigDecimal.TEN)
-        .withVatRate(BigDecimal.TEN)
-        .withDescription("parowar")
+    Invoice invoice1 = new InvoiceBulider()
+        .withSeller(new SellerBulider()
+            .withName("sellername")
+            .withIdNumber("12345")
+            .bulid())
+        .withBuyer(new BuyerBulider()
+            .withName("buyer")
+            .withIdNumber("666")
+            .bulid())
+        .withEntry(new EntryBulider()
+            .withDescriiption("zielony groszek")
+            .withAmount(BigDecimal.TEN)
+            .withVatRate(20)
+            .bulid())
+        .withEntry(new EntryBulider()
+            .withDescriiption("orzechy wloskie")
+            .withAmount(BigDecimal.valueOf(150))
+            .withVatRate(20)
+            .bulid())
+        .withLocalDate(LocalDate.now())
         .build();
-
-    Invoice invoice2 = new Builder()
-        .withLocalDate(LocalDate.of(2016, 5, 15))
+    Invoice invoice2 = new InvoiceBulider()
+        .withSeller(new SellerBulider()
+            .withName("sellername")
+            .withIdNumber("12345")
+            .bulid())
+        .withBuyer(new BuyerBulider()
+            .withName("buyer")
+            .withIdNumber("666")
+            .bulid())
+        .withEntry(new EntryBulider()
+            .withDescriiption("zielony groszek")
+            .withAmount(BigDecimal.TEN)
+            .withVatRate(20)
+            .bulid())
+        .withEntry(new EntryBulider()
+            .withDescriiption("orzechy wloskie")
+            .withAmount(BigDecimal.valueOf(150))
+            .withVatRate(20)
+            .bulid())
+        .withLocalDate(LocalDate.now())
         .build();
-
-    Invoice invoice3 = new Builder()
-        .withLocalDate(LocalDate.of(2016, 6, 15))
+    Invoice invoice3 = new InvoiceBulider()
+        .withSeller(new SellerBulider()
+            .withName("sellername")
+            .withIdNumber("12345")
+            .bulid())
+        .withBuyer(new BuyerBulider()
+            .withName("buyer")
+            .withIdNumber("666")
+            .bulid())
+        .withEntry(new EntryBulider()
+            .withDescriiption("zielony groszek")
+            .withAmount(BigDecimal.TEN)
+            .withVatRate(20)
+            .bulid())
+        .withEntry(new EntryBulider()
+            .withDescriiption("orzechy wloskie")
+            .withAmount(BigDecimal.valueOf(150))
+            .withVatRate(20)
+            .bulid())
+        .withLocalDate(LocalDate.now())
         .build();
 
     Database database = getDatabase();
@@ -48,16 +105,13 @@ public abstract class DatabaseTestAbstract {
     // then
     assertNotNull("should not be a null", listOfInvoice);
     assertEquals(sizeBeforeAdding + 3, database.getInvoices().size());
-    assertEquals(database.getInvoices().get(database.getInvoices().size() - 1), invoice3);
-    assertEquals(database.getInvoices().get(database.getInvoices().size() - 2), invoice2);
-    assertEquals(database.getInvoices().get(database.getInvoices().size() - 3), invoice1);
   }
 
   @Test
   public void shouldGetInvoicesFromDatabase() throws Exception {
     // given
     Database database = getDatabase();
-    Invoice invoice = new Builder()
+    Invoice invoice = new InvoiceBulider()
         .withLocalDate(LocalDate.of(2016, 2, 15))
         .build();
 
@@ -93,7 +147,7 @@ public abstract class DatabaseTestAbstract {
     }
   }
 
-  @Ignore // Sorting in REST phase.
+  @Ignore
   @Test
   public void shouldGetInvoicesFromDatabaseSortedByDate() throws Exception {
     // given

@@ -11,7 +11,6 @@ public class IdGenerator {
   private final File idFile;
   private final FileProcessor fileProcessor;
 
-
   /**
    * Constructor.
    */
