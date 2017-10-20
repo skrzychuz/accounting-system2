@@ -2,13 +2,11 @@ package pl.coderstrust.database.file;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,7 +19,7 @@ public class MapperConfig {
 
   @Bean
   public ObjectMapper getMapper() {
-    final ObjectMapper mapper = new ObjectMapper();
+    ObjectMapper mapper = new ObjectMapper();
     JavaTimeModule javaTimeModule = new JavaTimeModule();
     javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(
         DateTimeFormatter.ISO_DATE_TIME));
@@ -34,9 +32,6 @@ public class MapperConfig {
     mapper.registerModule(javaTimeModule);
     mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     return mapper;
-  }
 
-//
-//  public ObjectMapper getMapper() {
-//    return mapper;
+  }
 }

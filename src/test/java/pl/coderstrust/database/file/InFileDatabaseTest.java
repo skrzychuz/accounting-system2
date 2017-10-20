@@ -5,9 +5,14 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import pl.coderstrust.InvoicesGenerator;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.database.DatabaseTestAbstract;
@@ -18,18 +23,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class InFileDatabaseTest extends DatabaseTestAbstract {
 
   FileProcessor fileProcessorMock = mock(FileProcessor.class);
   JsonHelper jsonHelperMock = mock(JsonHelper.class);
-
+  @Autowired
+  JsonHelper jsonHelper;
   private InvoicesGenerator invoicesGenerator = new InvoicesGenerator();
   private String testDataBase = "src\\test\\resources\\dataForTest.json";
 
   @Override
   protected Database getDatabase() {
-    return new InFileDatabase(testDataBase, new JsonHelper(),
-        new FileProcessor(), new GeneratorId(new FileProcessor()));
+    return new InFileDatabase(testDataBase, jsonHelper,
+        new FileProcessor(), new IdGenerator(new FileProcessor()));
   }
 
   @Before
@@ -45,7 +53,7 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
     cleaner();
     Database database = getDatabase();
     List<Invoice> invoicesInOrder = invoicesGenerator
-        .invoiceGeneratorFor30DaysInJanuary2016InSuccessionWithID();
+        .genereataListOfInvoicesFromJanuary2016WithSuccessionId();
 
     for (Invoice invoice : invoicesInOrder) {
       database.saveInvoice(invoice);
@@ -68,7 +76,7 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
     cleaner();
     Database database = getDatabase();
     List<Invoice> invoicesInOrder = invoicesGenerator
-        .invoiceGeneratorFor30DaysInJanuary2016InSuccessionWithID();
+        .genereataListOfInvoicesFromJanuary2016WithSuccessionId();
 
     for (Invoice invoice : invoicesInOrder) {
       database.saveInvoice(invoice);

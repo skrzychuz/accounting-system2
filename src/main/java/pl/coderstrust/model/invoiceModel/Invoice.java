@@ -32,8 +32,7 @@ public class Invoice implements InvoiceVisitable {
     this.buyer = buyer;
     this.entries = entries;
     this.localDate = localDate;
-    this.amount =  this.getAmountFromEntries(entries);
-    this.vatAmount = this.getVatAmountFromEntries(entries);
+
   }
 
   public BigDecimal getAmountFromEntries(List<Entry> entryList) {
@@ -85,7 +84,11 @@ public class Invoice implements InvoiceVisitable {
   }
 
   public BigDecimal getAmount() {
-    return amount;
+    BigDecimal amountFromEntries = BigDecimal.valueOf(0);
+    for (Entry e : this.entries) {
+      amountFromEntries = amountFromEntries.add(e.getAmount());
+    }
+    return amountFromEntries;
   }
 
   public void setAmount(BigDecimal amount) {
@@ -93,8 +96,12 @@ public class Invoice implements InvoiceVisitable {
   }
 
   public BigDecimal getVatAmount() {
-    return vatAmount;
-  }
+    BigDecimal amountFromEntries = BigDecimal.valueOf(0);
+    for (Entry e : this.entries) {
+      amountFromEntries = amountFromEntries.add(e.getVatAmount());
+    }
+    return amountFromEntries;
+      }
 
   public void setVatAmount(BigDecimal vatAmount) {
     this.vatAmount = vatAmount;

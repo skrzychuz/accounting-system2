@@ -20,8 +20,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import pl.coderstrust.database.file.InFileDatabase;
 import pl.coderstrust.database.file.JsonHelper;
+import pl.coderstrust.model.InvoiceBook;
 import pl.coderstrust.model.invoiceModel.Invoice;
 import pl.coderstrust.model.InvoiceBulider;
 import pl.coderstrust.model.InvoiceBulider.BuyerBulider;
@@ -34,7 +34,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(InvoiceController.class)
-public class WebMockTest {
+public class InvoiceControllerTest {
 
   List<Invoice> listOfInvoice = new ArrayList<>();
 
@@ -48,7 +48,7 @@ public class WebMockTest {
   @MockBean
   private JsonHelper jsonHelperMock;
   @MockBean
-  private InFileDatabase inFileDatabase;
+  private InvoiceBook invoiceBookMock;
 
   @Test
   public void shouldAddInvoiceToDatabase() throws Exception {
@@ -85,7 +85,7 @@ public class WebMockTest {
     toTestList.add(invoice1);
     toTestList.add(invoice2);
 
-    when(inFileDatabase.getInvoices()).thenReturn(toTestList);
+    when(invoiceBookMock.getInvoices()).thenReturn(toTestList);
 
     this.mockMvc.perform(get("/invoices"))
         .andDo(print())
@@ -115,7 +115,7 @@ public class WebMockTest {
     toTestList.add(invoice1);
     toTestList.add(invoice2);
 
-    when(inFileDatabase.getInvoices()).thenReturn(toTestList);
+    when(invoiceBookMock.getInvoices()).thenReturn(toTestList);
 
     this.mockMvc.perform(get("/invoices/" + 5))
         .andDo(print())

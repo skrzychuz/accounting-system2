@@ -26,12 +26,6 @@ public class InvoiceController {
     this.invoiceBookDatabase = invoiceBook;
   }
 
-  @RequestMapping("/")
-  @ResponseBody
-  String greeting() {
-    return "Hello World";
-  }
-
   /**
    * Save.
    */

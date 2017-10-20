@@ -1,13 +1,13 @@
 package pl.coderstrust.database.file;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
-import pl.coderstrust.model.Invoice;
+import pl.coderstrust.model.invoiceModel.Invoice;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,8 +18,7 @@ public class InFileDatabase implements Database {
   private final File myFileDatabase;
   private final JsonHelper jsonHelper;
   private final FileProcessor fileProcessor;
-  private final GeneratorId generatorId;
-
+  private final IdGenerator idGenerator;
 
   /**
    * Constructor.
@@ -27,18 +26,13 @@ public class InFileDatabase implements Database {
   @Autowired
   public InFileDatabase(@Value("${pl.coderstrust.file.path}")
       String filePath, JsonHelper jsonHelper, FileProcessor fileProcessor,
-      GeneratorId generatorId) {
+      IdGenerator generatorId) {
 
     this.jsonHelper = jsonHelper;
     this.fileProcessor = fileProcessor;
-    this.generatorId = generatorId;
+    this.idGenerator = generatorId;
     this.myFileDatabase = new File(filePath);
   }
-
-//  public InFileDatabase(JsonHelper jsonHelper, FileProcessor fileProcessor,
-//      GeneratorId generatorId) {
-//    this("database\\data.json", jsonHelper, fileProcessor, generatorId);
-//  }
 
   @Override
   public void saveInvoice(Invoice invoice) {
@@ -69,10 +63,9 @@ public class InFileDatabase implements Database {
   }
 
   @Override
-  public int setUniqueId() {
-    return (generatorId.generateNewId());
+  public int getNextInvoiceId() {
+    return (idGenerator.generateNewId());
   }
-
 
   @Override
   public void deleteInvoice(int id) {
