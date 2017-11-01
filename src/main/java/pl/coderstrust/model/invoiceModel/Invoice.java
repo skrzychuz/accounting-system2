@@ -1,5 +1,16 @@
 package pl.coderstrust.model.invoiceModel;
 
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
+
 import pl.coderstrust.model.invoiceVisitorPattern.InvoiceVisitable;
 import pl.coderstrust.model.invoiceVisitorPattern.InvoiceVisitor;
 
@@ -7,12 +18,25 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Entity;
+
+@Entity
+@Table(name = "Invoices")
 public class Invoice implements InvoiceVisitable {
 
-  private Seller seller;
-  private Buyer buyer;
-  private List<Entry> entries;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
+
+  @OneToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn
+  private Seller seller;
+  @OneToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn
+  private Buyer buyer;
+
+  @OneToMany(mappedBy="invoice", fetch=FetchType.LAZY)
+  private List<Entry> entries;
   private BigDecimal amount;
   private BigDecimal vatAmount;
   private LocalDate localDate;
@@ -21,6 +45,7 @@ public class Invoice implements InvoiceVisitable {
   /**
    * Default Constructor to create the object.
    */
+
   public Invoice() {
   }
 
@@ -101,7 +126,7 @@ public class Invoice implements InvoiceVisitable {
       amountFromEntries = amountFromEntries.add(e.getVatAmount());
     }
     return amountFromEntries;
-      }
+  }
 
   public void setVatAmount(BigDecimal vatAmount) {
     this.vatAmount = vatAmount;

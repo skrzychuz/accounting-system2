@@ -1,8 +1,23 @@
 package pl.coderstrust.model.invoiceModel;
 
-import java.math.BigDecimal;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import java.math.BigDecimal;
+@Entity
 public class Entry {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int id;
+
+  @ManyToOne
+  @JoinColumn(name="invoice_id")
+  Invoice invoice;
 
   private String description;
   private int vatRate;
@@ -18,7 +33,9 @@ public class Entry {
     this.amount = amount;
     this.vatAmount = amount.multiply(BigDecimal.valueOf(vatRate)).divide(BigDecimal.valueOf(100));
   }
-
+  public Invoice getInvoice() {
+    return invoice;
+  }
   public String getDescription() {
     return description;
   }

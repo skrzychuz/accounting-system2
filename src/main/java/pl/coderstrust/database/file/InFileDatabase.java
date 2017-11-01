@@ -2,6 +2,7 @@ package pl.coderstrust.database.file;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.model.invoiceModel.Invoice;
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@ConditionalOnProperty(name = "pl.coderstrust.database", havingValue = "inFileDatabase")
+
 public class InFileDatabase implements Database {
 
   private final File myFileDatabase;
