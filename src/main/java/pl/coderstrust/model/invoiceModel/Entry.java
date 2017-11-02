@@ -1,28 +1,35 @@
 package pl.coderstrust.model.invoiceModel;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import java.math.BigDecimal;
+
 @Entity
 public class Entry {
+
+  public void setInvoice(Invoice invoice) {
+    this.invoice = invoice;
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
-
-  @ManyToOne
-  @JoinColumn(name="invoice_id")
-  Invoice invoice;
-
   private String description;
   private int vatRate;
   private BigDecimal amount;
   private BigDecimal vatAmount;
+
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "invoice_id")
+  private Invoice invoice;
 
   public Entry() {
   }
@@ -33,9 +40,11 @@ public class Entry {
     this.amount = amount;
     this.vatAmount = amount.multiply(BigDecimal.valueOf(vatRate)).divide(BigDecimal.valueOf(100));
   }
+
   public Invoice getInvoice() {
     return invoice;
   }
+
   public String getDescription() {
     return description;
   }

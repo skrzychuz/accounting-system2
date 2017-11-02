@@ -1,10 +1,13 @@
 package pl.coderstrust.model.invoiceModel;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -16,6 +19,7 @@ import pl.coderstrust.model.invoiceVisitorPattern.InvoiceVisitor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -25,18 +29,18 @@ import javax.persistence.Entity;
 public class Invoice implements InvoiceVisitable {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "invoice_id")
   private int id;
-
-  @OneToOne(fetch = FetchType.LAZY, optional = false)
+  @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
   @JoinColumn
   private Seller seller;
-  @OneToOne(fetch = FetchType.LAZY, optional = false)
+  @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
   @JoinColumn
   private Buyer buyer;
-
-  @OneToMany(mappedBy="invoice", fetch=FetchType.LAZY)
+  @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
   private List<Entry> entries;
+
   private BigDecimal amount;
   private BigDecimal vatAmount;
   private LocalDate localDate;
@@ -59,6 +63,8 @@ public class Invoice implements InvoiceVisitable {
     this.localDate = localDate;
 
   }
+
+
 
   public BigDecimal getAmountFromEntries(List<Entry> entryList) {
     BigDecimal amountFromEntries = BigDecimal.valueOf(0);
@@ -97,6 +103,10 @@ public class Invoice implements InvoiceVisitable {
   }
 
   public void setEntries(List<Entry> entries) {
+    for (Entry entry : entries) {
+      entry.setInvoice(this);
+    }
+
     this.entries = entries;
   }
 

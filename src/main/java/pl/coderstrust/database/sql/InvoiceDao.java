@@ -2,6 +2,7 @@ package pl.coderstrust.database.sql;
 
 import java.time.LocalDate;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -12,8 +13,6 @@ import pl.coderstrust.database.Database;
 import pl.coderstrust.model.invoiceModel.Invoice;
 
 
-
-
 @Repository
 @Transactional
 @ConditionalOnProperty(name = "pl.coderstrust.database", havingValue = "invoiceDao")
@@ -22,10 +21,10 @@ public class InvoiceDao implements Database {
   @PersistenceContext
   private EntityManager entityManager;
 
-
-
   @Override
   public void saveInvoice(Invoice invoice) {
+
+    invoice.setEntries(invoice.getEntries());
     entityManager.persist(invoice);
     return;
   }
