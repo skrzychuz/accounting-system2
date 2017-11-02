@@ -10,3 +10,6 @@
 {"seller":null,"buyer":null,"entries":[],"id":19,"amount":0,"vatAmount":0,"localDate":"2016-04-15"}
 {"seller":null,"buyer":null,"entries":[],"id":20,"amount":0,"vatAmount":0,"localDate":"2016-06-15"}
 {"seller":null,"buyer":null,"entries":[],"id":21,"amount":0,"vatAmount":0,"localDate":"2016-05-15"}
+{"id":0,"seller":null,"buyer":null,"entries":[],"amount":0,"vatAmount":0,"localDate":"2016-04-15"}
+{"id":0,"seller":null,"buyer":null,"entries":[],"amount":0,"vatAmount":0,"localDate":"2016-06-15"}
+{"id":0,"seller":null,"buyer":null,"entries":[],"amount":0,"vatAmount":0,"localDate":"2016-05-15"}

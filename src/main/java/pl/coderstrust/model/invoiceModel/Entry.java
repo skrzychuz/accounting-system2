@@ -1,5 +1,6 @@
 package pl.coderstrust.model.invoiceModel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -15,10 +16,6 @@ import java.math.BigDecimal;
 @Entity
 public class Entry {
 
-  public void setInvoice(Invoice invoice) {
-    this.invoice = invoice;
-  }
-
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
@@ -26,7 +23,6 @@ public class Entry {
   private int vatRate;
   private BigDecimal amount;
   private BigDecimal vatAmount;
-
   @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "invoice_id")
   private Invoice invoice;
@@ -40,9 +36,13 @@ public class Entry {
     this.amount = amount;
     this.vatAmount = amount.multiply(BigDecimal.valueOf(vatRate)).divide(BigDecimal.valueOf(100));
   }
+//  @JsonIgnore
+//  public Invoice getInvoice() {
+//    return invoice;
+//  }
 
-  public Invoice getInvoice() {
-    return invoice;
+  public void setInvoice(Invoice invoice) {
+    this.invoice = invoice;
   }
 
   public String getDescription() {

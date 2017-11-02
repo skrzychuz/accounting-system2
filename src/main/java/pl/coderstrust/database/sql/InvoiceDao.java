@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -31,7 +32,8 @@ public class InvoiceDao implements Database {
 
   @Override
   public List<Invoice> getInvoices() {
-    return null;
+    return entityManager.createQuery("from Invoice", Invoice.class).getResultList();
+
   }
 
   @Override
@@ -46,6 +48,9 @@ public class InvoiceDao implements Database {
 
   @Override
   public void deleteInvoice(int id) {
+    entityManager.remove(
+        entityManager.createQuery("from Invoice where id = :id").setParameter("id", id)
+            .getSingleResult());
 
   }
 

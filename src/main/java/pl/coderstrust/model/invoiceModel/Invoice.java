@@ -32,10 +32,10 @@ public class Invoice implements InvoiceVisitable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "invoice_id")
   private int id;
-  @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
   @JoinColumn
   private Seller seller;
-  @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
   @JoinColumn
   private Buyer buyer;
   @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
