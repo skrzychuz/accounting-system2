@@ -8,29 +8,23 @@ import static org.mockito.Mockito.mock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
 import pl.coderstrust.InvoicesGenerator;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.database.DatabaseTestAbstract;
 import pl.coderstrust.model.invoiceModel.Invoice;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
 public class InFileDatabaseTest extends DatabaseTestAbstract {
 
-  FileProcessor fileProcessorMock = mock(FileProcessor.class);
-  JsonHelper jsonHelperMock = mock(JsonHelper.class);
   @Autowired
   JsonHelper jsonHelper;
+  private FileProcessor fileProcessorMock = mock(FileProcessor.class);
+  private JsonHelper jsonHelperMock = mock(JsonHelper.class);
   private InvoicesGenerator invoicesGenerator = new InvoicesGenerator();
   private String testDataBase = "src\\test\\resources\\dataForTest.json";
 
@@ -50,7 +44,6 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
   @Test
   public void shouldDeleteInvoiceFromBaseById() throws Exception {
     // given
-    cleaner();
     Database database = getDatabase();
     List<Invoice> invoicesInOrder = invoicesGenerator
         .genereataListOfInvoicesFromJanuary2016WithSuccessionId();
@@ -73,7 +66,6 @@ public class InFileDatabaseTest extends DatabaseTestAbstract {
   public void shouldUpdateInvoice() throws Exception {
 
     // given
-    cleaner();
     Database database = getDatabase();
     List<Invoice> invoicesInOrder = invoicesGenerator
         .genereataListOfInvoicesFromJanuary2016WithSuccessionId();

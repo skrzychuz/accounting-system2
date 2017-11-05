@@ -13,6 +13,5 @@ public class InvoiceCost implements InvoiceVisitor {
 
     return !invoice.getSeller().getName().equals("MyCompany") ? invoice.getAmount()
         : BigDecimal.valueOf(0);
-
   }
 }

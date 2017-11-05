@@ -13,14 +13,14 @@ public class Buyer {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
   private String name;
-  private String taxpayerIdentificationNumber;
+  private String taxIdentificationNumber;
 
   public Buyer() {
   }
 
-  public Buyer(String name, String taxpayerIdentificationNumber) {
+  public Buyer(String name, String taxIdentificationNumber) {
     this.name = name;
-    this.taxpayerIdentificationNumber = taxpayerIdentificationNumber;
+    this.taxIdentificationNumber = taxIdentificationNumber;
   }
 
   public int getId() {
@@ -39,11 +39,11 @@ public class Buyer {
     this.name = name;
   }
 
-  public String getTaxpayerIdentificationNumber() {
-    return taxpayerIdentificationNumber;
+  public String getTaxIdentificationNumber() {
+    return taxIdentificationNumber;
   }
 
-  public void setTaxpayerIdentificationNumber(String taxpayerIdentificationNumber) {
-    this.taxpayerIdentificationNumber = taxpayerIdentificationNumber;
+  public void setTaxIdentificationNumber(String taxIdentificationNumber) {
+    this.taxIdentificationNumber = taxIdentificationNumber;
   }
 }

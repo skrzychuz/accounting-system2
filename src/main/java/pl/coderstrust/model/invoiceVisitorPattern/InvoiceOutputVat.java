@@ -9,10 +9,6 @@ public class InvoiceOutputVat implements InvoiceVisitor {
 
   @Override
   public BigDecimal visit(Invoice invoice) {
-    if (invoice.getSeller().getName().equals("MyCompany")) {
-      return invoice.getVatAmount();
-    } else {
-      return BigDecimal.valueOf(0);
-    }
+    return (invoice.getSeller().getName().equals("MyCompany")) ? invoice.getVatAmount() : BigDecimal.valueOf(0);
   }
 }

@@ -7,19 +7,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
 
 import pl.coderstrust.model.invoiceVisitorPattern.InvoiceVisitable;
 import pl.coderstrust.model.invoiceVisitorPattern.InvoiceVisitor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -45,7 +41,6 @@ public class Invoice implements InvoiceVisitable {
   private BigDecimal vatAmount;
   private LocalDate localDate;
 
-
   /**
    * Default Constructor to create the object.
    */
@@ -54,32 +49,13 @@ public class Invoice implements InvoiceVisitable {
   }
 
   /**
-   * Personalized Constructor to create the object.
+   * Constructor 2.
    */
   public Invoice(Seller seller, Buyer buyer, List<Entry> entries, LocalDate localDate) {
     this.seller = seller;
     this.buyer = buyer;
     this.entries = entries;
     this.localDate = localDate;
-
-  }
-
-
-
-  public BigDecimal getAmountFromEntries(List<Entry> entryList) {
-    BigDecimal amountFromEntries = BigDecimal.valueOf(0);
-    for (Entry e : entryList) {
-      amountFromEntries = amountFromEntries.add(e.getAmount());
-    }
-    return amountFromEntries;
-  }
-
-  public BigDecimal getVatAmountFromEntries(List<Entry> entryList) {
-    BigDecimal amountFromEntries = BigDecimal.valueOf(0);
-    for (Entry e : entryList) {
-      amountFromEntries = amountFromEntries.add(e.getVatAmount());
-    }
-    return amountFromEntries;
   }
 
   public Seller getSeller() {
@@ -100,14 +76,6 @@ public class Invoice implements InvoiceVisitable {
 
   public List<Entry> getEntries() {
     return entries;
-  }
-
-  public void setEntries(List<Entry> entries) {
-    for (Entry entry : entries) {
-      entry.setInvoice(this);
-    }
-
-    this.entries = entries;
   }
 
   public int getId() {
@@ -166,7 +134,6 @@ public class Invoice implements InvoiceVisitable {
   @Override
   public BigDecimal accept(InvoiceVisitor invoiceVisitor) {
     return invoiceVisitor.visit(this);
-
   }
 }
 

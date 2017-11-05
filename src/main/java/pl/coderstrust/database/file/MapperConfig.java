@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 @Configuration
 public class MapperConfig {
 
-  @Bean
+  @Bean //how to get that without method
   public ObjectMapper getMapper() {
     ObjectMapper mapper = new ObjectMapper();
     JavaTimeModule javaTimeModule = new JavaTimeModule();

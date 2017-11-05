@@ -10,29 +10,29 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvoiceBulider {
+public class InvoiceBuilder {
 
   private Seller seller;
   private Buyer buyer;
   private List<Entry> entries = new ArrayList<>();
   private LocalDate localDate;
 
-  public InvoiceBulider withSeller(Seller seller) {
+  public InvoiceBuilder withSeller(Seller seller) {
     this.seller = seller;
     return this;
   }
 
-  public InvoiceBulider withBuyer(Buyer buyer) {
+  public InvoiceBuilder withBuyer(Buyer buyer) {
     this.buyer = buyer;
     return this;
   }
 
-  public InvoiceBulider withEntry(Entry entry) {
+  public InvoiceBuilder withEntry(Entry entry) {
     this.entries.add(entry);
     return this;
   }
 
-  public InvoiceBulider withLocalDate(LocalDate localDate) {
+  public InvoiceBuilder withLocalDate(LocalDate localDate) {
     this.localDate = localDate;
     return this;
 

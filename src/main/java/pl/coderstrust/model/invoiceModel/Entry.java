@@ -22,7 +22,7 @@ public class Entry {
   private String description;
   private int vatRate;
   private BigDecimal amount;
-  private BigDecimal vatAmount;
+  private BigDecimal vatAmount; //maybe enum in the future
   @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "invoice_id")
   private Invoice invoice;

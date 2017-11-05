@@ -7,10 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.coderstrust.InvoicesGenerator;
 import pl.coderstrust.model.invoiceModel.Invoice;
-import pl.coderstrust.model.InvoiceBulider;
-import pl.coderstrust.model.InvoiceBulider.BuyerBulider;
-import pl.coderstrust.model.InvoiceBulider.EntryBulider;
-import pl.coderstrust.model.InvoiceBulider.SellerBulider;
+import pl.coderstrust.model.InvoiceBuilder;
+import pl.coderstrust.model.InvoiceBuilder.BuyerBulider;
+import pl.coderstrust.model.InvoiceBuilder.EntryBulider;
+import pl.coderstrust.model.InvoiceBuilder.SellerBulider;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,7 +29,7 @@ public abstract class DatabaseTestAbstract {
   @Test
   public void shouldSaveInvoiceToDatabase() throws Exception {
     // given
-    Invoice invoice1 = new InvoiceBulider()
+    Invoice invoice1 = new InvoiceBuilder()
         .withSeller(new SellerBulider()
             .withName("sellername")
             .withIdNumber("12345")
@@ -50,7 +50,7 @@ public abstract class DatabaseTestAbstract {
             .bulid())
         .withLocalDate(LocalDate.now())
         .build();
-    Invoice invoice2 = new InvoiceBulider()
+    Invoice invoice2 = new InvoiceBuilder()
         .withSeller(new SellerBulider()
             .withName("sellername")
             .withIdNumber("12345")
@@ -71,7 +71,7 @@ public abstract class DatabaseTestAbstract {
             .bulid())
         .withLocalDate(LocalDate.now())
         .build();
-    Invoice invoice3 = new InvoiceBulider()
+    Invoice invoice3 = new InvoiceBuilder()
         .withSeller(new SellerBulider()
             .withName("sellername")
             .withIdNumber("12345")
@@ -111,7 +111,7 @@ public abstract class DatabaseTestAbstract {
   public void shouldGetInvoicesFromDatabase() throws Exception {
     // given
     Database database = getDatabase();
-    Invoice invoice = new InvoiceBulider()
+    Invoice invoice = new InvoiceBuilder()
         .withLocalDate(LocalDate.of(2016, 2, 15))
         .build();
 
