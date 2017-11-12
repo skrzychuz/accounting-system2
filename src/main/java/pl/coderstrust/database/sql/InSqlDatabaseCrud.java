@@ -18,24 +18,24 @@ import javax.transaction.Transactional;
 public class InSqlDatabaseCrud implements Database {
 
   @Autowired
-  private InvoiceCrud invoiceCrud;
+  private InvoiceRepository invoiceRepository;
 
   @Override
   public void saveInvoice(Invoice invoice) {
     for (Entry entry : invoice.getEntries()) {
       entry.setInvoice(invoice);
     }
-    invoiceCrud.save(invoice);
+    invoiceRepository.save(invoice);
   }
 
   @Override
   public List<Invoice> getInvoices() {
-    return (List<Invoice>) invoiceCrud.findAll();
+    return (List<Invoice>) invoiceRepository.findAll();
   }
 
   @Override
   public List<Invoice> getListOfInvoicesFromGivenPeriod(LocalDate fromDate, LocalDate toDate) {
-    // return invoiceCrud.findByLocalDateBetween(fromDate, toDate);
+    // return invoiceRepository.findByLocalDateBetween(fromDate, toDate);
     return null;
   }
 
@@ -46,13 +46,13 @@ public class InSqlDatabaseCrud implements Database {
 
   @Override
   public void deleteInvoice(int id) {
-    invoiceCrud.delete(id);
+    invoiceRepository.delete(id);
   }
 
   @Override
   public void updateInvoice(int id, Invoice invoice) {
     updateAllIdInInvoice(id, invoice);
-    invoiceCrud.save(invoice);
+    invoiceRepository.save(invoice);
   }
 
   private void updateAllIdInInvoice(int id, Invoice invoice) {
