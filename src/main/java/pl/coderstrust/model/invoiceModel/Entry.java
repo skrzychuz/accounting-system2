@@ -1,6 +1,7 @@
 package pl.coderstrust.model.invoiceModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -25,6 +26,7 @@ public class Entry {
   private BigDecimal vatAmount; //maybe enum in the future
   @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "invoice_id")
+  @ApiModelProperty(hidden = true)
   private Invoice invoice;
 
   public Entry() {

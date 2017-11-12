@@ -53,7 +53,7 @@ public class InSqlDatabaseEntityManager implements Database {
 
   @Override
   public void updateInvoice(int id, Invoice invoice) {
-    updateAllIdInInvoice(id, invoice);
+   updateAllIdInInvoice(id,invoice);
     entityManager.merge(invoice);
   }
 
