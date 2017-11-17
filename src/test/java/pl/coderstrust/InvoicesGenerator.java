@@ -1,7 +1,7 @@
 package pl.coderstrust;
 
 import pl.coderstrust.model.invoiceModel.Invoice;
-import pl.coderstrust.model.InvoiceBulider;
+import pl.coderstrust.model.InvoiceBuilder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class InvoicesGenerator {
       int month = randomMonth.nextInt(11) + 1;
       int year = 2016;
 
-      Invoice invoice = new InvoiceBulider()
+      Invoice invoice = new InvoiceBuilder()
           .withLocalDate(LocalDate.of(year, month, day))
           .build();
 
@@ -40,7 +40,7 @@ public class InvoicesGenerator {
     List<Invoice> invoicesInSuccession = new ArrayList<>();
 
     for (int i = 1; i <= 30; i++) {
-      Invoice invoice = new InvoiceBulider()
+      Invoice invoice = new InvoiceBuilder()
           .withLocalDate(LocalDate.of(2016, 1, i))
           .build();
       invoice.setId(i);

@@ -1,16 +1,34 @@
 package pl.coderstrust.model.invoiceModel;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Buyer {
 
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int id;
   private String name;
-  private String taxpayerIdentificationNumber;
+  private String taxIdentificationNumber;
 
   public Buyer() {
   }
 
-  public Buyer(String name, String taxpayerIdentificationNumber) {
+  public Buyer(String name, String taxIdentificationNumber) {
     this.name = name;
-    this.taxpayerIdentificationNumber = taxpayerIdentificationNumber;
+    this.taxIdentificationNumber = taxIdentificationNumber;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getName() {
@@ -21,11 +39,11 @@ public class Buyer {
     this.name = name;
   }
 
-  public String getTaxpayerIdentificationNumber() {
-    return taxpayerIdentificationNumber;
+  public String getTaxIdentificationNumber() {
+    return taxIdentificationNumber;
   }
 
-  public void setTaxpayerIdentificationNumber(String taxpayerIdentificationNumber) {
-    this.taxpayerIdentificationNumber = taxpayerIdentificationNumber;
+  public void setTaxIdentificationNumber(String taxIdentificationNumber) {
+    this.taxIdentificationNumber = taxIdentificationNumber;
   }
 }

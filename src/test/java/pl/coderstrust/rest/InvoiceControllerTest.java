@@ -23,8 +23,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import pl.coderstrust.database.file.JsonHelper;
 import pl.coderstrust.model.InvoiceBook;
 import pl.coderstrust.model.invoiceModel.Invoice;
-import pl.coderstrust.model.InvoiceBulider;
-import pl.coderstrust.model.InvoiceBulider.BuyerBulider;
+import pl.coderstrust.model.InvoiceBuilder;
+import pl.coderstrust.model.InvoiceBuilder.BuyerBulider;
 
 
 import java.nio.charset.Charset;
@@ -52,7 +52,7 @@ public class InvoiceControllerTest {
 
   @Test
   public void shouldAddInvoiceToDatabase() throws Exception {
-    Invoice invoice1 = new InvoiceBulider()
+    Invoice invoice1 = new InvoiceBuilder()
         .withLocalDate(LocalDate.of(2016, 10, 15))
         .build();
 
@@ -71,12 +71,12 @@ public class InvoiceControllerTest {
   public void shouldGetInvoicesFromDatabase() throws Exception {
 
     List<Invoice> toTestList = new ArrayList<>();
-    Invoice invoice1 = new InvoiceBulider()
+    Invoice invoice1 = new InvoiceBuilder()
         .withBuyer(new BuyerBulider()
             .withName("stefan")
             .bulid())
         .build();
-    Invoice invoice2 = new InvoiceBulider()
+    Invoice invoice2 = new InvoiceBuilder()
         .withBuyer(new BuyerBulider()
             .withName("marian")
             .bulid())
@@ -101,14 +101,14 @@ public class InvoiceControllerTest {
   public void shouldGetSingleInvoiceFromDatabase() throws Exception {
 
     List<Invoice> toTestList = new ArrayList<>();
-    Invoice invoice1 = new InvoiceBulider()
+    Invoice invoice1 = new InvoiceBuilder()
         .withBuyer(new BuyerBulider()
             .withName("Mietek")
             .bulid())
         .build();
 
     invoice1.setId(5);
-    Invoice invoice2 = new InvoiceBulider().build();
+    Invoice invoice2 = new InvoiceBuilder().build();
 
     invoice2.setId(6);
 

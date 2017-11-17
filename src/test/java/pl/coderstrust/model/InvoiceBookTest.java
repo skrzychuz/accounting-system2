@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,10 +53,10 @@ public class InvoiceBookTest {
     // given
     InvoiceBook invoiceBook = new InvoiceBook(databaseMock);
 
-    Invoice invoice = new InvoiceBulider()
+    Invoice invoice = new InvoiceBuilder()
         .withLocalDate(LocalDate.of(2016, 7, 15))
         .build();
-    Invoice invoice2 = new InvoiceBulider()
+    Invoice invoice2 = new InvoiceBuilder()
         .withLocalDate(LocalDate.of(2016, 7, 15))
         .build();
 
@@ -87,13 +86,13 @@ public class InvoiceBookTest {
         new FileProcessor(), idGeneratorMock);
     InvoiceBook invoiceBook = new InvoiceBook(database);
 
-    Invoice invoice1 = new InvoiceBulider()
+    Invoice invoice1 = new InvoiceBuilder()
         .withLocalDate(LocalDate.of(2016, 4, 15))
         .build();
-    Invoice invoice2 = new InvoiceBulider()
+    Invoice invoice2 = new InvoiceBuilder()
         .withLocalDate(LocalDate.of(2016, 6, 15))
         .build();
-    Invoice invoice3 = new InvoiceBulider()
+    Invoice invoice3 = new InvoiceBuilder()
         .withLocalDate(LocalDate.of(2016, 5, 15))
         .build();
 
@@ -115,13 +114,13 @@ public class InvoiceBookTest {
     Database database = new InMemoryDatabase();
     InvoiceBook invoiceBook = new InvoiceBook(database);
 
-    Invoice invoice1 = new InvoiceBulider()
+    Invoice invoice1 = new InvoiceBuilder()
         .withLocalDate(LocalDate.of(2016, 4, 15))
         .build();
-    Invoice invoice2 = new InvoiceBulider()
+    Invoice invoice2 = new InvoiceBuilder()
         .withLocalDate(LocalDate.of(2016, 6, 15))
         .build();
-    Invoice invoice3 = new InvoiceBulider()
+    Invoice invoice3 = new InvoiceBuilder()
         .withLocalDate(LocalDate.of(2016, 5, 15))
         .build();
 
