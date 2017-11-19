@@ -131,6 +131,12 @@ public class Invoice implements InvoiceVisitable {
         + '}';
   }
 
+//  @Override
+//  public BigDecimal accept(InvoiceVisitor invoiceVisitor) {
+//    return null;
+//  }
+//}
+
   @Override
   public BigDecimal accept(InvoiceVisitor invoiceVisitor) {
     return invoiceVisitor.visit(this);

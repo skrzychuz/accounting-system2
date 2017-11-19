@@ -1,6 +1,7 @@
 package pl.coderstrust.model;
 
 import javax.annotation.Resource;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.model.invoiceModel.Invoice;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Component
 public class InvoiceBook implements InvoiceBookVisitable {
 
   private final Database database;
