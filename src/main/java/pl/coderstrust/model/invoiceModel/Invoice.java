@@ -34,7 +34,7 @@ public class Invoice implements InvoiceVisitable {
   @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
   @JoinColumn
   private Buyer buyer;
-  @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<Entry> entries;
 
   private BigDecimal amount;
@@ -76,6 +76,10 @@ public class Invoice implements InvoiceVisitable {
 
   public List<Entry> getEntries() {
     return entries;
+  }
+
+  public void setEntries(List<Entry> entries) {
+    this.entries = entries;
   }
 
   public int getId() {

@@ -20,10 +20,13 @@
     <xs:complexType name ="xInvoice">
       <xs:sequence>
         <xs:element name="xId" type="xs:int"/>
+        <xs:element name="xAmount" type="xs:decimal"/>
+        <xs:element name="xVatAmount" type="xs:decimal"/>
+        <xs:element name="Date" type="xs:date"/>
         <xs:element name="xSeller">
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="xId" type="xs:string"/>
+            <xs:element name="xId" type="xs:int"/>
             <xs:element name="xName" type="xs:string"/>
             <xs:element name="xTaxIdentificationNumber" type="xs:string"/>
           </xs:sequence>
@@ -32,7 +35,7 @@
         <xs:element name="xBuyer">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="xId" type="xs:string"/>
+              <xs:element name="xId" type="xs:int"/>
               <xs:element name="xName" type="xs:string"/>
               <xs:element name="xTaxIdentificationNumber" type="xs:string"/>
             </xs:sequence>
@@ -41,7 +44,7 @@
         <xs:element name="xEntreis" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="id" type="xs:string"/>
+              <xs:element name="id" type="xs:int"/>
               <xs:element name="desc" type="xs:string"/>
               <xs:element name="vatRate" type="xs:int"/>
               <xs:element name="amount" type="xs:decimal"/>
