@@ -41,6 +41,14 @@ public class Entry {
 //    return invoice;
 //  }
 
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
   public void setInvoice(Invoice invoice) {
     this.invoice = invoice;
   }
