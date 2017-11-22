@@ -57,7 +57,11 @@ public class InSqlDatabaseCrud implements Database {
 
   private void updateAllIdInInvoice(int id, Invoice invoice) {
     invoice.setId(id);
-    invoice.getSeller().setId(id);
+   // invoice.getSeller().setId(id);
     invoice.getBuyer().setId(id);
+    for (int i = 0; i < invoice.getEntries().size(); i++) {
+      invoice.getEntries().get(i).setId(getInvoices().get(id-1).getEntries().get(i).getId());
+      invoice.getEntries().get(i).setInvoice(invoice);
+    }
   }
 }

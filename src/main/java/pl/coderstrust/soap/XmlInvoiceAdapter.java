@@ -5,6 +5,9 @@ import generatedFromXSD.XInvoice;
 import generatedFromXSD.XInvoice.XBuyer;
 import generatedFromXSD.XInvoice.XEntreis;
 import generatedFromXSD.XInvoice.XSeller;
+import javax.xml.datatype.DatatypeConfigurationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pl.coderstrust.model.invoiceModel.Buyer;
 import pl.coderstrust.model.invoiceModel.Entry;
 import pl.coderstrust.model.invoiceModel.Invoice;
@@ -13,11 +16,19 @@ import pl.coderstrust.model.invoiceModel.Seller;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class XmlInvoiceAdapter {
 
-  static ObjectFactory objectFactory = new ObjectFactory();
+  ObjectFactory objectFactory = new ObjectFactory();
+  @Autowired
+  XmlDataAdapter xmlDataAdapter;
 
-  public XInvoice toXMLInvoice(Invoice invoice) {
+//
+//  public XmlInvoiceAdapter(XmlDataAdapter xmlDataAdapter) {
+//    this.xmlDataAdapter = xmlDataAdapter;
+//  }
+
+  public XInvoice toXMLInvoice(Invoice invoice) throws DatatypeConfigurationException {
 
     XInvoice xInvoice = objectFactory.createXInvoice();
     XBuyer xBuyer = objectFactory.createXInvoiceXBuyer();
@@ -27,9 +38,10 @@ public class XmlInvoiceAdapter {
       XEntreis xEntreis = objectFactory.createXInvoiceXEntreis();
       xEntreis.setAmount(e.getAmount());
       xEntreis.setDesc(e.getDescription());
-      xEntreis.setVatAmount(e.getVatAmount());
       xEntreis.setVatRate(e.getVatRate());
+      xEntreis.setVatAmount(e.getVatAmount());
       xEntreis.setId(e.getId());
+
       xInvoice.getXEntreis().add(xEntreis);
     }
 
@@ -44,11 +56,12 @@ public class XmlInvoiceAdapter {
     xInvoice.setXId(invoice.getId());
     xInvoice.setXAmount(invoice.getAmount());
     xInvoice.setXVatAmount(invoice.getVatAmount());
+    xInvoice.setDate(xmlDataAdapter.convertToGregorianCalendar(invoice.getLocalDate()));
 
     return xInvoice;
   }
 
-  public Invoice toInvoice(XInvoice xInvoice) {
+  public Invoice xmlToInvoice(XInvoice xInvoice) throws DatatypeConfigurationException {
 
     Invoice invoice = new Invoice();
     Buyer buyer = new Buyer();
@@ -59,8 +72,8 @@ public class XmlInvoiceAdapter {
       Entry entries = new Entry();
       entries.setAmount(e.getAmount());
       entries.setDescription(e.getDesc());
-      entries.setVatAmount(e.getVatAmount());
       entries.setVatRate(e.getVatRate());
+      entries.setVatAmount(entries.getVatAmount());
       entries.setId(e.getId());
       entryList.add(entries);
     }
@@ -76,8 +89,11 @@ public class XmlInvoiceAdapter {
     invoice.setSeller(seller);
 
     invoice.setId(xInvoice.getXId());
-    invoice.setAmount(xInvoice.getXAmount());
-    invoice.setVatAmount(xInvoice.getXVatAmount());
+//    invoice.setAmount(xInvoice.getXAmount());
+//    invoice.setVatAmount(xInvoice.getXVatAmount());
+    invoice.setAmount(invoice.getAmount());
+    invoice.setVatAmount(invoice.getVatAmount());
+    invoice.setLocalDate(xmlDataAdapter.convertToLocalDate(xInvoice.getDate()));
 
     return invoice;
   }
