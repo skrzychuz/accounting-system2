@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 import pl.coderstrust.database.Database;
+import pl.coderstrust.database.OperationResult;
 import pl.coderstrust.model.invoiceModel.Entry;
 import pl.coderstrust.model.invoiceModel.Invoice;
 
@@ -45,14 +46,16 @@ public class InSqlDatabaseCrud implements Database {
   }
 
   @Override
-  public void deleteInvoice(int id) {
+  public OperationResult deleteInvoice(int id) {
     invoiceRepository.delete(id);
+    return OperationResult.SUCCES;
   }
 
   @Override
-  public void updateInvoice(int id, Invoice invoice) {
+  public OperationResult updateInvoice(int id, Invoice invoice) {
     updateAllIdInInvoice(id, invoice);
     invoiceRepository.save(invoice);
+    return OperationResult.SUCCES;
   }
 
   private void updateAllIdInInvoice(int id, Invoice invoice) {

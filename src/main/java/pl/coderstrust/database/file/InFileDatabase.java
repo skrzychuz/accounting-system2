@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
+import pl.coderstrust.database.OperationResult;
 import pl.coderstrust.model.invoiceModel.Invoice;
 
 import java.io.File;
@@ -71,7 +72,7 @@ public class InFileDatabase implements Database {
   }
 
   @Override
-  public void deleteInvoice(int id) {
+  public OperationResult deleteInvoice(int id) {
 
     Iterator<Invoice> invoiceIterator = this.getInvoices().iterator();
     fileProcessor.clearTheFile(myFileDatabase);
@@ -83,10 +84,11 @@ public class InFileDatabase implements Database {
         saveInvoice(invoice);
       }
     }
+    return OperationResult.SUCCES;
   }
 
   @Override
-  public void updateInvoice(int id, Invoice invoice) {
+  public OperationResult updateInvoice(int id, Invoice invoice) {
 
     Iterator<Invoice> invoiceIterator = this.getInvoices().iterator();
     fileProcessor.clearTheFile(myFileDatabase);
@@ -102,6 +104,7 @@ public class InFileDatabase implements Database {
         saveInvoice(in);
       }
     }
+    return OperationResult.SUCCES;
   }
 }
 

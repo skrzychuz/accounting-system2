@@ -15,9 +15,12 @@ public class XmlDataAdapter {
 
   public LocalDate convertToLocalDate(XMLGregorianCalendar xmlDate)
       throws DatatypeConfigurationException {
-    return xmlDate.toGregorianCalendar().toZonedDateTime().toLocalDate();
+    if (xmlDate != null) {
+      return xmlDate.toGregorianCalendar().toZonedDateTime().toLocalDate();
+    } else {
+      return null;
+    }
   }
-
 
   public XMLGregorianCalendar convertToGregorianCalendar(LocalDate localDate)
       throws DatatypeConfigurationException {

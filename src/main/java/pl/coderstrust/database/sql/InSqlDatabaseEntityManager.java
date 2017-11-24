@@ -3,9 +3,11 @@ package pl.coderstrust.database.sql;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 import pl.coderstrust.database.Database;
+import pl.coderstrust.database.OperationResult;
 import pl.coderstrust.model.invoiceModel.Entry;
 import pl.coderstrust.model.invoiceModel.Invoice;
 
@@ -45,16 +47,30 @@ public class InSqlDatabaseEntityManager implements Database {
   }
 
   @Override
-  public void deleteInvoice(int id) {
-    entityManager.remove(
-        entityManager.createQuery("from Invoice where id = :id").setParameter("id", id)
-            .getSingleResult());
+  public OperationResult deleteInvoice(int id) {
+    try {
+      entityManager.remove(
+          entityManager.createQuery("from Invoice where id = :id").setParameter("id", id)
+              .getSingleResult());
+      return OperationResult.SUCCES;
+    } catch (NoResultException e) {
+      return OperationResult.FAILURE;
+    }
   }
 
   @Override
-  public void updateInvoice(int id, Invoice invoice) {
-    updateAllIdInInvoice(id, invoice);
-    entityManager.merge(invoice);
+  public OperationResult updateInvoice(int id, Invoice invoice) {
+
+    if (getInvoices().stream()
+        .filter(invoice44 -> invoice44.getId() == id)
+        .findFirst()
+        .orElse(null) != null) {
+      updateAllIdInInvoice(id, invoice);
+      entityManager.merge(invoice);
+      return OperationResult.SUCCES;
+    } else {
+      return OperationResult.FAILURE;
+    }
   }
 
   private void updateAllIdInInvoice(int id, Invoice invoice) {
@@ -62,7 +78,12 @@ public class InSqlDatabaseEntityManager implements Database {
     invoice.getSeller().setId(id);
     invoice.getBuyer().setId(id);
     for (int i = 0; i < invoice.getEntries().size(); i++) {
-      invoice.getEntries().get(i).setId(getInvoices().get(id-1).getEntries().get(i).getId());
+      invoice.getEntries().get(i).setId((
+          getInvoices().stream()
+              .filter(invoice44 -> invoice44.getId() == id)
+              .findFirst()
+              .orElse(null))
+          .getEntries().get(i).getId());
       invoice.getEntries().get(i).setInvoice(invoice);
     }
   }

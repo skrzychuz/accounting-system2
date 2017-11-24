@@ -122,6 +122,12 @@ public class Invoice implements InvoiceVisitable {
     this.localDate = localDate;
   }
 
+  public void completeInvoice() {
+    this.entries.stream().forEach(entry -> entry.setVatAmount(entry.getVatAmount()));
+    this.vatAmount = this.getVatAmount();
+    this.amount = this.getAmount();
+  }
+
   @Override
   public String toString() {
     return "Invoice{"

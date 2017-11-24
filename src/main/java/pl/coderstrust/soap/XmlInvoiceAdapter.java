@@ -20,13 +20,13 @@ import java.util.List;
 public class XmlInvoiceAdapter {
 
   ObjectFactory objectFactory = new ObjectFactory();
-  @Autowired
-  XmlDataAdapter xmlDataAdapter;
 
-//
-//  public XmlInvoiceAdapter(XmlDataAdapter xmlDataAdapter) {
-//    this.xmlDataAdapter = xmlDataAdapter;
-//  }
+  @Autowired
+  final XmlDataAdapter xmlDataAdapter;
+
+  public XmlInvoiceAdapter(XmlDataAdapter xmlDataAdapter) {
+    this.xmlDataAdapter = xmlDataAdapter;
+  }
 
   public XInvoice toXMLInvoice(Invoice invoice) throws DatatypeConfigurationException {
 
@@ -41,7 +41,6 @@ public class XmlInvoiceAdapter {
       xEntreis.setVatRate(e.getVatRate());
       xEntreis.setVatAmount(e.getVatAmount());
       xEntreis.setId(e.getId());
-
       xInvoice.getXEntreis().add(xEntreis);
     }
 
@@ -57,7 +56,6 @@ public class XmlInvoiceAdapter {
     xInvoice.setXAmount(invoice.getAmount());
     xInvoice.setXVatAmount(invoice.getVatAmount());
     xInvoice.setDate(xmlDataAdapter.convertToGregorianCalendar(invoice.getLocalDate()));
-
     return xInvoice;
   }
 
@@ -89,14 +87,10 @@ public class XmlInvoiceAdapter {
     invoice.setSeller(seller);
 
     invoice.setId(xInvoice.getXId());
-//    invoice.setAmount(xInvoice.getXAmount());
-//    invoice.setVatAmount(xInvoice.getXVatAmount());
     invoice.setAmount(invoice.getAmount());
     invoice.setVatAmount(invoice.getVatAmount());
     invoice.setLocalDate(xmlDataAdapter.convertToLocalDate(xInvoice.getDate()));
 
     return invoice;
   }
-
-
 }

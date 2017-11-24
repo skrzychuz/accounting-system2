@@ -51,6 +51,7 @@ public class InvoiceTaxController {
     return invoiceBookDatabase
         .accept(invoiceIncome,
             invoiceBookDatabase.filterInvoiceByDateFromGivenPeriod(dateFrom, dateTo));
+
   }
 
   @RequestMapping(value = "/invoices/cost", method = RequestMethod.GET)

@@ -25,6 +25,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import generatedFromXSD.GetInovicesRequest;
 import generatedFromXSD.GetInvoicesResponse;
+import pl.coderstrust.database.OperationResult;
 import pl.coderstrust.model.InvoiceBook;
 import pl.coderstrust.model.invoiceModel.Invoice;
 import pl.coderstrust.model.invoiceVisitorPattern.InvoiceCost;
@@ -40,7 +41,6 @@ public class InvoiceEndpoint {
 
   private static final String NAMESPACE_URI = "http://spring.io/guides/gs-producing-web-service";
 
-
   private InvoiceBook invoiceBook;
   private XmlInvoiceAdapter xmlInvoiceAdapter;
   private XmlDataAdapter xmlDataAdapter = new XmlDataAdapter();
@@ -48,7 +48,7 @@ public class InvoiceEndpoint {
   private InvoiceCost invoiceCost;
   private InvoiceOutputVat invoiceOutputVat;
   private InvoiceInputVat invoiceInputVat;
-
+  private ResultAdapter resultAdapter;
 
   @Autowired
   public InvoiceEndpoint(InvoiceBook invoiceBook,
@@ -56,24 +56,30 @@ public class InvoiceEndpoint {
       InvoiceCost invoiceCost,
       InvoiceOutputVat invoiceOutputVat,
       InvoiceInputVat invoiceInputVat,
-      XmlInvoiceAdapter xmlInvoiceAdapter) {
+      XmlInvoiceAdapter xmlInvoiceAdapter,
+      ResultAdapter resultAdapter) {
     this.invoiceBook = invoiceBook;
     this.invoiceIncome = invoiceIncome;
     this.invoiceCost = invoiceCost;
     this.invoiceOutputVat = invoiceOutputVat;
     this.invoiceInputVat = invoiceInputVat;
     this.xmlInvoiceAdapter = xmlInvoiceAdapter;
-
+    this.resultAdapter = resultAdapter;
   }
 
   @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getInovicesRequest")
   @ResponsePayload
   public GetInvoicesResponse getInvoiceById(@RequestPayload GetInovicesRequest request)
       throws DatatypeConfigurationException {
+//    GetInvoicesResponse response = new GetInvoicesResponse();
+//    Invoice invoice = invoiceBook.getInvoices().get(request.getId() - 1);
+//    response.setInvoice(xmlInvoiceAdapter.toXMLInvoice(invoice));
     GetInvoicesResponse response = new GetInvoicesResponse();
-    Invoice invoice = invoiceBook.getInvoices().get(request.getId() - 1);
+    Invoice invoice = invoiceBook.getInvoices().stream()
+        .filter(invoice44 -> invoice44.getId() == request.getId())
+        .findFirst()
+        .orElse(null);
     response.setInvoice(xmlInvoiceAdapter.toXMLInvoice(invoice));
-
     return response;
   }
 
@@ -87,7 +93,6 @@ public class InvoiceEndpoint {
     for (Invoice invoice : invoiceList) {
       response.getAllInvoices().add(xmlInvoiceAdapter.toXMLInvoice(invoice));
     }
-
     return response;
   }
 
@@ -98,9 +103,7 @@ public class InvoiceEndpoint {
     Invoice invoice = new Invoice();
     invoice = xmlInvoiceAdapter.xmlToInvoice(request.getInvoice());
     invoiceBook.addInvoices(invoice);
-
     response.setId(invoice.getId());
-
     return response;
   }
 
@@ -109,9 +112,8 @@ public class InvoiceEndpoint {
   public DeleteInvoiceResponse deleteInvoice(@RequestPayload DeleteInvoiceRequest request)
       throws Exception {
     DeleteInvoiceResponse response = new DeleteInvoiceResponse();
-    request.getId();
-    invoiceBook.deleteInvoice(request.getId());
-
+    OperationResult operationResult = invoiceBook.deleteInvoice(request.getId());
+    response.setResult(resultAdapter.operationResultAdapter(operationResult));
     return response;
   }
 
@@ -120,10 +122,8 @@ public class InvoiceEndpoint {
   public UpdateInvoiceResponse updateInvoice(@RequestPayload UpdateInvoiceRequest request)
       throws Exception {
     UpdateInvoiceResponse response = new UpdateInvoiceResponse();
-    request.getId();
-    invoiceBook
-        .modifyInvoice(request.getId(), xmlInvoiceAdapter.xmlToInvoice(request.getInvoice()));
-
+    OperationResult operationResult = invoiceBook.modifyInvoice(request.getId(), xmlInvoiceAdapter.xmlToInvoice(request.getInvoice()));
+    response.setResult(resultAdapter.operationResultAdapter(operationResult));
     return response;
   }
 
@@ -134,7 +134,6 @@ public class InvoiceEndpoint {
     GetIncomeResponse response = new GetIncomeResponse();
     LocalDate from = xmlDataAdapter.convertToLocalDate(request.getDateFrom());
     LocalDate to = xmlDataAdapter.convertToLocalDate(request.getDateTo());
-
     response.setIncome(invoiceBook.accept(invoiceIncome,
         invoiceBook.filterInvoiceByDateFromGivenPeriod(from, to)));
     return response;
@@ -173,11 +172,9 @@ public class InvoiceEndpoint {
     GetOutputVatResponse response = new GetOutputVatResponse();
     LocalDate from = xmlDataAdapter.convertToLocalDate(request.getDateFrom());
     LocalDate to = xmlDataAdapter.convertToLocalDate(request.getDateTo());
-
     response.setOutputVat(invoiceBook.accept(invoiceIncome,
         invoiceBook.filterInvoiceByDateFromGivenPeriod(from, to)));
     return response;
   }
-
 }
 

@@ -1,16 +1,13 @@
 package pl.coderstrust.rest;
 
-import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.coderstrust.database.Database;
 import pl.coderstrust.model.invoiceModel.Invoice;
 import pl.coderstrust.model.InvoiceBook;
 
@@ -31,10 +28,12 @@ public class InvoiceController {
    */
   @RequestMapping(value = "/invoices", method = RequestMethod.POST)
   public void saveInvoice(@RequestBody Invoice invoice) throws Exception {
+    invoice.completeInvoice();
     invoiceBookDatabase.addInvoices(invoice);
   }
 
   @RequestMapping(value = "/invoices", method = RequestMethod.GET)
+
   public List<Invoice> getInvoices() throws Exception {
     return invoiceBookDatabase.getInvoices();
   }
