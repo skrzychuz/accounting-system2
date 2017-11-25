@@ -71,9 +71,7 @@ public class InvoiceEndpoint {
   @ResponsePayload
   public GetInvoicesResponse getInvoiceById(@RequestPayload GetInovicesRequest request)
       throws DatatypeConfigurationException {
-//    GetInvoicesResponse response = new GetInvoicesResponse();
-//    Invoice invoice = invoiceBook.getInvoices().get(request.getId() - 1);
-//    response.setInvoice(xmlInvoiceAdapter.toXMLInvoice(invoice));
+
     GetInvoicesResponse response = new GetInvoicesResponse();
     Invoice invoice = invoiceBook.getInvoices().stream()
         .filter(invoice44 -> invoice44.getId() == request.getId())
