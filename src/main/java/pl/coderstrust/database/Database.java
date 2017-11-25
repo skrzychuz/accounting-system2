@@ -15,8 +15,8 @@ public interface Database {
 
   int getNextInvoiceId();
 
-  void deleteInvoice(int id);
+  OperationResult deleteInvoice(int id);
 
-  void updateInvoice(int id, Invoice invoice);
+  OperationResult updateInvoice(int id, Invoice invoice);
 
 }

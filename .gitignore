@@ -4,3 +4,5 @@
 /**/lib/
 /**/target/
 /**/*.json
+/**/src/main/java/io/spring/guides/gs_producing_web_service
+/**/src/main/java/generatedFromXSD

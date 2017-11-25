@@ -1,8 +1,8 @@
 package pl.coderstrust.database.memory;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
+import pl.coderstrust.database.OperationResult;
 import pl.coderstrust.model.invoiceModel.Invoice;
 
 import java.time.LocalDate;
@@ -42,7 +42,7 @@ public class InMemoryDatabase implements Database {
   }
 
   @Override
-  public void deleteInvoice(int id) {
+  public OperationResult deleteInvoice(int id) {
 
     Iterator<Invoice> invoiceIterator = this.getInvoices().iterator();
     while (invoiceIterator.hasNext()) {
@@ -51,10 +51,11 @@ public class InMemoryDatabase implements Database {
         break;
       }
     }
+    return OperationResult.SUCCES;
   }
 
   @Override
-  public void updateInvoice(int id, Invoice invoice) {
-
+  public OperationResult updateInvoice(int id, Invoice invoice) {
+    return OperationResult.SUCCES;
   }
 }

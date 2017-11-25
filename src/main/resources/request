@@ -1,0 +1,51 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:gs="http://spring.io/guides/gs-producing-web-service">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <gs:getInovicesRequest>
+      <gs:id>1</gs:id>
+    </gs:getInovicesRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+xmlns:gs="http://spring.io/guides/gs-producing-web-service">
+<soapenv:Header/>
+<soapenv:Body>
+  <gs:getAllInvoicesRequest>
+  </gs:getAllInvoicesRequest>
+</soapenv:Body>
+</soapenv:Envelope>
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+xmlns:ns2="http://spring.io/guides/gs-producing-web-service">
+<SOAP-ENV:Header/>
+<SOAP-ENV:Body>
+  <ns2:addInvoiceRequest>
+    <ns2:invoice>
+      <ns2:xAmount>200.00</ns2:xAmount>
+      <ns2:xVatAmount>55.00</ns2:xVatAmount>
+      <ns2:xSeller>
+        <ns2:xName>string</ns2:xName>
+        <ns2:xTaxIdentificationNumber>string</ns2:xTaxIdentificationNumber>
+      </ns2:xSeller>
+      <ns2:xBuyer>
+        <ns2:xName>string</ns2:xName>
+        <ns2:xTaxIdentificationNumber>string</ns2:xTaxIdentificationNumber>
+      </ns2:xBuyer>
+      <ns2:xEntreis>
+        <ns2:desc>fromxxml</ns2:desc>
+        <ns2:vatRate>20</ns2:vatRate>
+        <ns2:amount>50.00</ns2:amount>
+        <ns2:vatAmount>10.00</ns2:vatAmount>
+      </ns2:xEntreis>
+      <ns2:xEntreis>
+        <ns2:desc>xml222</ns2:desc>
+        <ns2:vatRate>30</ns2:vatRate>
+        <ns2:amount>150.00</ns2:amount>
+        <ns2:vatAmount>45.00</ns2:vatAmount>
+      </ns2:xEntreis>
+    </ns2:invoice>
+  </ns2:addInvoiceRequest>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

@@ -34,7 +34,7 @@ public class Invoice implements InvoiceVisitable {
   @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
   @JoinColumn
   private Buyer buyer;
-  @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<Entry> entries;
 
   private BigDecimal amount;
@@ -78,6 +78,10 @@ public class Invoice implements InvoiceVisitable {
     return entries;
   }
 
+  public void setEntries(List<Entry> entries) {
+    this.entries = entries;
+  }
+
   public int getId() {
     return id;
   }
@@ -118,6 +122,12 @@ public class Invoice implements InvoiceVisitable {
     this.localDate = localDate;
   }
 
+  public void completeInvoice() {
+    this.entries.stream().forEach(entry -> entry.setVatAmount(entry.getVatAmount()));
+    this.vatAmount = this.getVatAmount();
+    this.amount = this.getAmount();
+  }
+
   @Override
   public String toString() {
     return "Invoice{"
@@ -130,6 +140,12 @@ public class Invoice implements InvoiceVisitable {
         + ", localDate=" + localDate
         + '}';
   }
+
+//  @Override
+//  public BigDecimal accept(InvoiceVisitor invoiceVisitor) {
+//    return null;
+//  }
+//}
 
   @Override
   public BigDecimal accept(InvoiceVisitor invoiceVisitor) {

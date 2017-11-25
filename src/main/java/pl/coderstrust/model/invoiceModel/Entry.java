@@ -41,6 +41,14 @@ public class Entry {
 //    return invoice;
 //  }
 
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
   public void setInvoice(Invoice invoice) {
     this.invoice = invoice;
   }
@@ -70,7 +78,7 @@ public class Entry {
   }
 
   public BigDecimal getVatAmount() {
-    return vatAmount;
+    return amount.multiply(BigDecimal.valueOf(vatRate)).divide(BigDecimal.valueOf(100));
   }
 
   public void setVatAmount(BigDecimal vatAmount) {
