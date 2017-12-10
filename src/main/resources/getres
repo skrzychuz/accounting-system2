@@ -1,0 +1,33 @@
+    <ns2:getInvoicesResponse xmlns:ns2="http://spring.io/guides/gs-producing-web-service"
+      xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+      <ns2:invoice>
+      <ns2:xId>1</ns2:xId>
+      <ns2:xAmount>3000.00</ns2:xAmount>
+      <ns2:xVatAmount>800.00</ns2:xVatAmount>
+      <ns2:date>2017-11-15</ns2:date>
+      <ns2:xSeller>
+        <ns2:xId>1</ns2:xId>
+        <ns2:xName>MyCompany</ns2:xName>
+        <ns2:xTaxIdentificationNumber>string</ns2:xTaxIdentificationNumber>
+      </ns2:xSeller>
+      <ns2:xBuyer>
+        <ns2:xId>1</ns2:xId>
+        <ns2:xName>PPHU Jacek</ns2:xName>
+        <ns2:xTaxIdentificationNumber>123456</ns2:xTaxIdentificationNumber>
+      </ns2:xBuyer>
+      <ns2:xEntreis>
+        <ns2:id>1</ns2:id>
+        <ns2:desc>program TV</ns2:desc>
+        <ns2:vatRate>20</ns2:vatRate>
+        <ns2:amount>1000.00</ns2:amount>
+        <ns2:vatAmount>200.00</ns2:vatAmount>
+      </ns2:xEntreis>
+      <ns2:xEntreis>
+        <ns2:id>2</ns2:id>
+        <ns2:desc>xml222</ns2:desc>
+        <ns2:vatRate>30</ns2:vatRate>
+        <ns2:amount>2000.00</ns2:amount>
+        <ns2:vatAmount>600.00</ns2:vatAmount>
+      </ns2:xEntreis>
+    </ns2:invoice>
+      </ns2:getInvoicesResponse>

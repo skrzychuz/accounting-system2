@@ -1,0 +1,4 @@
+    <gs:getInovicesRequest xmlns:gs="http://spring.io/guides/gs-producing-web-service"
+      xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+        <gs:id>1</gs:id>
+      </gs:getInovicesRequest>

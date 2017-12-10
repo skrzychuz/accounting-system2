@@ -1,0 +1,5 @@
+    <ns2:addInvoiceResponse xmlns:ns2="http://spring.io/guides/gs-producing-web-service"
+      xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+      <ns2:id>1</ns2:id>
+    </ns2:addInvoiceResponse>
+

@@ -56,6 +56,7 @@ public class InSqlDatabaseCrud implements Database {
     updateAllIdInInvoice(id, invoice);
     invoiceRepository.save(invoice);
     return OperationResult.SUCCES;
+
   }
 
   private void updateAllIdInInvoice(int id, Invoice invoice) {

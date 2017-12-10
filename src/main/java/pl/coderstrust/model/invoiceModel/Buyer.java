@@ -1,5 +1,6 @@
 package pl.coderstrust.model.invoiceModel;
 
+import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ public class Buyer {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @ApiModelProperty(hidden = true)
   private int id;
   private String name;
   private String taxIdentificationNumber;
