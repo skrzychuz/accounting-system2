@@ -1,1 +1,1 @@
-# project-krzychu-krzysiek-bogumil
+# project-krzychu
