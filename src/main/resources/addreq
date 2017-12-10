@@ -1,0 +1,24 @@
+    <ns2:addInvoiceRequest xmlns:ns2="http://spring.io/guides/gs-producing-web-service"
+      xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+      <ns2:invoice>
+        <ns2:date>2017-11-15</ns2:date>
+        <ns2:xSeller>
+          <ns2:xName>MyCompany</ns2:xName>
+          <ns2:xTaxIdentificationNumber>0700</ns2:xTaxIdentificationNumber>
+        </ns2:xSeller>
+        <ns2:xBuyer>
+          <ns2:xName>PPHU Piotrek</ns2:xName>
+          <ns2:xTaxIdentificationNumber>123456</ns2:xTaxIdentificationNumber>
+        </ns2:xBuyer>
+        <ns2:xEntreis>
+          <ns2:desc>wegiel</ns2:desc>
+          <ns2:vatRate>20</ns2:vatRate>
+          <ns2:amount>1000</ns2:amount>
+        </ns2:xEntreis>
+        <ns2:xEntreis>
+          <ns2:desc>sloma</ns2:desc>
+          <ns2:vatRate>30</ns2:vatRate>
+          <ns2:amount>2000.00</ns2:amount>
+        </ns2:xEntreis>
+      </ns2:invoice>
+    </ns2:addInvoiceRequest>
